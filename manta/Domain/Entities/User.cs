@@ -1,15 +1,48 @@
+using manta.Domain.Enums;
+
 namespace manta.Domain.Entities;
 
 public abstract class User
 {
-    public virtual string Username { get; private set; }
-    public virtual string Email { get; private set; }
+    public int Id { get; protected set; }
+    public string Email { get; protected set; }
+    public string FullName { get; protected set; }
+    public abstract UserRole Role { get; }
+
+    protected User(int id, string fullName, string email)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            throw new ArgumentException("Username cannot be null or empty", nameof(fullName));
+        Id = id;
+        FullName = fullName;
+        Email = email;
+    }
+    
+    
+    public void PrintInfo()
+    {
+        Console.WriteLine($"User Id: {Id}");
+        Console.WriteLine($"Email: {Email}");
+        Console.WriteLine($"FullName: {FullName}");
+        Console.WriteLine($"Role: {Role}");
+    }
 }
 
 public class Admin : User
 {
-    public override string Username => "root";
+    public Admin(int id, string fullname, string email) 
+        : base(id, fullname, email){}
+    public override UserRole Role => UserRole.Admin;
+}
 
-    public override string Email => "root";
-    
+public class Cashier : User
+{
+    public int DeliveryPoint { get; private set; }
+
+    public Cashier(int id, string fullname, string email, int deliveryPoint)
+        : base(id, fullname, email)
+    {
+        DeliveryPoint = deliveryPoint;
+    }
+    public override UserRole Role => UserRole.Cashier;
 }

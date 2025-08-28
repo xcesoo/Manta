@@ -17,6 +17,9 @@ public static class Manta
         // Console.WriteLine($"parcel_id_{parcel1.Id} is {parcel1.Status}");
         // Console.WriteLine($"parcel_id_{parcel2.Id} is {parcel2.Status}");
         Parcel p = new Parcel(10149);
+        Admin kk = new Admin(1, "Karpeta_Kyrylo", "notxceso@gmail.com");
+        p.ChangeStatus(EParcelStatus.InTransit, kk);
         p.GetInfo();
+        kk.PrintInfo();
     }
 }

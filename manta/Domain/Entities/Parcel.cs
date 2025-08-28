@@ -18,7 +18,7 @@ public class Parcel
     {
         Id = 1;
         DeliveryPointId = deliveryPointId;
-        ChangeStatus(EParcelStatus.Processing, new Admin());
+        ChangeStatus(EParcelStatus.Processing, new Admin(1, "root", "root"));
     }
 
     public void ChangeStatus(EParcelStatus status, User changedBy) =>
@@ -31,6 +31,6 @@ public class Parcel
         Console.WriteLine($"Current Status: {CurrentStatus}");
         Console.WriteLine($"Statuses count: {_statusHistory.Count}");
         foreach (var s in _statusHistory)
-            Console.WriteLine($"{s.Status} by {s.ChangedBy?.Username} at {s.ChangedAt}");
+            Console.WriteLine($"{s.Status} by {s.ChangedBy?.Email} at {s.ChangedAt}");
     }
 }
