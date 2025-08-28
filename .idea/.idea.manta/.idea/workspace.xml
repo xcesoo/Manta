@@ -7,71 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/WebApplication1/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/Properties/launchSettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/WebApplication1.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/WebApplication1.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/appsettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.GlobalUsings.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/net8.0/WebApplication1.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/WebApplication1.csproj.nuget.dgspec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/WebApplication1.csproj.nuget.g.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/WebApplication1.csproj.nuget.g.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/project.assets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApplication1/obj/rider.project.restore.info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/Properties/launchSettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/appsettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/manta.API.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/manta.API.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.GlobalUsings.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/Debug/net8.0/manta.API.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/manta.API.csproj.nuget.dgspec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/manta.API.csproj.nuget.g.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/manta.API.csproj.nuget.g.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/project.assets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta.API/obj/rider.project.restore.info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/API/Controllers/ParcelController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/DTOs/MessageDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/DTOs/ParcelDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Interfaces/IDeliveryPointRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Interfaces/IMessageRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Interfaces/IParcelRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Services/AuthorizationService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Services/ChatService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Services/DeliveryPointService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Services/ParcelService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/CashDesk.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/Message.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/Parcel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/User.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Enums/ParcelStatus.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Exceptions/InvalidStatusChangeException.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Infrastructure/Repositories/DeliveryPointRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Infrastructure/Repositories/MessageRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Infrastructure/Repositories/ParcelRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta.sln" beforeDir="false" afterPath="$PROJECT_DIR$/manta.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta/manta.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/manta/manta.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,6 +20,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/manta.API/Controllers/ChatController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta.API/Controllers/DeliveryPointController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta.API/Controllers/ParcelController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/DTOs/MessageDTO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/DTOs/ParcelDTO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/Interfaces/IDeliveryPointRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -169,7 +108,7 @@
       <updated>1755949674033</updated>
       <workItem from="1755949675291" duration="1814000" />
       <workItem from="1755968014002" duration="44000" />
-      <workItem from="1756377567152" duration="5058000" />
+      <workItem from="1756377567152" duration="5359000" />
     </task>
     <servers />
   </component>
