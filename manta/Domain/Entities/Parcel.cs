@@ -11,7 +11,7 @@ public class Parcel
     public ParcelStatus? CurrentStatus => 
         _statusHistory.Count == 0 ? null : _statusHistory[^1]; // Отримання поточного статусу посилки (останній запис в list)
     
-    private List<ParcelStatus> _statusHistory = new List<ParcelStatus>(); // Історія посилок доступна до змін
+    private List<ParcelStatus> _statusHistory = new(); // Історія посилок доступна до змін
     
 
     public Parcel(int deliveryPointId)
@@ -24,7 +24,7 @@ public class Parcel
     public void ChangeStatus(EParcelStatus status, User changedBy) =>
     _statusHistory.Add(new ParcelStatus(status, changedBy));
 
-    public void GetInfo()
+    public void PrintInfo()
     {
         Console.WriteLine($"Parcel Id: {Id}");
         Console.WriteLine($"Delivery Point Id: {DeliveryPointId}");

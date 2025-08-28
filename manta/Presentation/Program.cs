@@ -16,10 +16,14 @@ public static class Manta
         // dp.AddParcel(parcel2);
         // Console.WriteLine($"parcel_id_{parcel1.Id} is {parcel1.Status}");
         // Console.WriteLine($"parcel_id_{parcel2.Id} is {parcel2.Status}");
-        Parcel p = new Parcel(10149);
+        Parcel parcel = new Parcel(10149);
+        DeliveryPoint deliveryPoint = new DeliveryPoint(10149, "Тарасівка");
         Admin kk = new Admin(1, "Karpeta_Kyrylo", "notxceso@gmail.com");
-        p.ChangeStatus(EParcelStatus.InTransit, kk);
-        p.GetInfo();
-        kk.PrintInfo();
+        parcel.ChangeStatus(EParcelStatus.InTransit, kk);
+        deliveryPoint.AddParcel(parcel, kk);
+        Console.WriteLine("\n");
+        parcel.PrintInfo();
+        Console.WriteLine("\n");
+        deliveryPoint.PrintInfo();
     }
 }
