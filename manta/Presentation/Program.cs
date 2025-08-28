@@ -18,7 +18,5 @@ public static class Manta
         // Console.WriteLine($"parcel_id_{parcel2.Id} is {parcel2.Status}");
         Parcel p = new Parcel(10149);
         p.GetInfo();
-        p.ChangeStatus(new ParcelStatus(EParcelStatus.Returned, new User("admin")));
-        p.GetInfo();
     }
 }

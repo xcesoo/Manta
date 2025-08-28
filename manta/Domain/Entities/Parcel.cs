@@ -4,31 +4,33 @@ namespace manta.Domain.Entities;
 
 public class Parcel
 {
-    public int Id { get; private set; }
-    public int DeliveryPointId { get; private set; }
-    private List<ParcelStatus> Statuses { get; set; }
-    public ParcelStatus Status { get; private set; }
+    public int Id { get; private set; } // Унікальний id посилки
+    public int DeliveryPointId { get; private set; } // id Відділення доставки 
+    public IReadOnlyCollection<ParcelStatus> StatusHistory => 
+        _statusHistory.AsReadOnly(); // Історія всіх статусів, інкапсульований
+    public ParcelStatus? CurrentStatus => 
+        _statusHistory.Count == 0 ? null : _statusHistory[^1]; // Отримання поточного статусу посилки (останній запис в list)
+    
+    private List<ParcelStatus> _statusHistory = new List<ParcelStatus>(); // Історія посилок доступна до змін
+    
 
     public Parcel(int deliveryPointId)
     {
         Id = 1;
         DeliveryPointId = deliveryPointId;
-        Status = new ParcelStatus(EParcelStatus.Processing, new User("popa"));
-        Statuses = new List<ParcelStatus>();
-        Statuses.Add(Status);
+        ChangeStatus(EParcelStatus.Processing, new Admin());
     }
 
-    public void ChangeStatus(ParcelStatus status)
-    {
-        Status = status;
-        Statuses.Add(Status);
-    }
+    public void ChangeStatus(EParcelStatus status, User changedBy) =>
+    _statusHistory.Add(new ParcelStatus(status, changedBy));
 
     public void GetInfo()
     {
         Console.WriteLine($"Parcel Id: {Id}");
         Console.WriteLine($"Delivery Point Id: {DeliveryPointId}");
-        Console.WriteLine($"Status: {Status.ToString()}"); 
-        Console.WriteLine($"Statuses count: {Statuses.Count}");
+        Console.WriteLine($"Current Status: {CurrentStatus}");
+        Console.WriteLine($"Statuses count: {_statusHistory.Count}");
+        foreach (var s in _statusHistory)
+            Console.WriteLine($"{s.Status} by {s.ChangedBy?.Username} at {s.ChangedAt}");
     }
 }

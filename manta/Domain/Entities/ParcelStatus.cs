@@ -14,5 +14,11 @@ public class ParcelStatus
         ChangedBy = changedBy;
         ChangedAt = DateTime.UtcNow;
     }
+
+    public ParcelStatus(EParcelStatus status)
+    {
+        Status = status;
+        ChangedBy = new Admin();
+    }
     public override string ToString() => Status.ToString();
 }

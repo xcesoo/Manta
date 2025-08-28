@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("manta")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25c7293bd734216363dc7a61e4ff0a202adc3095")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+efd81df823c549fb1b934e4baf825298360a07e3")]
 [assembly: System.Reflection.AssemblyProductAttribute("manta")]
 [assembly: System.Reflection.AssemblyTitleAttribute("manta")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

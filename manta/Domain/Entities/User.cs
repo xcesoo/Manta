@@ -1,11 +1,15 @@
 namespace manta.Domain.Entities;
 
-public class User
+public abstract class User
 {
-    public string FirstName { get; set; }
+    public virtual string Username { get; private set; }
+    public virtual string Email { get; private set; }
+}
 
-    public User(string firstName)
-    {
-        FirstName = firstName;
-    }
+public class Admin : User
+{
+    public override string Username => "root";
+
+    public override string Email => "root";
+    
 }
