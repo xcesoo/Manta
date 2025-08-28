@@ -1,0 +1,14 @@
+/Users/mashazhyrnova/RiderProjects/manta/manta/bin/Debug/net8.0/manta
+/Users/mashazhyrnova/RiderProjects/manta/manta/bin/Debug/net8.0/manta.deps.json
+/Users/mashazhyrnova/RiderProjects/manta/manta/bin/Debug/net8.0/manta.runtimeconfig.json
+/Users/mashazhyrnova/RiderProjects/manta/manta/bin/Debug/net8.0/manta.dll
+/Users/mashazhyrnova/RiderProjects/manta/manta/bin/Debug/net8.0/manta.pdb
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.csproj.CoreCompileInputs.cache
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.dll
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/refint/manta.dll
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.pdb
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.genruntimeconfig.cache
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/ref/manta.dll

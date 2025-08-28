@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="API\Controllers\" />
+      <Folder Include="Application\DTOs\" />
+      <Folder Include="Application\Interfaces\" />
+      <Folder Include="Application\Services\" />
+      <Folder Include="Domain\Entities\" />
+      <Folder Include="Domain\Enums\" />
+      <Folder Include="Domain\Exceptions\" />
+      <Folder Include="Infrastructure\Repositories\" />
+      <Folder Include="Infrastructure\Services\" />
+      <Folder Include="Presentation\Forms\" />
+    </ItemGroup>
+
+</Project>
