@@ -12,3 +12,4 @@
 /Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.pdb
 /Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.genruntimeconfig.cache
 /Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/ref/manta.dll
+/Users/mashazhyrnova/RiderProjects/manta/manta/obj/Debug/net8.0/manta.sourcelink.json

@@ -7,7 +7,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="" />
+    <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/ParcelFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Entities/ParcelStatus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Enums/EParcelStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Entities/Parcel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Entities/Parcel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Entities/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Enums/ParcelStatus.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Presentation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/ref/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/ref/manta.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/refint/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/refint/manta.dll" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,8 +55,10 @@
     <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/Message.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/Parcel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/ParcelFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/ParcelStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/User.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/manta/Domain/Enums/ParcelStatus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Enums/EParcelStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Exceptions/InvalidStatusChangeException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Infrastructure/Repositories/DeliveryPointRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Infrastructure/Repositories/MessageRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -59,7 +80,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Project.Unnamed.executor": "Run",
+    ".NET Project.Unnamed.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -108,7 +129,7 @@
       <updated>1755949674033</updated>
       <workItem from="1755949675291" duration="1814000" />
       <workItem from="1755968014002" duration="44000" />
-      <workItem from="1756377567152" duration="5359000" />
+      <workItem from="1756377567152" duration="12736000" />
     </task>
     <servers />
   </component>
@@ -134,6 +155,19 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/manta/Presentation/Program.cs</url>
+          <line>20</line>
+          <properties documentPath="$PROJECT_DIR$/manta/Presentation/Program.cs" containingFunctionPresentation="Method 'Main'">
+            <startOffsets>
+              <option value="792" />
+            </startOffsets>
+            <endOffsets>
+              <option value="868" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
