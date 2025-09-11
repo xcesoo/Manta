@@ -25,4 +25,16 @@
                 }
             }
         }
+
+        public void ApplyRule<T>(Parcel parcel, User changedBy, DeliveryPoint deliveryPoint) 
+            where T : IParcelStatusRule
+        {
+            var rule = _rules.OfType<T>().FirstOrDefault();
+            if (rule == null) throw new Exception($"Rule {typeof(T).Name} does not exist");
+            if (rule.ShouldApply(parcel, deliveryPoint, out EParcelStatus newStatus)
+                && newStatus != parcel.CurrentStatus.Status)
+            {
+                parcel.ChangeStatus(newStatus, changedBy ?? SystemUser.Instance);
+            }
+        }
     }

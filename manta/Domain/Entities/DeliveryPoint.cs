@@ -1,5 +1,6 @@
 using manta.Domain.Enums;
 using manta.Domain.Services;
+using manta.Domain.StatusRules;
 
 namespace manta.Domain.Entities;
 
@@ -38,7 +39,7 @@ public class DeliveryPoint
     {
         if(!_parcels.Contains(parcel))
             throw new ArgumentException("Parcel does not exist", nameof(parcel));
-        _statusService.UpdateStatus(parcel, changedBy, this);
+        _statusService.ApplyRule<DeliveredRule>(parcel, changedBy, this);
         
         if(parcel.CurrentStatus.Status==EParcelStatus.Delivered) RemoveParcel(parcel);
     }

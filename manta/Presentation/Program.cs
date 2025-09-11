@@ -15,5 +15,6 @@ public static class Manta
          dp.AddParcel(p, SystemUser.Instance);
          dp.AddParcel(p2, SystemUser.Instance);
          dp.DeliveryParcel(p2, SystemUser.Instance);
+         dp.DeliveryParcel(p, SystemUser.Instance);
     }
 }

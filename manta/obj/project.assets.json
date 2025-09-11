@@ -8,23 +8,26 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\xceso\\.nuget\\packages\\": {}
+    "/Users/mashazhyrnova/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\desktop\\Manta\\manta\\manta.csproj",
+      "projectUniqueName": "/Users/mashazhyrnova/RiderProjects/Manta/manta/manta.csproj",
       "projectName": "manta",
-      "projectPath": "F:\\desktop\\Manta\\manta\\manta.csproj",
-      "packagesPath": "C:\\Users\\xceso\\.nuget\\packages\\",
-      "outputPath": "F:\\desktop\\Manta\\manta\\obj\\",
+      "projectPath": "/Users/mashazhyrnova/RiderProjects/Manta/manta/manta.csproj",
+      "packagesPath": "/Users/mashazhyrnova/.nuget/packages/",
+      "outputPath": "/Users/mashazhyrnova/RiderProjects/Manta/manta/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\xceso\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/mashazhyrnova/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
@@ -40,7 +43,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -61,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/mashazhyrnova/.dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
