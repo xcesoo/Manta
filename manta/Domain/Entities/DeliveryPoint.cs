@@ -1,4 +1,3 @@
-using System.Data;
 using manta.Domain.Enums;
 using manta.Domain.Services;
 
@@ -9,14 +8,15 @@ public class DeliveryPoint
     public int Id { get; private set; }
     public string Address { get; private set; }
     private readonly List<Parcel> _parcels = new();
-    private readonly ParcelStatusService _statusService = new();
+    private readonly ParcelStatusService _statusService;
 
     public IEnumerable<Parcel> Parcels => _parcels.AsReadOnly();
 
-    public DeliveryPoint(int id, string address)
+    public DeliveryPoint(int id, string address, ParcelStatusService statusService)
     {
         Id = id;
         Address = address;
+        _statusService = statusService;
     }
 
     public void AddParcel(Parcel parcel, User changedBy)
@@ -26,30 +26,21 @@ public class DeliveryPoint
         _parcels.Add(parcel);
         _statusService.UpdateStatus(parcel, changedBy, this);
     }
-    public void PrintInfo()
-    {
-        Console.WriteLine($"Delivery Point Id: {Id}");
-        Console.WriteLine($"Address: {Address}");
-        Console.WriteLine($"Parcels count: {_parcels.Count}");
-    
-        if (_parcels.Count == 0)
-        {
-            Console.WriteLine("No parcels in this delivery point.");
-            return;
-        }
 
-        Console.WriteLine("Parcels:");
-        foreach (var parcel in _parcels)
-        {
-            Console.WriteLine($"  Parcel Id: {parcel.Id}");
-            Console.WriteLine($"  Current Status: {parcel.CurrentStatus}");
-            Console.WriteLine($"  Status history:");
-            foreach (var s in parcel.StatusHistory) // якщо Statuses зроблені public або internal для доступу
-            {
-                Console.WriteLine($"    - {s.Status} at {s.ChangedAt} by {(s.ChangedBy?.Email ?? "System")}");
-            }
-            Console.WriteLine();
-        }
+    private void RemoveParcel(Parcel parcel)
+    {
+        if(parcel == null) 
+            throw new ArgumentNullException(nameof(parcel));
+        _parcels.Remove(parcel);
     }
 
+    public void DeliveryParcel(Parcel parcel, User changedBy)
+    {
+        if(!_parcels.Contains(parcel))
+            throw new ArgumentException("Parcel does not exist", nameof(parcel));
+        _statusService.UpdateStatus(parcel, changedBy, this);
+        
+        if(parcel.CurrentStatus.Status==EParcelStatus.Delivered) RemoveParcel(parcel);
+    }
+    
 }

@@ -4,5 +4,5 @@ public enum UserRole
 {
     Cashier,
     Admin,
-    Root
+    System
 }

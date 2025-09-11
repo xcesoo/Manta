@@ -4,33 +4,36 @@ namespace manta.Domain.Entities;
 
 public class Parcel
 {
-    public int Id { get; private set; } // Унікальний id посилки
-    public int DeliveryPointId { get; private set; } // id Відділення доставки 
-    public IReadOnlyCollection<ParcelStatus> StatusHistory => 
-        _statusHistory.AsReadOnly(); // Історія всіх статусів, інкапсульований
-    public ParcelStatus? CurrentStatus => 
-        _statusHistory.Count == 0 ? null : _statusHistory[^1]; // Отримання поточного статусу посилки (останній запис в list)
-    
-    private List<ParcelStatus> _statusHistory = new(); // Історія посилок доступна до змін
-    
+    //Ідентичність та базові поля
+    public int Id {get; private set;}
+    public int DeliveryPointId {get; private set;}
+    //Привітна історія статусів до змін
+    private readonly List<ParcelStatus> _history = new();
+    public IReadOnlyList<ParcelStatus> StatusHistory => _history.AsReadOnly();
+    //Лямбда функція поточного статусу посилки
+    public ParcelStatus CurrentStatus => _history[^1];
 
-    public Parcel(int deliveryPointId)
+    //Конструктор
+    private Parcel(int id, int deliveryPointId)
     {
-        Id = 1;
-        DeliveryPointId = deliveryPointId;
-        ChangeStatus(EParcelStatus.Processing, new Admin(1, "root", "root"));
+        Id=id;
+        DeliveryPointId=deliveryPointId;
     }
 
-    public void ChangeStatus(EParcelStatus status, User changedBy) =>
-    _statusHistory.Add(new ParcelStatus(status, changedBy));
-
-    public void PrintInfo()
+    public static Parcel Create(int id, int deliveryPointId)
     {
-        Console.WriteLine($"Parcel Id: {Id}");
-        Console.WriteLine($"Delivery Point Id: {DeliveryPointId}");
-        Console.WriteLine($"Current Status: {CurrentStatus}");
-        Console.WriteLine($"Statuses count: {_statusHistory.Count}");
-        foreach (var s in _statusHistory)
-            Console.WriteLine($"{s.Status} by {s.ChangedBy?.Email} at {s.ChangedAt}");
+        if(id<=0) throw new ArgumentOutOfRangeException(nameof(id));
+        if(deliveryPointId<=0) throw new ArgumentOutOfRangeException(nameof(deliveryPointId));
+        
+        var parcel = new Parcel(id, deliveryPointId);
+        //Задаємо початковий статус
+        parcel._history.Add(new ParcelStatus(EParcelStatus.Processing,SystemUser.Instance));
+        return parcel;
+    }
+    
+        
+    public void ChangeStatus(EParcelStatus newStatus, User? changedBy)
+    {
+        _history.Add(new ParcelStatus(newStatus, changedBy ?? SystemUser.Instance));
     }
 }

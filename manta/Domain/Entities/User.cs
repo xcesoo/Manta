@@ -17,25 +17,16 @@ public abstract class User
         FullName = fullName;
         Email = email;
     }
-    
-    
-    public void PrintInfo()
-    {
-        Console.WriteLine($"User Id: {Id}");
-        Console.WriteLine($"Email: {Email}");
-        Console.WriteLine($"FullName: {FullName}");
-        Console.WriteLine($"Role: {Role}");
-    }
 }
 
-public class Admin : User
+public sealed class Admin : User
 {
     public Admin(int id, string fullname, string email) 
         : base(id, fullname, email){}
     public override UserRole Role => UserRole.Admin;
 }
 
-public class Cashier : User
+public sealed class Cashier : User
 {
     public int DeliveryPoint { get; private set; }
 
@@ -45,4 +36,11 @@ public class Cashier : User
         DeliveryPoint = deliveryPoint;
     }
     public override UserRole Role => UserRole.Cashier;
+}
+
+public sealed class SystemUser : User
+{
+    public static readonly SystemUser Instance = new SystemUser();
+    private SystemUser() : base(0, "system", "system@manta.com"){}
+    public override UserRole Role => UserRole.System;
 }

@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "manta", "manta\manta.csproj", "{A430FC4B-187D-4473-A380-09B6499E0149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "manta.API", "manta.API\manta.API.csproj", "{AC243E9D-F4DC-437E-8F5B-54C74A058B20}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{A430FC4B-187D-4473-A380-09B6499E0149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A430FC4B-187D-4473-A380-09B6499E0149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A430FC4B-187D-4473-A380-09B6499E0149}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC243E9D-F4DC-437E-8F5B-54C74A058B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC243E9D-F4DC-437E-8F5B-54C74A058B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC243E9D-F4DC-437E-8F5B-54C74A058B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC243E9D-F4DC-437E-8F5B-54C74A058B20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
