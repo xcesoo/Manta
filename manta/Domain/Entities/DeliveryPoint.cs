@@ -1,6 +1,8 @@
 using manta.Domain.Enums;
+using manta.Domain.Events;
 using manta.Domain.Services;
 using manta.Domain.StatusRules;
+using manta.Infrastructure.EventDispatcher;
 
 namespace manta.Domain.Entities;
 
@@ -25,7 +27,7 @@ public class DeliveryPoint
         if (parcel == null)
             throw new ArgumentNullException(nameof(parcel));
         _parcels.Add(parcel);
-        _statusService.UpdateStatus(parcel, changedBy, this);
+        DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, this));
     }
 
     private void RemoveParcel(Parcel parcel)
@@ -39,9 +41,11 @@ public class DeliveryPoint
     {
         if(!_parcels.Contains(parcel))
             throw new ArgumentException("Parcel does not exist", nameof(parcel));
-        _statusService.ApplyRule<DeliveredRule>(parcel, changedBy, this);
-        
-        if(parcel.CurrentStatus.Status==EParcelStatus.Delivered) RemoveParcel(parcel);
+        // _statusService.ApplyRule<DeliveredRule>(parcel, changedBy, this);
+        //
+        // if(parcel.CurrentStatus.Status==EParcelStatus.Delivered) RemoveParcel(parcel);
+        //
+        DomainEvents.Raise(new ParcelDeliveredEvent(parcel, this));
     }
     
 }

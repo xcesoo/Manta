@@ -1,5 +1,7 @@
-﻿using manta.Domain.Entities;
+﻿using manta.Application.Handlers;
+using manta.Domain.Entities;
 using manta.Domain.Enums;
+using manta.Domain.Events;
 using manta.Domain.Services;
 
 namespace manta.Presentation;
@@ -9,6 +11,7 @@ public static class Manta
     public static void Main(string[] args)
     {
          ParcelStatusService statusService = new ParcelStatusService();
+         EventsLoader.LoadAllEvents(statusService);
          var dp = new DeliveryPoint(102, "blalba", statusService);
          var p = Parcel.Create(1, 103);
          var p2 = Parcel.Create(1, 102);

@@ -11,13 +11,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.manta/.idea/.name" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Application/Handlers/ParcelAddedHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Application/Handlers/ParcelDeliveredHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/DomainEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/EventsLoader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/IDomainEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelAddedToDeliveryPointEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelDeliveredEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/Infrastructure/EventDispatcher/DomainEvents.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/manta.sln.DotSettings.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta/Domain/Services/ParcelStatusService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Services/ParcelStatusService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Presentation/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.exe" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/apphost.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
@@ -54,13 +63,14 @@
     &quot;assignee&quot;: &quot;xcesoo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/xcesoo/Manta.git",
-    "accountId": "94bb2e86-9218-41e5-a186-36dfaec59347"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/xcesoo/Manta.git&quot;,
+    &quot;accountId&quot;: &quot;94bb2e86-9218-41e5-a186-36dfaec59347&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/833e9913cfea894121d36df3dbe63f69583989396ff52191a29aa53a4dd49941/Cast.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d42d5f1712377031e2892d1c29db5c23b8c7d49b9dc632fbf463bd930a8/RuntimeHelpers.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/96178db1709e872c391367fef1b31fca80f9f18119cdf4145a2650ac9f332ac/Array.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9a6b1457cbcf17db31a383ba49ef9bcc786cf3ef77146d997eee499b27a46d/Object.cs" root0="FORCE_HIGHLIGHTING" />
@@ -68,6 +78,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b7208b3f72528d22781d25fde9a55271bdf2b5aade4f03b1324579a25493cd8/List.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/DTOs/MessageDTO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/DTOs/ParcelDTO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Application/Handlers/ParcelAddedHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Application/Handlers/ParcelDeliveredHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/Interfaces/IDeliveryPointRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/Interfaces/IMessageRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Application/Interfaces/IParcelRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -83,12 +95,18 @@
     <setting file="file://$PROJECT_DIR$/manta/Domain/Entities/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Enums/EParcelStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Enums/UserRole.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Events/DomainEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Events/EventsLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Events/IDomainEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Events/ParcelAddedToDeliveryPointEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Domain/Events/ParcelDeliveredEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Interfaces/IParcelStatusRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/Services/ParcelStatusService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/StatusRules/DeliveredRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/StatusRules/ReadyForPickupRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/StatusRules/RuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Domain/StatusRules/WrongDeliveryPointRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/manta/Infrastructure/EventDispatcher/DomainEvents.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Infrastructure/Repositories/DeliveryPointRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Infrastructure/Repositories/MessageRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/manta/Infrastructure/Repositories/ParcelRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -252,16 +270,16 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/manta/Presentation/Program.cs</url>
-          <line>10</line>
-          <properties documentPath="$PROJECT_DIR$/manta/Presentation/Program.cs" containingFunctionPresentation="Method 'Main'">
+          <line>18</line>
+          <properties documentPath="F:\desktop\Manta\manta\Presentation\Program.cs" containingFunctionPresentation="Method 'Main'">
             <startOffsets>
-              <option value="202" />
+              <option value="582" />
             </startOffsets>
             <endOffsets>
-              <option value="264" />
+              <option value="620" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
