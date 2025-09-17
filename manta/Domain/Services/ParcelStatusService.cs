@@ -26,7 +26,7 @@
             }
         }
 
-        public void ApplyRule<T>(Parcel parcel, User changedBy, DeliveryPoint deliveryPoint) 
+        public bool ApplyRule<T>(Parcel parcel, User changedBy, DeliveryPoint deliveryPoint) 
             where T : IParcelStatusRule
         {
             var rule = _rules.OfType<T>().FirstOrDefault();
@@ -35,6 +35,8 @@
                 && newStatus != parcel.CurrentStatus.Status)
             {
                 parcel.ChangeStatus(newStatus, changedBy ?? SystemUser.Instance);
+                return true;
             }
+            return false;
         }
     }

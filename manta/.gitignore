@@ -1,0 +1,30 @@
+# Build results
+bin/
+obj/
+
+# Rider IDE files
+.idea/
+*.sln.iml
+.idea/.idea.LocalHistory
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.DotSettings.user
+
+# NuGet packages
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Others
+.vs/
+*.log
+
+# Rider code style settings
+

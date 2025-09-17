@@ -1,24 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "F:\\desktop\\Manta\\manta\\manta.csproj": {}
+    "/Users/kirusha/RiderProjects/Manta/manta/manta.csproj": {}
   },
   "projects": {
-    "F:\\desktop\\Manta\\manta\\manta.csproj": {
+    "/Users/kirusha/RiderProjects/Manta/manta/manta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\desktop\\Manta\\manta\\manta.csproj",
+        "projectUniqueName": "/Users/kirusha/RiderProjects/Manta/manta/manta.csproj",
         "projectName": "manta",
-        "projectPath": "F:\\desktop\\Manta\\manta\\manta.csproj",
-        "packagesPath": "C:\\Users\\xceso\\.nuget\\packages\\",
-        "outputPath": "F:\\desktop\\Manta\\manta\\obj\\",
+        "projectPath": "/Users/kirusha/RiderProjects/Manta/manta/manta.csproj",
+        "packagesPath": "/Users/kirusha/.nuget/packages/",
+        "outputPath": "/Users/kirusha/RiderProjects/Manta/manta/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\xceso\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/kirusha/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
@@ -55,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.413/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

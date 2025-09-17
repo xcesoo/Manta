@@ -27,10 +27,10 @@ public class DeliveryPoint
         if (parcel == null)
             throw new ArgumentNullException(nameof(parcel));
         _parcels.Add(parcel);
-        DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, this));
+        DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, this, changedBy));
     }
 
-    private void RemoveParcel(Parcel parcel)
+    internal void RemoveParcel(Parcel parcel)
     {
         if(parcel == null) 
             throw new ArgumentNullException(nameof(parcel));
@@ -39,13 +39,9 @@ public class DeliveryPoint
 
     public void DeliveryParcel(Parcel parcel, User changedBy)
     {
-        if(!_parcels.Contains(parcel))
+        if (!_parcels.Contains(parcel))
             throw new ArgumentException("Parcel does not exist", nameof(parcel));
-        // _statusService.ApplyRule<DeliveredRule>(parcel, changedBy, this);
-        //
-        // if(parcel.CurrentStatus.Status==EParcelStatus.Delivered) RemoveParcel(parcel);
-        //
-        DomainEvents.Raise(new ParcelDeliveredEvent(parcel, this));
+        DomainEvents.Raise(new ParcelDeliveredEvent(parcel, this, changedBy));
     }
     
 }

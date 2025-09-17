@@ -11,27 +11,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5ada352-6505-4cbe-bf06-fa152f03f45d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/manta/Application/Handlers/ParcelAddedHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Application/Handlers/ParcelDeliveredHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/DomainEvent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/EventsLoader.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/IDomainEvent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelAddedToDeliveryPointEvent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelDeliveredEvent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manta/Infrastructure/EventDispatcher/DomainEvents.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manta/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.manta/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/manta.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Application/Handlers/ParcelDeliveredHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Application/Handlers/ParcelDeliveredHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Entities/DeliveryPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Presentation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Events/DomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Events/DomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Events/IDomainEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Events/IDomainEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Events/ParcelAddedToDeliveryPointEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelAddedToDeliveryPointEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Events/ParcelDeliveredEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Events/ParcelDeliveredEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/Services/ParcelStatusService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/Services/ParcelStatusService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Domain/StatusRules/DeliveredRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Domain/StatusRules/DeliveredRule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/Infrastructure/EventDispatcher/DomainEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/Infrastructure/EventDispatcher/DomainEvents.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.exe" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/manta/bin/Debug/net8.0/manta.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/apphost.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.dll" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/manta/obj/Debug/net8.0/manta.pdb" afterDir="false" />
@@ -268,21 +267,13 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/manta/Presentation/Program.cs</url>
-          <line>18</line>
-          <properties documentPath="F:\desktop\Manta\manta\Presentation\Program.cs" containingFunctionPresentation="Method 'Main'">
-            <startOffsets>
-              <option value="582" />
-            </startOffsets>
-            <endOffsets>
-              <option value="620" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#manta.Domain.Entities.Parcel" memberName="CurrentStatus" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

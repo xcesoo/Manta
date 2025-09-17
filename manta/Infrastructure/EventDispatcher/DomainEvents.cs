@@ -4,16 +4,18 @@ namespace manta.Infrastructure.EventDispatcher;
 
 public static class DomainEvents
 {
-    private static readonly List<Delegate> _handlers = new List<Delegate>(); 
+    private static readonly Dictionary<Type, List<Delegate>> _handlers = new Dictionary<Type, List<Delegate>>();
 
     public static void Register<T>(Action<T> handler) where T : IDomainEvent
     {
-        _handlers.Add(handler); 
+        if (!_handlers.ContainsKey(typeof(T))) 
+            _handlers.Add(typeof(T), new List<Delegate>());
+        _handlers[typeof(T)].Add(handler);
     }
 
     public static void Raise<T>(T domainEvent) where T : IDomainEvent
     {
-        foreach (var handler in _handlers.OfType<Action<T>>())
+        foreach (var handler in _handlers[typeof(T)].OfType<Action<T>>())
         {
             handler(domainEvent);
         }

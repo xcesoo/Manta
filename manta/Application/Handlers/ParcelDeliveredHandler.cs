@@ -18,6 +18,9 @@ public class ParcelDeliveredHandler
     
     private void Handle(ParcelDeliveredEvent e)
     {
-        _statusService.ApplyRule<DeliveredRule>(e.Parcel,SystemUser.Instance, e.DeliveryPoint);
+        if (_statusService.ApplyRule<DeliveredRule>(e.Parcel, SystemUser.Instance, e.DeliveryPoint))
+        {
+            e.DeliveryPoint.RemoveParcel(e.Parcel);
+        }
     }
 }
