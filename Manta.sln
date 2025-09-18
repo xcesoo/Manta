@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Presentation", "Manta.Presentation\Manta.Presentation.csproj", "{45BF3DDE-524B-4A49-9C54-0E7B581E766A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Application", "Manta.Application\Manta.Application.csproj", "{D29CFB24-8A62-46F0-A4DA-4EA531E0A60B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Domain", "Manta.Domain\Manta.Domain.csproj", "{FE618E0C-84A3-4663-8194-76A55C5A0730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Infrastructure", "Manta.Infrastructure\Manta.Infrastructure.csproj", "{FBE3B296-B313-4B9D-8450-7047F6B42956}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45BF3DDE-524B-4A49-9C54-0E7B581E766A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BF3DDE-524B-4A49-9C54-0E7B581E766A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BF3DDE-524B-4A49-9C54-0E7B581E766A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BF3DDE-524B-4A49-9C54-0E7B581E766A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29CFB24-8A62-46F0-A4DA-4EA531E0A60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29CFB24-8A62-46F0-A4DA-4EA531E0A60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29CFB24-8A62-46F0-A4DA-4EA531E0A60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29CFB24-8A62-46F0-A4DA-4EA531E0A60B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE618E0C-84A3-4663-8194-76A55C5A0730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE618E0C-84A3-4663-8194-76A55C5A0730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE618E0C-84A3-4663-8194-76A55C5A0730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE618E0C-84A3-4663-8194-76A55C5A0730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBE3B296-B313-4B9D-8450-7047F6B42956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBE3B296-B313-4B9D-8450-7047F6B42956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBE3B296-B313-4B9D-8450-7047F6B42956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBE3B296-B313-4B9D-8450-7047F6B42956}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

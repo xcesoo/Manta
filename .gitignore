@@ -1,0 +1,44 @@
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider IDE
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+# Можна додати caching
+*.cache
+
+Migrations/
+
+# Log файли
+*.log
+
+# Test results
+TestResults/
+*.trx
+
+# Dotnet watch / temporary files
+*.dotCover
+*.ncrunch*
+*.resharper*
+
+# ASP.NET Core runtime files
+*.db
+*.pdb
+*.pid
