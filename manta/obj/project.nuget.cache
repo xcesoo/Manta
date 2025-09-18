@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "3oOdbGUw7xs=",
+  "dgSpecHash": "L8M2Te2gQWg=",
   "success": true,
-  "projectFilePath": "/Users/kirusha/RiderProjects/Manta/manta/manta.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Operator-200\\Desktop\\kira\\Legacy\\manta\\manta.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Operator-200\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.17\\microsoft.netcore.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\Operator-200\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.17\\microsoft.windowsdesktop.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\Operator-200\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.17\\microsoft.aspnetcore.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\Operator-200\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.17\\microsoft.netcore.app.host.win-x64.8.0.17.nupkg.sha512"
+  ],
   "logs": []
 }
