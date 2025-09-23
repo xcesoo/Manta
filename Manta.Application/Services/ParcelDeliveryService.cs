@@ -32,4 +32,9 @@ public class ParcelDeliveryService
             DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
         }
     }
+    
+    public void CancelParcel(Parcel parcel, User cancelledBy)
+    {
+        parcel.Cancel(cancelledBy);
+    }
 }

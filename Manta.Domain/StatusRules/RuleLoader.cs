@@ -6,6 +6,7 @@ public static class RuleLoader
 {
     private static List<IParcelStatusRule> _rules = new List<IParcelStatusRule>
     {
+        new CanceledToReturnRequestedRule(),
         new WrongDeliveryPointRule(),
         new ReadyForPickupRule(),
         new DeliveredRule()

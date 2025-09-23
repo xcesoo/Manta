@@ -5,6 +5,6 @@ namespace Manta.Application.Services;
 
 public static class ParcelFactory
 {
-    public static Parcel Create(int id, int deliveryPointId, User createdBy) =>
-        Parcel.Create(id, deliveryPointId, createdBy);
+    public static Parcel Create(ParcelCreationOptions options) =>
+        Parcel.Create(options);
 }
