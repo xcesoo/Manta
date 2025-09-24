@@ -7,6 +7,7 @@ public class Parcel
 {
     public int Id {get; private set;}
     public int DeliveryPointId {get; private set;}
+    public int? CurrentLocationDeliveryPointId { get; private set; }
     public decimal AmountDue { get; private set; }
     public bool Paid => AmountDue == 0;
     public double Weight { get; private set; }
@@ -27,6 +28,7 @@ public class Parcel
         RecipientPhoneNumber = recipientPhoneNumber;
         RecipientEmail = recipientEmail;
         Weight = weight;
+        CurrentLocationDeliveryPointId = null;
     }
 
     internal static Parcel Create(ParcelCreationOptions options)
@@ -62,8 +64,9 @@ public class Parcel
     internal void ChangeAmountDue(decimal newAmountDue) => AmountDue = newAmountDue;
     
     internal void ChangeWeight(double newWeight) => Weight = newWeight;
-    
-    internal void ChangeDeliveryPoint(int newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
+
+    internal void Readdress(int newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
+    internal void MoveToLocation(int? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
 
     internal void Cancel(User cancelledBy)
     {

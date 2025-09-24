@@ -3,8 +3,6 @@ namespace Manta.Domain.Enums;
 public enum EParcelStatus
 {
     Processing,                  // Обробка
-    Assembling,                  // Комплектується
-    ScheduledForShipment,        // Заплановано до відправки
     ShipmentCancelled,           // Відправлення скасовано
     InTransit,                   // В дорозі
     ReaddressRequested,          // Оформлено переадресацію

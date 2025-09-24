@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Manta.Infrastructure\Manta.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\" />
+    </ItemGroup>
+
 </Project>

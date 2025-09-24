@@ -18,7 +18,6 @@ public class ParcelDeliveryService
     {
         if (_statusService.ApplyRule<DeliveredRule>(parcel, deliveryPoint, changeBy))
         {
-            deliveryPoint.RemoveParcel(parcel);
             DomainEvents.Raise(new ParcelDeliveredEvent(parcel, deliveryPoint, changeBy));
         }
         else throw new ArgumentException("Failed to deliver the parcel", nameof(parcel));
@@ -28,13 +27,26 @@ public class ParcelDeliveryService
     {
         if (_statusService.UpdateStatus(parcel, deliveryPoint, changedBy))
         {
-            deliveryPoint.AddParcel(parcel);
+            parcel.MoveToLocation(deliveryPoint.Id);
             DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
         }
+        else throw new ArgumentException("Failed to accept the parcel", nameof(parcel));
     }
+
+    public void ReaddressParcel(DeliveryPoint deliveryPoint, Parcel parcel, User changedBy)
+    {
+        if (_statusService.ApplyRule<ReaddressRequestedRule>(parcel, deliveryPoint, changedBy))
+        {
+            parcel.Readdress(deliveryPoint.Id);
+            //TODO raise event
+        }
+        else throw new ArgumentException("Failed to readdress the parcel", nameof(parcel));
+    }
+    
     
     public void CancelParcel(Parcel parcel, User cancelledBy)
     {
         parcel.Cancel(cancelledBy);
+        //TODO raise event
     }
 }

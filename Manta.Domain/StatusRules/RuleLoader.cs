@@ -9,7 +9,8 @@ public static class RuleLoader
         new CanceledToReturnRequestedRule(),
         new WrongDeliveryPointRule(),
         new ReadyForPickupRule(),
-        new DeliveredRule()
+        new DeliveredRule(),
+        new ReaddressRequestedRule()
     };
     public static List<IParcelStatusRule> LoadAllRules => _rules;
 }
