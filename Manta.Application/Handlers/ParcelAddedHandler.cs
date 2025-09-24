@@ -1,4 +1,3 @@
-using Manta.Domain.Entities;
 using Manta.Domain.Events;
 using Manta.Domain.Services;
 using Manta.Infrastructure.EventDispatcher;

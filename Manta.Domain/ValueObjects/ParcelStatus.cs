@@ -1,6 +1,7 @@
+using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 
-namespace Manta.Domain.Entities;
+namespace Manta.Domain.ValueObjects;
 
 public record ParcelStatus
 {

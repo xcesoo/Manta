@@ -1,4 +1,4 @@
-namespace Manta.Domain.Entities;
+namespace Manta.Domain.ValueObjects;
 
 public record Email
 {

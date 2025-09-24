@@ -1,8 +1,3 @@
-using System.Runtime.CompilerServices;
-using Manta.Domain.Events;
-using Manta.Domain.Services;
-[assembly: InternalsVisibleTo("Manta.Application")]
-
 namespace Manta.Domain.Entities;
 public class DeliveryPoint
 {

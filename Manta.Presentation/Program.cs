@@ -2,9 +2,6 @@
 using Manta.Application.Services;
 using Manta.Domain.Services;
 using Manta.Domain.Entities;
-using Manta.Domain.Enums;
-using Manta.Domain.Events;
-using Manta.Domain.Services;
 
 namespace Manta.Presentation;
 
