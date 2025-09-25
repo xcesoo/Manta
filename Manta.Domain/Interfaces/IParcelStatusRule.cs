@@ -1,9 +1,10 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
+using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.Interfaces;
 
 public interface IParcelStatusRule
 {
-    bool ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint, out EParcelStatus newStatus);
+    RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint); //todo pattern matching for rules (switch)
 }

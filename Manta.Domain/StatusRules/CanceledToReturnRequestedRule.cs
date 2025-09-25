@@ -1,19 +1,21 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
+using Manta.Domain.Exceptions;
 using Manta.Domain.Interfaces;
+using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.StatusRules;
 
 public class CanceledToReturnRequestedRule : IParcelStatusRule
 {
-    public bool ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint, out EParcelStatus newStatus)
+    public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
+        if (parcel.CurrentStatus.Status == EParcelStatus.Delivered)
+            return RuleResult.Failed("PAD", "Parcel is already delivered");
         if (parcel.CurrentStatus.Status == EParcelStatus.ShipmentCancelled)
         {
-            newStatus = EParcelStatus.ReturnRequested;
-            return true;
+            return RuleResult.Ok(EParcelStatus.ReturnRequested);
         }
-        newStatus = parcel.CurrentStatus.Status;
-        return false;
+        return RuleResult.Failed("PAD", "Parcel is not in the right status"); //todo
     }
 }

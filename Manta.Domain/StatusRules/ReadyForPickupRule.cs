@@ -1,19 +1,18 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Interfaces;
+using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.StatusRules;
 
 public class ReadyForPickupRule : IParcelStatusRule
 {
-    public bool ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint, out EParcelStatus newStatus)
+    public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
         if (parcel.DeliveryPointId == deliveryPoint.Id)
         {
-            newStatus = EParcelStatus.ReadyForPickup;
-            return true;
+            return RuleResult.Ok(EParcelStatus.ReadyForPickup);
         }
-        newStatus = parcel.CurrentStatus.Status;
-        return false;
+        return RuleResult.Failed("U", "Unknown");
     }
 }

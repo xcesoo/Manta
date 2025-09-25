@@ -20,7 +20,7 @@ public class ParcelDeliveryService
         {
             DomainEvents.Raise(new ParcelDeliveredEvent(parcel, deliveryPoint, changeBy));
         }
-        else throw new ArgumentException("Failed to deliver the parcel", nameof(parcel));
+        else throw new ArgumentException($"Failed to deliver the parcel {nameof(parcel)}");
     }
 
     public void AcceptedAtDeliveryPoint(DeliveryPoint deliveryPoint, Parcel parcel, User changedBy)

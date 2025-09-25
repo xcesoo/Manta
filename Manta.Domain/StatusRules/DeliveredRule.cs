@@ -1,23 +1,22 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Interfaces;
+using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.StatusRules;
 
 public class DeliveredRule : IParcelStatusRule
 {
-    public bool ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint, out EParcelStatus newStatus)
+    public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
         if (parcel.CurrentLocationDeliveryPointId != deliveryPoint.Id)
-            throw new ArgumentException("Parcel does not exist in this delivery point", nameof(parcel));
+            return RuleResult.Failed("PAD", "Parcel is not in the right location to be delivered");
             
         if (parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup && parcel.DeliveryPointId == deliveryPoint.Id)
         {
             //todo check paid and other
-            newStatus = EParcelStatus.Delivered;
-            return true; 
+            return RuleResult.Ok(EParcelStatus.Delivered);
         }
-        newStatus = parcel.CurrentStatus.Status;
-        return false;
+        return RuleResult.Failed("PAD", "Parcel is not in the right status");
     }
 }
