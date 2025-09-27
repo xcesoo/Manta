@@ -10,13 +10,40 @@ public class DeliveredRule : IParcelStatusRule
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
         if (parcel.CurrentLocationDeliveryPointId != deliveryPoint.Id)
-            return RuleResult.Failed("PAD", "Parcel is not in the right location to be delivered");
-            
-        if (parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup && parcel.DeliveryPointId == deliveryPoint.Id)
+            return RuleResult.Failed(
+                ERuleResultError.LocationMismatch, 
+                "Parcel is not currently located at this delivery point.");
+        if (!parcel.Paid)
+            return RuleResult.Failed(
+                ERuleResultError.PaymentRequired,
+                "Cannot deliver a parcel: amount is still due.");
+        
+        return parcel.CurrentStatus.Status switch
         {
-            //todo check paid and other
-            return RuleResult.Ok(EParcelStatus.Delivered);
-        }
-        return RuleResult.Failed("PAD", "Parcel is not in the right status");
+            EParcelStatus.ReadyForPickup => RuleResult.Ok(EParcelStatus.Delivered),
+            
+            EParcelStatus.Delivered or EParcelStatus.PartiallyReceived =>
+                RuleResult.Failed(
+                    ERuleResultError.ParcelAlreadyDelivered, 
+                    "Parcel has already been delivered or partially received."),
+            
+            EParcelStatus.ShipmentCancelled =>
+                RuleResult.Failed(
+                    ERuleResultError.ParcelWrongStatus,
+                    "Parcel has been canceled."),
+            
+            EParcelStatus.ReturnRequested or 
+                EParcelStatus.ReturnProcessed or
+                EParcelStatus.ReturnedToContainer or
+                EParcelStatus.ReturnGivenToCourier or
+                EParcelStatus.Returned =>
+                RuleResult.Failed(
+                    ERuleResultError.ParcelWrongStatus,
+                    "Parcel is currently involved in a return process"),
+            
+            _ => RuleResult.Failed(
+                ERuleResultError.Unknown, 
+                "Cannot deliver a parcel.")
+        };
     }
 }

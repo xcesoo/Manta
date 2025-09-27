@@ -7,8 +7,8 @@ public record ParcelCreationOptions (
     int DeliveryPointId,
     decimal AmountDue,
     double Weight,
-    Name? RecipientName,
-    PhoneNumber? RecipientPhoneNumber,
-    Email? RecipientEmail,
-    User? CreatedBy
+    Name RecipientName,
+    PhoneNumber RecipientPhoneNumber,
+    Email RecipientEmail,
+    User CreatedBy
 );

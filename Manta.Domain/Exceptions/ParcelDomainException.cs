@@ -9,13 +9,13 @@ public class ParcelDomainException : Exception
     public int ParcelId { get; }
     public int? DeliveryPointId { get; }
     public string CurrentStatus { get; }
-    public string ErrorCode { get; }
+    public ERuleResultError ErrorCode { get; }
 
     public ParcelDomainException(Parcel parcel, DeliveryPoint deliveryPoint, RuleResult result) : base(result.Message)
     {
         ParcelId = parcel.Id;
         DeliveryPointId = deliveryPoint?.Id;
         CurrentStatus = parcel.CurrentStatus.Status.ToString();
-        ErrorCode = result.Code ?? "UNKNOWN";
+        ErrorCode = result.Code ?? ERuleResultError.Unknown;
     }
 }

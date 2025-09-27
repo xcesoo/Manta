@@ -13,6 +13,6 @@ public class ReadyForPickupRule : IParcelStatusRule
         {
             return RuleResult.Ok(EParcelStatus.ReadyForPickup);
         }
-        return RuleResult.Failed("U", "Unknown");
+        return RuleResult.Failed(ERuleResultError.Unknown, "Unknown");
     }
 }

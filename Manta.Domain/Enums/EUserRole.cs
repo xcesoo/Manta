@@ -1,6 +1,6 @@
 namespace Manta.Domain.Enums;
 
-public enum UserRole
+public enum EUserRole
 {
     Cashier,
     Admin,

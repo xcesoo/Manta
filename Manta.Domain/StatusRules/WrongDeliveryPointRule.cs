@@ -14,6 +14,6 @@ public class WrongDeliveryPointRule : IParcelStatusRule
         {
             return RuleResult.Ok(EParcelStatus.WrongLocation);
         }
-        return RuleResult.Failed("U", "Unknown");
+        return RuleResult.Failed(ERuleResultError.Unknown, "Unknown");
     }
 }

@@ -7,7 +7,7 @@ public abstract class User
     public int Id { get; protected set; }
     public string Email { get; protected set; }
     public string FullName { get; protected set; }
-    public abstract UserRole Role { get; }
+    public abstract EUserRole Role { get; }
 
     protected User(int id, string fullName, string email)
     {
@@ -23,7 +23,7 @@ public sealed class Admin : User
 {
     public Admin(int id, string fullname, string email) 
         : base(id, fullname, email){}
-    public override UserRole Role => UserRole.Admin;
+    public override EUserRole Role => EUserRole.Admin;
 }
 
 public sealed class Cashier : User
@@ -35,12 +35,12 @@ public sealed class Cashier : User
     {
         DeliveryPoint = deliveryPoint;
     }
-    public override UserRole Role => UserRole.Cashier;
+    public override EUserRole Role => EUserRole.Cashier;
 }
 
 public sealed class SystemUser : User
 {
     public static readonly SystemUser Instance = new SystemUser();
     private SystemUser() : base(0, "system", "system@manta.com"){}
-    public override UserRole Role => UserRole.System;
+    public override EUserRole Role => EUserRole.System;
 }

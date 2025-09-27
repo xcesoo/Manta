@@ -25,7 +25,7 @@ public class ParcelStatusService
                 return true;
             }
         }
-        throw new ParcelDomainException(parcel, deliveryPoint, ruleResult ?? RuleResult.Failed("U", "Unknown"));
+        throw new ParcelDomainException(parcel, deliveryPoint, ruleResult ?? RuleResult.Failed(ERuleResultError.Unknown, "Unknown"));
     }
 
     public bool ApplyRule<T>(Parcel parcel, DeliveryPoint deliveryPoint, User changedBy) 

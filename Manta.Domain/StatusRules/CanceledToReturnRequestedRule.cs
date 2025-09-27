@@ -11,11 +11,11 @@ public class CanceledToReturnRequestedRule : IParcelStatusRule
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
         if (parcel.CurrentStatus.Status == EParcelStatus.Delivered)
-            return RuleResult.Failed("PAD", "Parcel is already delivered");
+            return RuleResult.Failed(ERuleResultError.ParcelAlreadyDelivered, "Parcel is already delivered");
         if (parcel.CurrentStatus.Status == EParcelStatus.ShipmentCancelled)
         {
             return RuleResult.Ok(EParcelStatus.ReturnRequested);
         }
-        return RuleResult.Failed("PAD", "Parcel is not in the right status"); //todo
+        return RuleResult.Failed(ERuleResultError.ParcelWrongStatus, "Parcel is not in the right status"); //todo
     }
 }

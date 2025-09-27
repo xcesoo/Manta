@@ -10,9 +10,9 @@ public class ReaddressRequestedRule : IParcelStatusRule
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
         if (parcel.CurrentLocationDeliveryPointId == deliveryPoint.Id)
-            return RuleResult.Failed("PARL", "Parcel is already in the right location");
+            return RuleResult.Failed(ERuleResultError.ParcelAlreadyRightLocation, "Parcel is already in the right location");
         if (parcel.CurrentStatus.Status == EParcelStatus.Delivered)
-            return RuleResult.Failed("PAD", "Parcel is already delivered");
+            return RuleResult.Failed(ERuleResultError.ParcelAlreadyDelivered, "Parcel is already delivered");
         
         return RuleResult.Ok(EParcelStatus.ReaddressRequested);
     }
