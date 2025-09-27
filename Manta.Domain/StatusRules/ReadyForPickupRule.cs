@@ -9,10 +9,16 @@ public class ReadyForPickupRule : IParcelStatusRule
 {
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
-        if (parcel.DeliveryPointId == deliveryPoint.Id)
+        return parcel.CurrentStatus.Status switch
         {
-            return RuleResult.Ok(EParcelStatus.ReadyForPickup);
-        }
-        return RuleResult.Failed(ERuleResultError.Unknown, "Unknown");
+            EParcelStatus.Processing or
+                EParcelStatus.InTransit when
+                parcel.DeliveryPointId == deliveryPoint.Id =>
+                RuleResult.Ok(EParcelStatus.ReadyForPickup),
+            
+            _ => RuleResult.Failed(
+                ERuleResultError.Unknown, 
+                "Failed to pick up a parcel")
+        };
     }
 }

@@ -8,6 +8,7 @@ public class Parcel
     public int Id {get; private set;}
     public int DeliveryPointId {get; private set;}
     public int? CurrentLocationDeliveryPointId { get; private set; }
+    public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId;
     public decimal AmountDue { get; private set; }
     public bool Paid => AmountDue == 0;
     public double Weight { get; private set; }
@@ -53,8 +54,8 @@ public class Parcel
     }
 
 
-    internal void ChangeStatus(EParcelStatus newStatus, User? changedBy) =>
-        _history.Add(new ParcelStatus(newStatus, changedBy ?? SystemUser.Instance));
+    internal void ChangeStatus(EParcelStatus newStatus, User changedBy) =>
+        _history.Add(new ParcelStatus(newStatus, changedBy));
     
     internal void ChangeRecipientName(Name newName) => RecipientName = newName;
     internal void ChangeRecipientPhoneNumber(PhoneNumber newPhoneNumber) => RecipientPhoneNumber = newPhoneNumber;

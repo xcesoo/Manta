@@ -5,7 +5,7 @@ namespace Manta.Domain.ValueObjects;
 public record RuleResult(
     bool Success, 
     EParcelStatus? NewStatus, 
-    ERuleResultError? Code = null, // todo change Code to enum
+    ERuleResultError? Code = null, 
     string? Message = null) 
 {
     public static RuleResult Ok(EParcelStatus newStatus) => 

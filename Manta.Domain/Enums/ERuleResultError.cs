@@ -3,11 +3,8 @@ namespace Manta.Domain.Enums;
 public enum ERuleResultError
 {
     Unknown,
-    ParcelAlreadyDelivered,
-    ParcelWrongStatus,
+    WrongParcelStatus,
     LocationMismatch,
-    ParcelAlreadyRightLocation,
-    StorageTimeExpired,
     PaymentRequired,
     
 }

@@ -10,10 +10,16 @@ public class WrongDeliveryPointRule : IParcelStatusRule
 {
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
-        if (parcel.DeliveryPointId != deliveryPoint.Id)
+        return parcel.CurrentStatus.Status switch
         {
-            return RuleResult.Ok(EParcelStatus.WrongLocation);
-        }
-        return RuleResult.Failed(ERuleResultError.Unknown, "Unknown");
+            EParcelStatus.Processing or
+                EParcelStatus.InTransit when 
+                parcel.DeliveryPointId != deliveryPoint.Id =>
+                RuleResult.Ok(EParcelStatus.WrongLocation),
+            
+            _ => RuleResult.Failed(
+                ERuleResultError.LocationMismatch, 
+                "Parcel in right location")
+        };
     }
 }

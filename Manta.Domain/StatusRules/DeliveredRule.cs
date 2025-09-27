@@ -9,41 +9,21 @@ public class DeliveredRule : IParcelStatusRule
 {
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
-        if (parcel.CurrentLocationDeliveryPointId != deliveryPoint.Id)
-            return RuleResult.Failed(
-                ERuleResultError.LocationMismatch, 
-                "Parcel is not currently located at this delivery point.");
-        if (!parcel.Paid)
-            return RuleResult.Failed(
-                ERuleResultError.PaymentRequired,
-                "Cannot deliver a parcel: amount is still due.");
-        
         return parcel.CurrentStatus.Status switch
         {
-            EParcelStatus.ReadyForPickup => RuleResult.Ok(EParcelStatus.Delivered),
+            EParcelStatus.ReadyForPickup when parcel is { Paid: true, InRightLocation: true } => 
+                RuleResult.Ok(EParcelStatus.Delivered),
             
-            EParcelStatus.Delivered or EParcelStatus.PartiallyReceived =>
-                RuleResult.Failed(
-                    ERuleResultError.ParcelAlreadyDelivered, 
-                    "Parcel has already been delivered or partially received."),
+            EParcelStatus.ReadyForPickup when parcel is {InRightLocation: false} =>
+                RuleResult.Failed(ERuleResultError.LocationMismatch, "Parcel is not currently located at this delivery point."),
             
-            EParcelStatus.ShipmentCancelled =>
-                RuleResult.Failed(
-                    ERuleResultError.ParcelWrongStatus,
-                    "Parcel has been canceled."),
+            EParcelStatus.ReadyForPickup when parcel is {Paid: false} =>
+                RuleResult.Failed(ERuleResultError.PaymentRequired, "Cannot deliver a parcel: amount is still due."),
             
-            EParcelStatus.ReturnRequested or 
-                EParcelStatus.ReturnProcessed or
-                EParcelStatus.ReturnedToContainer or
-                EParcelStatus.ReturnGivenToCourier or
-                EParcelStatus.Returned =>
-                RuleResult.Failed(
-                    ERuleResultError.ParcelWrongStatus,
-                    "Parcel is currently involved in a return process"),
             
             _ => RuleResult.Failed(
-                ERuleResultError.Unknown, 
-                "Cannot deliver a parcel.")
+                ERuleResultError.WrongParcelStatus, 
+                $"Cannot deliver a parcel. Parcel -> {parcel.CurrentStatus.Status}")
         };
     }
 }

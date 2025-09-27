@@ -21,7 +21,7 @@ public class ParcelStatusService
             ruleResult = rule.ShouldApply(parcel, deliveryPoint);
             if (ruleResult.IsOk)
             {
-                parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy ?? SystemUser.Instance);
+                parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy);
                 return true;
             }
         }
@@ -42,7 +42,7 @@ public class ParcelStatusService
         if (ruleResult.IsFailed)
             throw new ParcelDomainException(parcel, deliveryPoint, ruleResult);
         
-        parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy ?? SystemUser.Instance);
+        parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy);
         return true;
     }
 }

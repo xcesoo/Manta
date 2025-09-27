@@ -1,7 +1,6 @@
 using Manta.Domain.Entities;
-using Manta.Domain.Services;
 
-namespace Manta.Application.Services;
+namespace Manta.Application.Factories;
 
 public static class ParcelFactory
 {

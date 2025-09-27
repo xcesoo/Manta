@@ -10,9 +10,7 @@ public enum EParcelStatus
     WrongLocation,               // Невірна локація
     StorageExpired,              // Вийшов термін зберігання
     ReturnRequested,             // Отримано запит на повернення
-    ReturnProcessed,             // Оформлене повернення
-    ReturnedToContainer,         // Повернення помістили в контейнер
-    ReturnGivenToCourier,        // Повернення передано курʼєру
+    InReturnTransit,             // Повернення прямує назад
     PartiallyReceived,           // Частково отримано
     Delivered,                   // Видано
     Returned                     // Повернуто

@@ -9,11 +9,27 @@ public class ReaddressRequestedRule : IParcelStatusRule
 {
     public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
     {
-        if (parcel.CurrentLocationDeliveryPointId == deliveryPoint.Id)
-            return RuleResult.Failed(ERuleResultError.ParcelAlreadyRightLocation, "Parcel is already in the right location");
-        if (parcel.CurrentStatus.Status == EParcelStatus.Delivered)
-            return RuleResult.Failed(ERuleResultError.ParcelAlreadyDelivered, "Parcel is already delivered");
-        
-        return RuleResult.Ok(EParcelStatus.ReaddressRequested);
+        return parcel.CurrentStatus.Status switch
+        {
+            _ when parcel.CurrentLocationDeliveryPointId == deliveryPoint.Id => 
+                RuleResult.Failed(
+                ERuleResultError.LocationMismatch, 
+                $"Cannot to readdress a parcel to the same delivery point"),
+            
+            EParcelStatus.Delivered or 
+                EParcelStatus.PartiallyReceived => 
+                RuleResult.Failed(
+                    ERuleResultError.WrongParcelStatus, 
+                    "Cannot to readdress a delivered parcel"),
+            
+            EParcelStatus.ReturnRequested or 
+                EParcelStatus.InReturnTransit or 
+                EParcelStatus.Returned =>
+                RuleResult.Failed(
+                    ERuleResultError.WrongParcelStatus, 
+                    "Parcel is currently involved in a return process"),
+            
+            _ => RuleResult.Ok(EParcelStatus.ReaddressRequested)
+        };
     }
 }

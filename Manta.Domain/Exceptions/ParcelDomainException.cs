@@ -11,7 +11,8 @@ public class ParcelDomainException : Exception
     public string CurrentStatus { get; }
     public ERuleResultError ErrorCode { get; }
 
-    public ParcelDomainException(Parcel parcel, DeliveryPoint deliveryPoint, RuleResult result) : base(result.Message)
+    public ParcelDomainException(Parcel parcel, DeliveryPoint deliveryPoint, RuleResult result) : 
+        base($"CODE {result.Code}: {result.Message}")
     {
         ParcelId = parcel.Id;
         DeliveryPointId = deliveryPoint?.Id;

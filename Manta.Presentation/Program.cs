@@ -1,4 +1,5 @@
 ﻿using Manta.Application.Events;
+using Manta.Application.Factories;
 using Manta.Application.Services;
 using Manta.Domain.Services;
 using Manta.Domain.Entities;
