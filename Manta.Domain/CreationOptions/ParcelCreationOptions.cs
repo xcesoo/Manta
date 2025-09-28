@@ -1,6 +1,7 @@
+using Manta.Domain.Entities;
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Domain.Entities;
+namespace Manta.Domain.CreationOptions;
 
 public record ParcelCreationOptions (
     int Id,

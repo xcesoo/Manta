@@ -4,5 +4,6 @@ public enum EUserRole
 {
     Cashier,
     Admin,
+    Driver,
     System
 }

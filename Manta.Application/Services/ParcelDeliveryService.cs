@@ -42,11 +42,20 @@ public class ParcelDeliveryService
         }
         else throw new ArgumentException("Failed to readdress the parcel", nameof(parcel));
     }
-    
-    
+
+    public void LoadInDeliveryVehicle(DeliveryVehicle deliveryVehicle, Parcel parcel, User changeBy)
+    {
+        deliveryVehicle.LoadParcel(parcel.Id, parcel.Weight);
+        //todo
+    }
+
+    public void UnloadFromDeliveryVehicle(DeliveryVehicle deliveryVehicle, Parcel parcel, User changeBy)
+    {
+        deliveryVehicle.UnloadParcel(parcel.Id, parcel.Weight);
+    }
     public void CancelParcel(Parcel parcel, User cancelledBy)
     {
         parcel.Cancel(cancelledBy);
-        //TODO raise event
+        //TODO raise event + rule
     }
 }

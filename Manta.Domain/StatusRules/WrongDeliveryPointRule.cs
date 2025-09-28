@@ -17,9 +17,15 @@ public class WrongDeliveryPointRule : IParcelStatusRule
                 parcel.DeliveryPointId != deliveryPoint.Id =>
                 RuleResult.Ok(EParcelStatus.WrongLocation),
             
-            _ => RuleResult.Failed(
+            _ when parcel.DeliveryPointId == deliveryPoint.Id =>
+                RuleResult.Failed(
                 ERuleResultError.LocationMismatch, 
-                "Parcel in right location")
+                "Parcel in right location"),
+            
+            _ =>
+                RuleResult.Failed(
+                    ERuleResultError.WrongParcelStatus, 
+                    $"Cannot apply Wrong DeliveryPoint. Parcel -> {parcel.CurrentStatus.Status}")
         };
     }
 }
