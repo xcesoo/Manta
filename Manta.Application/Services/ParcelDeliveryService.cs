@@ -2,6 +2,8 @@ using Manta.Domain.Entities;
 using Manta.Domain.Events;
 using Manta.Domain.Services;
 using Manta.Domain.StatusRules;
+using Manta.Domain.StatusRules.Implementations;
+using Manta.Domain.StatusRules.Policies;
 using Manta.Infrastructure.EventDispatcher;
 
 namespace Manta.Application.Services;
@@ -14,9 +16,10 @@ public class ParcelDeliveryService
         _statusService = statusService;
     }
 
-    public void DeliverParcel(DeliveryPoint deliveryPoint, Parcel parcel, User changeBy)
+    public void DeliverParcel(Parcel parcel, User changeBy, DeliveryPoint deliveryPoint)
     {
-        if (_statusService.ApplyRule<DeliveredRule>(parcel, deliveryPoint, changeBy))
+        var context = RuleContext.ForDelivery(parcel, changeBy, deliveryPoint);
+        if (_statusService.ApplyRule<DeliveredRule>(context))
         {
             DomainEvents.Raise(new ParcelDeliveredEvent(parcel, deliveryPoint, changeBy));
         }
@@ -25,7 +28,8 @@ public class ParcelDeliveryService
 
     public void AcceptedAtDeliveryPoint(DeliveryPoint deliveryPoint, Parcel parcel, User changedBy)
     {
-        if (_statusService.UpdateStatus(parcel, deliveryPoint, changedBy))
+        var context = RuleContext.ForDelivery(parcel, changedBy, deliveryPoint);
+        if (_statusService.ApplyRule<AcceptAtDeliveryPointPolicy>(context))
         {
             parcel.MoveToLocation(deliveryPoint.Id);
             DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
@@ -35,7 +39,8 @@ public class ParcelDeliveryService
 
     public void ReaddressParcel(DeliveryPoint deliveryPoint, Parcel parcel, User changedBy)
     {
-        if (_statusService.ApplyRule<ReaddressRequestedRule>(parcel, deliveryPoint, changedBy))
+        var context = RuleContext.ForDelivery(parcel, changedBy, deliveryPoint);
+        if (_statusService.ApplyRule<ReaddressRequestedRule>(context))
         {
             parcel.Readdress(deliveryPoint.Id);
             //TODO raise event

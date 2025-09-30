@@ -1,8 +1,8 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Exceptions;
-using Manta.Domain.Interfaces;
 using Manta.Domain.StatusRules;
+using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.Services;
@@ -10,39 +10,22 @@ namespace Manta.Domain.Services;
 public class ParcelStatusService
 {
     private readonly List<IParcelStatusRule> _rules = RuleLoader.LoadAllRules;
-
-    public bool UpdateStatus(Parcel parcel, DeliveryPoint deliveryPoint, User changedBy)
+    
+    public bool ApplyRule<TRule>(RuleContext context) 
+        where TRule : IParcelStatusRule
     {
-        if (parcel == null) throw new ArgumentNullException(nameof(parcel));
-        if (deliveryPoint == null) throw new ArgumentNullException(nameof(deliveryPoint));
-        RuleResult? ruleResult = null;
-        foreach (var rule in _rules)
-        {
-            ruleResult = rule.ShouldApply(parcel, deliveryPoint);
-            if (ruleResult.IsOk)
-            {
-                parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy);
-                return true;
-            }
-        }
-        throw new ParcelDomainException(parcel, deliveryPoint, ruleResult ?? RuleResult.Failed(ERuleResultError.Unknown, "Unknown"));
-    }
-
-    public bool ApplyRule<T>(Parcel parcel, DeliveryPoint deliveryPoint, User changedBy) 
-        where T : IParcelStatusRule
-    {
-        var rule = _rules.OfType<T>().FirstOrDefault();
+        var rule = _rules.OfType<TRule>().FirstOrDefault()
+            ?? throw new InvalidOperationException($"Rule {typeof(TRule).Name} not registered");
         
-        if (rule == null) throw new Exception($"Rule {typeof(T).Name} does not exist");
-        if (parcel == null) throw new ArgumentNullException(nameof(parcel));
-        if (deliveryPoint == null) throw new ArgumentNullException(nameof(deliveryPoint));
+        if(context.Parcel is null || context.User is null)
+            throw new ArgumentException("RuleContext must contain Parcel and ChangedBy.");
         
-        var ruleResult = rule.ShouldApply(parcel, deliveryPoint);
+        var result = rule.ShouldApply(context);
         
-        if (ruleResult.IsFailed)
-            throw new ParcelDomainException(parcel, deliveryPoint, ruleResult);
+        if (result.IsFailed)
+            throw new ParcelDomainException(context.Parcel, context.DeliveryPoint, result);
         
-        parcel.ChangeStatus(ruleResult.NewStatus.Value, changedBy);
+        context.Parcel.ChangeStatus(result.NewStatus.Value, context.User);
         return true;
     }
 }

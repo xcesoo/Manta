@@ -10,7 +10,7 @@ public class ParcelDomainException : Exception
     public int? DeliveryPointId { get; }
     public string CurrentStatus { get; }
     public ERuleResultError ErrorCode { get; }
-
+//todo видалити прив'язку до deliverypoint та parcel
     public ParcelDomainException(Parcel parcel, DeliveryPoint deliveryPoint, RuleResult result) : 
         base($"CODE {result.Code}: {result.Message}")
     {

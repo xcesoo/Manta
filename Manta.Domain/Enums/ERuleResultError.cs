@@ -6,5 +6,5 @@ public enum ERuleResultError
     WrongParcelStatus,
     LocationMismatch,
     PaymentRequired,
-    
+    ArguementInvalid,
 }

@@ -36,7 +36,7 @@ public static class Manta
         var parcel2 = ParcelFactory.Create(new ParcelCreationOptions(
             Id: 2,
             DeliveryPointId: 2,
-            AmountDue: 1000m,
+            AmountDue: 0m,
             RecipientName: "John",
             RecipientPhoneNumber: "+380987654321",
             RecipientEmail: "popa@gmail.com",
@@ -45,9 +45,11 @@ public static class Manta
         
         try
         {
-            deliveryService.LoadInDeliveryVehicle(dv, parcel, SystemUser.Instance);
-            deliveryService.UnloadFromDeliveryVehicle(dv, parcel, SystemUser.Instance);
-            deliveryService.LoadInDeliveryVehicle(dv, parcel2, SystemUser.Instance);
+            deliveryService.AcceptedAtDeliveryPoint(dp2, parcel2, SystemUser.Instance);
+            deliveryService.AcceptedAtDeliveryPoint(dp2, parcel, SystemUser.Instance);
+            deliveryService.DeliverParcel(parcel2, SystemUser.Instance, dp2);
+            // deliveryService.DeliverParcel(parcel, SystemUser.Instance, dp2);
+            deliveryService.AcceptedAtDeliveryPoint(dp, parcel, SystemUser.Instance);;
             // deliveryService.CancelParcel(parcel, SystemUser.Instance);
             // deliveryService.AcceptedAtDeliveryPoint(dp, parcel, SystemUser.Instance);
             // deliveryService.AcceptedAtDeliveryPoint(dp2, parcel2, SystemUser.Instance);

@@ -1,4 +1,6 @@
-using Manta.Domain.Interfaces;
+using Manta.Domain.StatusRules.Implementations;
+using Manta.Domain.StatusRules.Interfaces;
+using Manta.Domain.StatusRules.Policies;
 
 namespace Manta.Domain.StatusRules;
 
@@ -10,7 +12,8 @@ public static class RuleLoader
         new WrongDeliveryPointRule(),
         new ReadyForPickupRule(),
         new DeliveredRule(),
-        new ReaddressRequestedRule()
+        new ReaddressRequestedRule(),
+        new AcceptAtDeliveryPointPolicy()
     };
     public static List<IParcelStatusRule> LoadAllRules => _rules;
 }

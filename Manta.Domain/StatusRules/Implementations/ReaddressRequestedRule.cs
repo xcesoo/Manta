@@ -1,17 +1,20 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
-using Manta.Domain.Interfaces;
+using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.StatusRules;
 
 public class ReaddressRequestedRule : IParcelStatusRule
 {
-    public RuleResult ShouldApply(Parcel parcel, DeliveryPoint deliveryPoint)
+    public RuleResult ShouldApply(RuleContext context)
     {
-        return parcel.CurrentStatus.Status switch
+        if (context.DeliveryPoint is null)
+            return RuleResult.Failed(ERuleResultError.ArguementInvalid, "DeliveryPoint is null");
+        
+        return context.Parcel.CurrentStatus.Status switch
         {
-            _ when parcel.CurrentLocationDeliveryPointId == deliveryPoint.Id => 
+            _ when context.Parcel.CurrentLocationDeliveryPointId == context.DeliveryPoint.Id => 
                 RuleResult.Failed(
                 ERuleResultError.LocationMismatch, 
                 $"Cannot to readdress a parcel to the same delivery point"),
