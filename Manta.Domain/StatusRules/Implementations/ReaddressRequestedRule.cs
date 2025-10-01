@@ -1,38 +1,45 @@
-using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Domain.StatusRules;
+namespace Manta.Domain.StatusRules.Implementations;
 
-public class ReaddressRequestedRule : IParcelStatusRule
+public sealed class ReaddressRequestedRule : IParcelStatusRule
 {
-    public RuleResult ShouldApply(RuleContext context)
+    public RuleResult ShouldApply(RuleContext context) => context switch
     {
-        if (context.DeliveryPoint is null)
-            return RuleResult.Failed(ERuleResultError.ArguementInvalid, "DeliveryPoint is null");
-        
-        return context.Parcel.CurrentStatus.Status switch
-        {
-            _ when context.Parcel.CurrentLocationDeliveryPointId == context.DeliveryPoint.Id => 
-                RuleResult.Failed(
-                ERuleResultError.LocationMismatch, 
-                $"Cannot to readdress a parcel to the same delivery point"),
-            
-            EParcelStatus.Delivered or 
-                EParcelStatus.PartiallyReceived => 
-                RuleResult.Failed(
-                    ERuleResultError.WrongParcelStatus, 
-                    "Cannot to readdress a delivered parcel"),
-            
-            EParcelStatus.ReturnRequested or 
+        { Parcel: { CurrentStatus: { Status: 
+                EParcelStatus.Delivered or 
+                EParcelStatus.PartiallyReceived } } }
+            => RuleResult.Failed(
+                ERuleResultError.WrongParcelStatus, 
+                "Cannot readdress a delivered/partially received parcel."),
+
+        { Parcel: { CurrentStatus: { Status: 
+                EParcelStatus.ReturnRequested or 
                 EParcelStatus.InReturnTransit or 
-                EParcelStatus.Returned =>
-                RuleResult.Failed(
-                    ERuleResultError.WrongParcelStatus, 
-                    "Parcel is currently involved in a return process"),
-            
-            _ => RuleResult.Ok(EParcelStatus.ReaddressRequested)
-        };
-    }
+                EParcelStatus.Returned or 
+                EParcelStatus.ShipmentCancelled } } }
+            => RuleResult.Failed(
+                ERuleResultError.WrongParcelStatus, 
+                "Parcel is involved in a return process."),
+        
+        { Parcel: { CurrentStatus: { Status: EParcelStatus.WrongLocation } }, DeliveryPoint: null }
+            => RuleResult.Ok(EParcelStatus.ReaddressRequested),
+        
+        { DeliveryPoint: null }
+            => RuleResult.Failed(
+                ERuleResultError.ArgumentInvalid, 
+                "Target delivery point is required."),
+        
+        { Parcel: { DeliveryPointId: var dest }, DeliveryPoint: { Id: var id } } when dest == id
+            => RuleResult.Failed(
+                ERuleResultError.LocationMismatch, 
+                "Target equals parcel destination."),
+        
+        { Parcel: { CurrentLocationDeliveryPointId: var cur }, DeliveryPoint: { Id: var id } } when cur == id
+            => RuleResult.Failed(ERuleResultError.LocationMismatch, "Target equals current location."),
+        
+        _ => RuleResult.Ok(EParcelStatus.ReaddressRequested)
+    };
 }

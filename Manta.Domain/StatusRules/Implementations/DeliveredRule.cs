@@ -4,32 +4,30 @@ using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.StatusRules.Implementations;
 
-public class DeliveredRule : IParcelStatusRule
+public sealed class DeliveredRule : IParcelStatusRule
 {
-    public RuleResult ShouldApply(RuleContext context)
-    {
-        return context.Parcel.CurrentStatus.Status switch
+    public RuleResult ShouldApply(RuleContext context) => context switch //todo check context as switch
         {
-            EParcelStatus.ReadyForPickup when context.Parcel is
-                {
+            {Parcel: {CurrentStatus: { Status: 
+                        EParcelStatus.ReadyForPickup}, 
                     Paid: true, 
-                    InRightLocation: true
-                } => 
+                    InRightLocation:true}} => 
                 RuleResult.Ok(EParcelStatus.Delivered),
             
-            EParcelStatus.ReadyForPickup when context.Parcel is
-                {
-                    InRightLocation: false
-                } =>
+            {Parcel:{CurrentStatus:{Status:
+                EParcelStatus.ReadyForPickup}, 
+                InRightLocation: false}}=>
                 RuleResult.Failed(ERuleResultError.LocationMismatch, "Parcel is not currently located at right delivery point."),
             
-            EParcelStatus.ReadyForPickup when context.Parcel is {Paid: false} =>
+            {Parcel: {CurrentStatus: {Status:
+                        EParcelStatus.ReadyForPickup}, 
+                    Paid: false}} =>
                 RuleResult.Failed(ERuleResultError.PaymentRequired, "Cannot deliver a parcel: amount is still due."),
-            
             
             _ => RuleResult.Failed(
                 ERuleResultError.WrongParcelStatus, 
                 $"Cannot deliver a parcel. Parcel -> {context.Parcel.CurrentStatus.Status}")
+
         };
-    }
+    
 }

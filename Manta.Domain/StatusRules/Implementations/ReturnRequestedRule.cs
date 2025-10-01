@@ -1,23 +1,19 @@
-using Manta.Domain.Entities;
 using Manta.Domain.Enums;
-using Manta.Domain.Exceptions;
 using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Domain.StatusRules;
+namespace Manta.Domain.StatusRules.Implementations;
 
-public class CanceledToReturnRequestedRule : IParcelStatusRule
+public sealed class ReturnRequestedRule : IParcelStatusRule
 {
-    public RuleResult ShouldApply(RuleContext context)
-    {
-        return context.Parcel.CurrentStatus.Status switch
+    public RuleResult ShouldApply(RuleContext context) => context.Parcel.CurrentStatus.Status switch
         {
-            EParcelStatus.ShipmentCancelled =>
+            EParcelStatus.ShipmentCancelled or 
+                EParcelStatus.StorageExpired =>
                 RuleResult.Ok(EParcelStatus.ReturnRequested),
             
             _ => RuleResult.Failed(
                 ERuleResultError.WrongParcelStatus, 
                 $"Unable to return request. Parcel -> {context.Parcel.CurrentStatus.Status}")
         };
-    }
 }

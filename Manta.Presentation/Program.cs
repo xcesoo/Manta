@@ -45,23 +45,18 @@ public static class Manta
         
         try
         {
-            deliveryService.AcceptedAtDeliveryPoint(dp2, parcel2, SystemUser.Instance);
-            deliveryService.AcceptedAtDeliveryPoint(dp2, parcel, SystemUser.Instance);
-            deliveryService.DeliverParcel(parcel2, SystemUser.Instance, dp2);
-            // deliveryService.DeliverParcel(parcel, SystemUser.Instance, dp2);
-            deliveryService.AcceptedAtDeliveryPoint(dp, parcel, SystemUser.Instance);;
-            // deliveryService.CancelParcel(parcel, SystemUser.Instance);
+            deliveryService.AcceptedAtDeliveryPoint(dp, parcel, SystemUser.Instance);
             // deliveryService.AcceptedAtDeliveryPoint(dp, parcel, SystemUser.Instance);
-            // deliveryService.AcceptedAtDeliveryPoint(dp2, parcel2, SystemUser.Instance);
-            // deliveryService.ReaddressParcel(dp, parcel2, SystemUser.Instance);
-            // deliveryService.DeliverParcel(dp2, parcel2, SystemUser.Instance);
+            deliveryService.AcceptedAtDeliveryPoint(dp, parcel2, SystemUser.Instance);
+            // deliveryService.CancelParcel(parcel2, SystemUser.Instance);
+            deliveryService.ReaddressParcel(parcel2, SystemUser.Instance);
+            deliveryService.AcceptedAtDeliveryPoint(dp2, parcel2, SystemUser.Instance);
+            deliveryService.ReaddressParcel(dp2, parcel, SystemUser.Instance);
+            deliveryService.DeliverParcel(parcel2, SystemUser.Instance);
         }
-        catch (Exception e){ Console.WriteLine(e.Message);}
-        
-        // var parcel1 = ParcelFactory.Create(1, 1, SystemUser.Instance);
-        // var parcel2 = ParcelFactory.Create(2, 2, SystemUser.Instance);
-        // deliveryService.AcceptedAtDeliveryPoint(dp,parcel1,SystemUser.Instance);
-        // deliveryService.AcceptedAtDeliveryPoint(dp,parcel2,SystemUser.Instance);
-        // deliveryService.DeliverParcel(dp,parcel1,SystemUser.Instance);
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
