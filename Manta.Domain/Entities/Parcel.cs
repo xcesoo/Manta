@@ -9,6 +9,7 @@ public class Parcel
     public int Id {get; private set;}
     public int DeliveryPointId {get; private set;}
     public int? CurrentLocationDeliveryPointId { get; private set; }
+    public LicensePlate? CurrentVehicleId { get; private set; }
     public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId;
     public decimal AmountDue { get; private set; }
     public bool Paid => AmountDue == 0;
@@ -74,9 +75,6 @@ public class Parcel
 
     internal void Cancel(User cancelledBy)
     {
-        if(CurrentStatus.Status == EParcelStatus.Delivered)
-            throw new InvalidOperationException("Delivered parcel can't be cancelled");
-        
         ChangeStatus(EParcelStatus.ShipmentCancelled, cancelledBy);
     }
 }

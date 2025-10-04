@@ -76,8 +76,7 @@ public class ParcelDeliveryService
         var context = RuleContext.ForParcel(parcel, cancelledBy);
         if (_statusService.ApplyRule<ShipmentCancelledRule>(context))
         {
-            parcel.Cancel(cancelledBy);
-        }
         //TODO raise event + rule
+        }
     }
 }

@@ -1,6 +1,6 @@
 namespace Manta.Domain.ValueObjects;
 
-public class CarModel
+public sealed record CarModel
 {
     public string Brand { get; private set; }
     public string Model { get; private set; }

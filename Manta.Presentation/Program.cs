@@ -4,12 +4,14 @@ using Manta.Application.Services;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Services;
 using Manta.Domain.Entities;
+using Manta.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manta.Presentation;
 
 public static class Manta
 {
-    public static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         //todo create failed ParcelDeliveryService events
         ParcelStatusService statusService = new ParcelStatusService(); //todo move to Application layer + commands in Application layer

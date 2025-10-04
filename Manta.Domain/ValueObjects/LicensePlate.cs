@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace Manta.Domain.ValueObjects;
 
-public record LicensePlate
+public sealed record  LicensePlate
 {
-    string Value { get; }
+    public string Value { get; }
 
     private LicensePlate(string value)
     {

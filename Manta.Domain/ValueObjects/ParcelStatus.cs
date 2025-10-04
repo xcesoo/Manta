@@ -3,11 +3,11 @@ using Manta.Domain.Enums;
 
 namespace Manta.Domain.ValueObjects;
 
-public record ParcelStatus
+public sealed record  ParcelStatus
 {
     public EParcelStatus Status { get; }
     public DateTime ChangedAt { get; }
-    public User ChangedBy { get; }
+    public UserInfo ChangedBy { get; }
 
     public ParcelStatus(EParcelStatus status, User changedBy)
     {

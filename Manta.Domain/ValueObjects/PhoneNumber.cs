@@ -1,6 +1,6 @@
 namespace Manta.Domain.ValueObjects;
 
-public record PhoneNumber
+public sealed record  PhoneNumber
 {
     public string Value { get; }
 
