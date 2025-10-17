@@ -18,6 +18,11 @@ public class DeliveryPointRepository : IDeliveryPointRepository
         return await _context.DeliveryPoints
             .FirstOrDefaultAsync(dp => dp.Id == id, cancellationToken);
     }
+    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
+    {
+        var maxId = await _context.DeliveryPoints.MaxAsync(dp => (int?)dp.Id, cancellationToken) ?? 0;
+        return maxId + 1;
+    }   
 
     public async Task<IEnumerable<DeliveryPoint>> GetAllAsync(CancellationToken cancellationToken = default)
     {

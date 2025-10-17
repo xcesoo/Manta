@@ -2,16 +2,15 @@ namespace Manta.Domain.Enums;
 
 public enum EParcelStatus
 {
-    Processing,                  // Обробка
+    Processing,                  // Обробка✅
     ShipmentCancelled,           // Відправлення скасовано ✅
-    InTransit,                   // В дорозі 
+    InTransit,                   // В дорозі ✅
     ReaddressRequested,          // Оформлено переадресацію ✅
     ReadyForPickup,              // Готове до видачі ✅
     WrongLocation,               // Невірна локація ✅
     StorageExpired,              // Вийшов термін зберігання
     ReturnRequested,             // Отримано запит на повернення ✅
-    InReturnTransit,             // Повернення прямує назад
-    PartiallyReceived,           // Частково отримано
+    InReturnTransit,             // Повернення прямує назад✅
     Delivered,                   // Видано ✅
-    Returned                     // Повернуто
+    Returned                     // Повернуто✅
 }

@@ -44,7 +44,7 @@ public class Parcel
             throw new ArgumentOutOfRangeException(nameof(options.DeliveryPointId) + "DeliveryPointId can't be null");
         
         var parcel = new Parcel(
-            options.Id,
+            (int)options.Id!,
             options.DeliveryPointId,
             options.RecipientName,
             options.RecipientPhoneNumber,
@@ -59,6 +59,7 @@ public class Parcel
 
     internal void ChangeStatus(EParcelStatus newStatus, User changedBy) =>
         _history.Add(new ParcelStatus(newStatus, changedBy));
+    internal void Pay() => AmountDue = 0m;
     
     internal void ChangeRecipientName(Name newName) => RecipientName = newName;
     internal void ChangeRecipientPhoneNumber(PhoneNumber newPhoneNumber) => RecipientPhoneNumber = newPhoneNumber;
@@ -72,8 +73,9 @@ public class Parcel
     internal void ChangeWeight(double newWeight) => Weight = newWeight;
 
     internal void Readdress(int newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
-    internal void MoveToLocation(int? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
+    internal void  MoveToLocation(int? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
 
+    internal void ChangeDeliveryVehicle(LicensePlate? newVehicleId) => CurrentVehicleId = newVehicleId;
     internal void Cancel(User cancelledBy)
     {
         ChangeStatus(EParcelStatus.ShipmentCancelled, cancelledBy);

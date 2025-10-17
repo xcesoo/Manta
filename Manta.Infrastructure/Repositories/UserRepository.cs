@@ -19,6 +19,11 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
+    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
+    {
+        var maxId = await _context.Users.MaxAsync(u => (int?)u.Id, cancellationToken) ?? 0;
+        return maxId + 1;
+    }   
 
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -56,7 +61,11 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .AnyAsync(u => u.Id == id, cancellationToken);
     }
-
+    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await _context.Users
+            .AnyAsync(u => EF.Property<string>(u.Email, "Value") == email, cancellationToken);
+    }
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(email))

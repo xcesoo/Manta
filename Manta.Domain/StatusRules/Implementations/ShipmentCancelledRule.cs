@@ -8,8 +8,7 @@ public class ShipmentCancelledRule : IParcelStatusRule
 {
     public RuleResult ShouldApply(RuleContext context) => context.Parcel.CurrentStatus.Status switch
         {
-            EParcelStatus.Delivered or 
-                EParcelStatus.PartiallyReceived => 
+            EParcelStatus.Delivered => 
                 RuleResult.Failed(
                     ERuleResultError.WrongParcelStatus, 
                     "Cannot cancel a delivered parcel"),

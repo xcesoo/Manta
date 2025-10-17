@@ -14,7 +14,9 @@ public static class RuleLoader
         new DeliveredRule(),
         new ReaddressRequestedRule(),
         new AcceptAtDeliveryPointPolicy(),
-        new ShipmentCancelledRule()
+        new ShipmentCancelledRule(),
+        new TransitRule(),
+        new ReturnedRule()
     };
     public static List<IParcelStatusRule> LoadAllRules => _rules;
 }

@@ -1,3 +1,5 @@
+using Manta.Domain.CreationOptions;
+
 namespace Manta.Domain.Entities;
 public class DeliveryPoint
 {
@@ -11,11 +13,11 @@ public class DeliveryPoint
         Address = address;
     }
 
-    internal static DeliveryPoint Create(int id, string address)
+    internal static DeliveryPoint Create(DeliveryPointCreationOptions options)
     {
-        if (id <= 0) throw new ArgumentException("Id can't be null", nameof(id));
-        if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Address can't be null", nameof(address));
-        return new DeliveryPoint(id, address);
+        if (options.Id <= 0) throw new ArgumentException("Id can't be null", nameof(Id));
+        if (string.IsNullOrWhiteSpace(options.Address)) throw new ArgumentException("Address can't be null", nameof(options.Address));;
+        return new DeliveryPoint((int)options.Id!, options.Address);
     }
     
 }

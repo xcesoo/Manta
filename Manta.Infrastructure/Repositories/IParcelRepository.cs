@@ -8,9 +8,11 @@ public interface IParcelRepository
 {
     // Базові CRUD операції
     Task<Parcel?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<int> GetNextIdAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetAllAsync(CancellationToken cancellationToken = default);
     Task AddAsync(Parcel parcel, CancellationToken cancellationToken = default);
     Task UpdateAsync(Parcel parcel, CancellationToken cancellationToken = default);
+    // Task UpdateAsync(int parcelId, CancellationToken cancellationToken = default);
     Task DeleteAsync(int id, CancellationToken cancellationToken = default);
     Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default);
     

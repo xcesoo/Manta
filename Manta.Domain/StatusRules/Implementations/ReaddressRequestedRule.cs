@@ -9,11 +9,10 @@ public sealed class ReaddressRequestedRule : IParcelStatusRule
     public RuleResult ShouldApply(RuleContext context) => context switch
     {
         { Parcel: { CurrentStatus: { Status: 
-                EParcelStatus.Delivered or 
-                EParcelStatus.PartiallyReceived } } }
+                EParcelStatus.Delivered } } }
             => RuleResult.Failed(
                 ERuleResultError.WrongParcelStatus, 
-                "Cannot readdress a delivered/partially received parcel."),
+                "Cannot readdress a delivered parcel."),
 
         { Parcel: { CurrentStatus: { Status: 
                 EParcelStatus.ReturnRequested or 

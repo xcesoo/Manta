@@ -21,6 +21,11 @@ public class ParcelRepository : IParcelRepository
         return await _context.Parcels
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
+    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
+    {
+        var maxId = await _context.Parcels.MaxAsync(p => (int?)p.Id, cancellationToken) ?? 0;
+        return maxId + 1;
+    }   
 
     public async Task<IEnumerable<Parcel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
