@@ -10,8 +10,8 @@ public class DeliveryVehicle
     public double Capacity { get; private set; }
     public double CurrentLoad { get; private set; } = 0;
     
-    private readonly List<int> _parcelsIds = new List<int>();
-    public IEnumerable<int> ParcelsIds => _parcelsIds.AsReadOnly();
+    public virtual ICollection<int> ParcelsIds { get; private set; } = new List<int>();
+    
     private DeliveryVehicle() { }
 
     private DeliveryVehicle(LicensePlate id, CarModel carModel, double capacity)
@@ -37,17 +37,17 @@ public class DeliveryVehicle
     {
         if(parcelWeight + CurrentLoad > Capacity)
             throw new ArgumentException("Delivery vehicle is full.");
-        if(_parcelsIds.Contains(parcelId))
+        if(ParcelsIds.Contains(parcelId))
             throw new ArgumentException($"The parcel with id {parcelId} is already loaded in the delivery vehicle {Id}.");
-        _parcelsIds.Add(parcelId);
+        ParcelsIds.Add(parcelId);
         CurrentLoad += parcelWeight;
     }
 
     internal void UnloadParcel(int parcelId, double parcelWeight)
     {
-        if (!_parcelsIds.Contains(parcelId))
+        if (!ParcelsIds.Contains(parcelId))
             throw new ArgumentException($"The parcel with ID {parcelId} does not exist in the delivery vehicle {Id}.");
-        _parcelsIds.Remove(parcelId);
+        ParcelsIds.Remove(parcelId);
         CurrentLoad -= parcelWeight;
     }
 }

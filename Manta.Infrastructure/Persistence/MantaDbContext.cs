@@ -1,9 +1,9 @@
 using Manta.Domain.ValueObjects;
-
 using Microsoft.EntityFrameworkCore;
 using Manta.Domain.Entities;
 
 namespace Manta.Infrastructure.Persistence;
+
 public class MantaDbContext : DbContext
 {
     public MantaDbContext(DbContextOptions<MantaDbContext> options) : base(options) {}
@@ -14,7 +14,8 @@ public class MantaDbContext : DbContext
     public DbSet<User> Users {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {// Конфігурація Parcel
+    {
+        // Конфігурація Parcel
         modelBuilder.Entity<Parcel>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -182,15 +183,13 @@ public class MantaDbContext : DbContext
                 .HasPrecision(10, 2)
                 .IsRequired();
             
-            // ParcelsIds як backing field для колекції
-            entity.Property<List<int>>("_parcelsIds")
+            // ParcelsIds як колекція - використовуємо HasConversion для збереження у вигляді рядка
+            entity.Property(v => v.ParcelsIds)
                 .HasColumnName("ParcelsIds")
                 .HasConversion(
                     v => string.Join(',', v),
                     v => string.IsNullOrEmpty(v) ? new List<int>() : v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList())
                 .IsRequired();
-            
-            entity.Ignore(v => v.ParcelsIds);
         });
         
         modelBuilder.Entity<User>(entity =>
@@ -257,8 +256,6 @@ public class MantaDbContext : DbContext
                 lp.HasIndex(p => p.Value);
             });
         });
-
-        
 
         base.OnModelCreating(modelBuilder);
     }

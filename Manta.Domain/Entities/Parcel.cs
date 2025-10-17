@@ -19,9 +19,8 @@ public class Parcel
     public PhoneNumber RecipientPhoneNumber { get; private set; }
     public Email RecipientEmail { get; private set; }
     
-    private readonly List<ParcelStatus> _history = new List<ParcelStatus>();
-    public IEnumerable<ParcelStatus> StatusHistory => _history.AsReadOnly();
-    public ParcelStatus CurrentStatus => _history[^1];
+    public virtual ICollection<ParcelStatus> StatusHistory { get; private set; } = new List<ParcelStatus>();
+    public ParcelStatus CurrentStatus => StatusHistory.Last();
     
     private Parcel() { }
     private Parcel(int id, int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
@@ -56,9 +55,9 @@ public class Parcel
         return parcel;
     }
 
-
     internal void ChangeStatus(EParcelStatus newStatus, User changedBy) =>
-        _history.Add(new ParcelStatus(newStatus, changedBy));
+        StatusHistory.Add(new ParcelStatus(newStatus, changedBy));
+    
     internal void Pay() => AmountDue = 0m;
     
     internal void ChangeRecipientName(Name newName) => RecipientName = newName;
