@@ -4,6 +4,7 @@ public sealed record  PhoneNumber
 {
     public string Value { get; }
 
+    private PhoneNumber(){}
     public PhoneNumber(string value)
     {
         if(!IsValid(value))

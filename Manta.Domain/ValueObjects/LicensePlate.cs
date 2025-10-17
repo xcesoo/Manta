@@ -7,6 +7,7 @@ public sealed record  LicensePlate
 {
     public string Value { get; }
 
+    private LicensePlate(){}
     private LicensePlate(string value)
     {
         Value = value;

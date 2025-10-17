@@ -5,6 +5,7 @@ public sealed record CarModel
     public string Brand { get; private set; }
     public string Model { get; private set; }
 
+    private CarModel(){}
     private CarModel(string brand, string model)
     {
         Brand = brand;

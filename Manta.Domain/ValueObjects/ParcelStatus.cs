@@ -9,6 +9,7 @@ public sealed record  ParcelStatus
     public DateTime ChangedAt { get; }
     public UserInfo ChangedBy { get; }
 
+    private ParcelStatus(){}
     public ParcelStatus(EParcelStatus status, User changedBy)
     {
         Status = status;

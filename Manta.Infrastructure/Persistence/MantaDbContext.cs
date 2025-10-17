@@ -1,9 +1,9 @@
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Manta.Domain.Entities;
 
+namespace Manta.Infrastructure.Persistence;
 public class MantaDbContext : DbContext
 {
     public MantaDbContext(DbContextOptions<MantaDbContext> options) : base(options) {}
@@ -14,14 +14,28 @@ public class MantaDbContext : DbContext
     public DbSet<User> Users {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    {// Конфігурація Parcel
         modelBuilder.Entity<Parcel>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(p => p.DeliveryPointId).IsRequired();
-            entity.Property(p => p.AmountDue).IsRequired();
-            entity.Property(p => p.Weight).IsRequired();
-
+            
+            entity.Property(p => p.Id)
+                .ValueGeneratedNever();
+            
+            entity.Property(p => p.DeliveryPointId)
+                .IsRequired();
+            
+            entity.Property(p => p.CurrentLocationDeliveryPointId)
+                .IsRequired(false);
+            
+            entity.Property(p => p.AmountDue)
+                .HasPrecision(18, 2)
+                .IsRequired();
+            
+            entity.Property(p => p.Weight)
+                .IsRequired();
+            
+            // Value Objects
             entity.OwnsOne(p => p.RecipientName, name =>
             {
                 name.Property(n => n.Value)
@@ -29,83 +43,123 @@ public class MantaDbContext : DbContext
                     .HasMaxLength(200)
                     .IsRequired();
             });
+            
             entity.OwnsOne(p => p.RecipientPhoneNumber, phone =>
             {
-                phone.Property(p => p.Value)
+                phone.Property(ph => ph.Value)
                     .HasColumnName("RecipientPhoneNumber")
-                    .HasMaxLength(200)
-                    .IsRequired(false);
+                    .HasMaxLength(20)
+                    .IsRequired();
             });
+            
             entity.OwnsOne(p => p.RecipientEmail, email =>
             {
                 email.Property(e => e.Value)
                     .HasColumnName("RecipientEmail")
-                    .HasMaxLength(200)
-                    .IsRequired(false);
+                    .HasMaxLength(300);
             });
-            entity.OwnsOne(p => p.CurrentStatus, status =>
+            
+            // CurrentVehicleId як простий навігаційний property
+            entity.Property(p => p.CurrentVehicleId)
+                .HasConversion(
+                    v => v != null ? v.Value : null,
+                    v => v != null ? LicensePlate.Create(v) : null)
+                .HasColumnName("CurrentVehicleId")
+                .HasMaxLength(10)
+                .IsRequired(false);
+            
+            // Ігноруємо computed properties
+            entity.Ignore(p => p.InRightLocation);
+            entity.Ignore(p => p.Paid);
+            entity.Ignore(p => p.CurrentStatus);
+            
+            // StatusHistory як окрема таблиця
+            entity.OwnsMany(p => p.StatusHistory, history =>
             {
-                status.Property(s => s.Status)
+                history.ToTable("ParcelStatusHistory");
+                history.WithOwner().HasForeignKey("ParcelId");
+                history.Property<int>("Id").ValueGeneratedOnAdd();
+                history.HasKey("Id");
+                
+                history.Property(s => s.Status)
                     .HasColumnName("Status")
+                    .HasConversion<string>()
                     .IsRequired();
-                status.Property(s => s.ChangedAt)
+                
+                history.Property(s => s.ChangedAt)
                     .HasColumnName("ChangedAt")
                     .IsRequired();
-                status.OwnsOne(s => s.ChangedBy, user =>
+                
+                history.OwnsOne(s => s.ChangedBy, user =>
                 {
-                    user.Property(u => u.Id).HasColumnName("ChangedById");
-                    user.Property(u => u.Name).HasColumnName("ChangedByName");
-                    user.Property(u => u.Email).HasColumnName("ChangedByEmail");
-                    user.Property(u => u.Role).HasColumnName("ChangedByRole");
-                });
-                entity.OwnsMany(p => p.StatusHistory, history =>
-                {
-                    history.WithOwner().HasForeignKey("ParcelId");
-                    history.Property<int>("Id").ValueGeneratedOnAdd();
-                    history.HasKey("Id");
-                    status.Property(s => s.Status)
-                        .HasColumnName("Status")
+                    user.Property(u => u.Id)
+                        .HasColumnName("ChangedById")
                         .IsRequired();
-                    status.Property(s => s.ChangedAt)
-                        .HasColumnName("ChangedAt")
+                    
+                    user.Property(u => u.Name)
+                        .HasColumnName("ChangedByName")
+                        .HasMaxLength(200)
                         .IsRequired();
-                    status.OwnsOne(s => s.ChangedBy, user =>
-                    {
-                        user.Property(u => u.Id).HasColumnName("ChangedById");
-                        user.Property(u => u.Name).HasColumnName("ChangedByName");
-                        user.Property(u => u.Email).HasColumnName("ChangedByEmail");
-                        user.Property(u => u.Role).HasColumnName("ChangedByRole");
-                    });
-                    status.ToTable("ParcelStatusHistory");
+
+                    user.Property(u => u.Email)
+                        .HasColumnName("ChangedByEmail")
+                        .HasMaxLength(300);
+                    
+                    // Ігноруємо Role - це вичислювана властивість
+                    user.Ignore(u => u.Role);
                 });
             });
-            entity.OwnsOne(p => p.CurrentVehicleId, vehicle =>
-            {
-                vehicle.Property(v => v.Value)
-                    .HasColumnName("VehicleId")
-                    .HasMaxLength(8)
-                    .IsRequired(false);
-            });
+
+            
+            // Зв'язки
+            entity.HasOne<DeliveryPoint>()
+                .WithMany()
+                .HasForeignKey(p => p.DeliveryPointId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            entity.HasOne<DeliveryPoint>()
+                .WithMany()
+                .HasForeignKey(p => p.CurrentLocationDeliveryPointId)
+                .OnDelete(DeleteBehavior.SetNull);
+            
+            entity.HasOne<DeliveryVehicle>()
+                .WithMany()
+                .HasPrincipalKey(v => v.Id)
+                .HasForeignKey(p => p.CurrentVehicleId)
+                .OnDelete(DeleteBehavior.SetNull);
+            
+            // Індекси
+            entity.HasIndex(p => p.DeliveryPointId);
+            entity.HasIndex(p => p.CurrentLocationDeliveryPointId);
+            entity.HasIndex(p => p.CurrentVehicleId);
         });
+        
+        // Конфігурація DeliveryPoint
         modelBuilder.Entity<DeliveryPoint>(entity =>
         {
             entity.HasKey(dp => dp.Id);
+            
+            entity.Property(dp => dp.Id)
+                .ValueGeneratedNever();
+            
             entity.Property(dp => dp.Address)
                 .HasMaxLength(500)
                 .IsRequired();
         });
+        
+        // Конфігурація DeliveryVehicle
         modelBuilder.Entity<DeliveryVehicle>(entity =>
         {
-            entity.Property<int>("TechnicalId")
-                .ValueGeneratedOnAdd();
-            entity.HasKey("TechnicalId");
+            // Використовуємо LicensePlate як первинний ключ
+            entity.HasKey(v => v.Id);
             
             entity.Property(v => v.Id)
-                .HasConversion(lp => lp.Value, v => LicensePlate.Create(v))
+                .HasConversion(
+                    lp => lp.Value,
+                    v => LicensePlate.Create(v))
                 .HasColumnName("LicensePlate")
                 .HasMaxLength(10)
                 .IsRequired();
-            entity.HasIndex("LicensePlate").IsUnique();
             
             entity.OwnsOne(v => v.CarModel, car =>
             {
@@ -113,38 +167,49 @@ public class MantaDbContext : DbContext
                     .HasColumnName("CarBrand")
                     .HasMaxLength(100)
                     .IsRequired();
-
+                
                 car.Property(c => c.Model)
-                    .HasColumnName("CarModel") 
+                    .HasColumnName("CarModel")
                     .HasMaxLength(100)
                     .IsRequired();
             });
-
+            
             entity.Property(v => v.Capacity)
                 .HasPrecision(10, 2)
                 .IsRequired();
-
+            
             entity.Property(v => v.CurrentLoad)
                 .HasPrecision(10, 2)
                 .IsRequired();
-            entity.HasMany<Parcel>()
-                .WithOne()
-                .HasPrincipalKey(v => v.Id)
-                .HasForeignKey(p => p.CurrentVehicleId)
-                .OnDelete(DeleteBehavior.SetNull);
+            
+            // ParcelsIds як backing field для колекції
+            entity.Property<List<int>>("_parcelsIds")
+                .HasColumnName("ParcelsIds")
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => string.IsNullOrEmpty(v) ? new List<int>() : v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList())
+                .IsRequired();
+            
+            entity.Ignore(v => v.ParcelsIds);
         });
+        
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(u => u.Id);
-
+            
+            entity.Property(u => u.Id)
+                .ValueGeneratedNever();
+            
             entity.OwnsOne(u => u.Email, email =>
             {
                 email.Property(e => e.Value)
                     .HasColumnName("Email")
-                    .HasMaxLength(300)
-                    .IsRequired();
+                    .HasMaxLength(300);
+                
+                // Створюємо індекс на вкладеному рівні
+                email.HasIndex(e => e.Value);
             });
-
+            
             entity.OwnsOne(u => u.Name, name =>
             {
                 name.Property(n => n.Value)
@@ -152,25 +217,33 @@ public class MantaDbContext : DbContext
                     .HasMaxLength(200)
                     .IsRequired();
             });
-
-            entity.Property(u => u.Role)
-                .HasColumnName("Role")
-                .IsRequired();
-
+            
+            // Ігноруємо Role - це вичислювана властивість
+            entity.Ignore(u => u.Role);
+            
+            // Discriminator для TPH
             entity.HasDiscriminator<string>("UserType")
                 .HasValue<Admin>("Admin")
                 .HasValue<Cashier>("Cashier")
                 .HasValue<Driver>("Driver")
                 .HasValue<SystemUser>("SystemUser");
         });
+
         
+        // Конфігурація Cashier
         modelBuilder.Entity<Cashier>(entity =>
         {
             entity.Property(c => c.DeliveryPointId)
                 .HasColumnName("DeliveryPointId")
                 .IsRequired();
-        });
-
+            
+            entity.HasOne<DeliveryPoint>()
+                .WithMany()
+                .HasForeignKey(c => c.DeliveryPointId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });        
+        
+        // Конфігурація Driver
         modelBuilder.Entity<Driver>(entity =>
         {
             entity.OwnsOne(d => d.LicensePlate, lp =>
@@ -179,7 +252,14 @@ public class MantaDbContext : DbContext
                     .HasColumnName("LicensePlate")
                     .HasMaxLength(10)
                     .IsRequired();
+                
+                // Створюємо індекс на вкладеному рівні
+                lp.HasIndex(p => p.Value);
             });
         });
+
+        
+
+        base.OnModelCreating(modelBuilder);
     }
 }

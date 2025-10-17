@@ -10,6 +10,7 @@
         public string Name { get; init; }   
         public EUserRole  Role { get; init; }
 
+        private UserInfo(){}
         private UserInfo(User user)
         {
             Id = user.Id;

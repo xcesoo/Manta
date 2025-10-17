@@ -23,6 +23,7 @@ public class Parcel
     public IEnumerable<ParcelStatus> StatusHistory => _history.AsReadOnly();
     public ParcelStatus CurrentStatus => _history[^1];
     
+    private Parcel() { }
     private Parcel(int id, int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
     {
         Id=id;

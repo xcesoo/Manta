@@ -4,7 +4,7 @@ public class DeliveryPoint
     public int Id { get; private set; }
     public string Address { get; private set; }
     
-
+    private DeliveryPoint() { }
     private DeliveryPoint(int id, string address)
     {
         Id = id;

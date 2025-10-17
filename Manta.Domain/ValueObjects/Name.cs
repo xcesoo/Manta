@@ -4,6 +4,7 @@ public sealed record  Name
 {
     public string Value { get; private set; }
 
+    private Name(){}
     public Name(string value)
     {
         if(string.IsNullOrWhiteSpace(value))

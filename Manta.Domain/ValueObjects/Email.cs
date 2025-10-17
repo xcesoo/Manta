@@ -4,6 +4,7 @@ public sealed record  Email
 {
     public string Value { get; private set; }
 
+    private Email(){}
     public Email(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || !IsValid(value))

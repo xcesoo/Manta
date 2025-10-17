@@ -10,6 +10,15 @@
     <ItemGroup>
       <ProjectReference Include="..\Manta.Application\Manta.Application.csproj" />
       <ProjectReference Include="..\Manta.Domain\Manta.Domain.csproj" />
+      <ProjectReference Include="..\Manta.Infrastructure\Manta.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
     </ItemGroup>
 
 </Project>

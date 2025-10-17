@@ -12,7 +12,8 @@ public class DeliveryVehicle
     
     private readonly List<int> _parcelsIds = new List<int>();
     public IEnumerable<int> ParcelsIds => _parcelsIds.AsReadOnly();
-    
+    private DeliveryVehicle() { }
+
     private DeliveryVehicle(LicensePlate id, CarModel carModel, double capacity)
     {
         Id = id;

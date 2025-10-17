@@ -10,6 +10,10 @@ public abstract class User
     public Name Name { get; protected set; }
     public abstract EUserRole Role { get; }
 
+    protected User()
+    {
+    }
+
     protected User(int id, string name, string email)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -18,18 +22,27 @@ public abstract class User
         Name = name;
         Email = email;
     }
+    
 }
 
 public sealed class Admin : User
 {
     public Admin(int id, string fullname, string email) 
         : base(id, fullname, email){}
+    private Admin()
+    {
+    }
+
+    
     public override EUserRole Role => EUserRole.Admin;
 }
 
 public sealed class Cashier : User
 {
     public int DeliveryPointId { get; private set; }
+    private Cashier()
+    {
+    }
 
     public Cashier(int id, string name, string email, int deliveryPointId)
         : base(id, name, email)
@@ -42,6 +55,10 @@ public sealed class Cashier : User
 public sealed class Driver : User
 {
     public LicensePlate LicensePlate { get; private set; }
+    private Driver()
+    {
+    }
+
     public Driver(int id, string name, string email, LicensePlate licensePlate) : base(id, name, email)
     {
         LicensePlate = licensePlate;
