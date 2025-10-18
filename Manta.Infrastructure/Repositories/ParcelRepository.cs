@@ -92,7 +92,6 @@ public class ParcelRepository : IParcelRepository
 
     public async Task<IEnumerable<Parcel>> GetByStatusAsync(EParcelStatus status, CancellationToken cancellationToken = default)
     {
-        // Оскільки CurrentStatus - це computed property, потрібно завантажити StatusHistory
         var parcels = await _context.Parcels
             .ToListAsync(cancellationToken);
 
@@ -117,7 +116,7 @@ public class ParcelRepository : IParcelRepository
             throw new ArgumentException("Phone number cannot be null or empty", nameof(phoneNumber));
 
         return await _context.Parcels
-            .Where(p => EF.Property<string>(p.RecipientPhoneNumber, "Value") == phoneNumber)
+            .Where(p => EF.Property<string>(p.RecipientPhoneNumber, "Value").Contains(phoneNumber))
             .ToListAsync(cancellationToken);
     }
 
