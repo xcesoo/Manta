@@ -15,6 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.10" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
@@ -42,9 +46,6 @@
         <SubType>UserControl</SubType>
       </Compile>
       <Compile Update="Forms\FOptions.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Forms\FShipmentsReadyForPickUp.cs">
         <SubType>Form</SubType>
       </Compile>
       <Compile Update="Forms\FCashDesk.cs">

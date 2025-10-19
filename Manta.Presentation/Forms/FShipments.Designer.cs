@@ -44,7 +44,7 @@ partial class FShipments
         searchTextBox.Name = "searchTextBox";
         searchTextBox.Size = new System.Drawing.Size(732, 29);
         searchTextBox.TabIndex = 0;
-        searchTextBox.KeyDown += textBox1_KeyDown;
+        searchTextBox.KeyDown += searchTextBox_KeyDown;
         // 
         // flowDataPanel
         // 

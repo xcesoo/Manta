@@ -1,19 +1,19 @@
 using Manta.Domain.Entities;
 
-namespace Manta.Presentation;
+namespace Manta.Presentation.Services;
 
-public static class CashDesk
+public static class CashDeskManager
 {
     public static List<Parcel> Parcels { get; set; } = new();
     public static event Action? ParcelsChanged;
     public static event Action? DeliveryCompleted;
-    public static void AddParcel(Parcel parcel)
+    public static void Add(Parcel parcel)
     {
         if (Parcels.Contains(parcel)) return;
         Parcels.Add(parcel);
         ParcelsChanged?.Invoke();
     }
-    public static void RemoveParcel(Parcel parcel)
+    public static void Remove(Parcel parcel)
     {
         if (!Parcels.Contains(parcel)) return;
         Parcels.Remove(parcel);
@@ -25,7 +25,7 @@ public static class CashDesk
         ParcelsChanged?.Invoke();
     }
 
-    public static void OnDeliveryCompleted()
+    public static void Complete()
     {
         DeliveryCompleted?.Invoke();
     }

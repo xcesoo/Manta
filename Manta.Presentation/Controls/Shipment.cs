@@ -1,11 +1,12 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
+using Manta.Presentation.Services;
 
 namespace Manta.Presentation.Controls;
 
 public partial class Shipment : UserControl
 {
-    private Parcel _parcel;
+    public Parcel Parcel;
     public Shipment()
     {
         InitializeComponent();
@@ -15,28 +16,23 @@ public partial class Shipment : UserControl
     public Shipment(Parcel parcel)
     {
         InitializeComponent();
-        _parcel = parcel;
-        idLabel.Text = _parcel.Id.ToString();
-        recipientNameLabel.Text = _parcel.RecipientName.ToString();
-        phoneNumberLabel.Text = _parcel.RecipientPhoneNumber.ToString();
-        statusLabel.Text = _parcel.CurrentStatus.Status.ToString();
-        if (_parcel.CurrentStatus.Status != EParcelStatus.ReadyForPickup)
-        {
-            cashdeskBtn.Enabled = false;
-        }
-        if (_parcel.Paid)
-        {
-            amountDueLabel.Text = $"{_parcel.AmountDue} - сплачено";
+        Parcel = parcel;
+        
+        idLabel.Text = Parcel.Id.ToString();
+        recipientNameLabel.Text = Parcel.RecipientName.ToString();
+        phoneNumberLabel.Text = Parcel.RecipientPhoneNumber.ToString();
+        statusLabel.Text = Parcel.CurrentStatus.Status.ToString();
+        amountDueLabel.Text = Parcel.Paid
+            ? $"{Parcel.AmountDue} - сплачено"
+            : Parcel.AmountDue.ToString();
+        if (Parcel.Paid)
             amountDueLabel.ForeColor = Color.DimGray;
-        }
-        else
-        {
-            amountDueLabel.Text = _parcel.AmountDue.ToString();
-        }
+        
+        cashdeskBtn.Enabled = Parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup;
     }
 
     private void cashdeskBtn_Click(object sender, EventArgs e)
     {
-        CashDesk.AddParcel(_parcel);
+        CashDeskManager.Add(Parcel);
     }
 }

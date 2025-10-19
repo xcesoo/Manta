@@ -1,5 +1,7 @@
 using Manta.Infrastructure.Repositories;
+using Manta.Presentation.State;
 using Microsoft.IdentityModel.Tokens;
+using AppContext = Manta.Presentation.State.AppContext;
 
 namespace Manta.Presentation.Forms;
 
@@ -23,8 +25,8 @@ public partial class FOptions : Form
                 MessageBox.Show("Некоректні дані", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;           
             }
-            Globals.CurrentUser = await _userRepository.GetByEmailAsync(userTextBox.Text) ?? null;
-            if (Globals.CurrentUser == null) MessageBox.Show("Користувача не знайдено", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            AppContext.CurrentUser = await _userRepository.GetByEmailAsync(userTextBox.Text) ?? null;
+            if (AppContext.CurrentUser == null) MessageBox.Show("Користувача не знайдено", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -37,11 +39,11 @@ public partial class FOptions : Form
                 MessageBox.Show("Некоректні дані", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Globals.CurrentDeliveryPointId =
+            AppContext.CurrentDeliveryPointId =
                 await _deliveryPointRepository.ExistsAsync(Convert.ToInt32(deliveryPointIdTextBox.Text))
                     ? Convert.ToInt32(deliveryPointIdTextBox.Text) : null;
-            if (Globals.CurrentDeliveryPointId == null) MessageBox.Show("Точку видачі не знайдено", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Globals.DeliveryPointChanged();
+            if (AppContext.CurrentDeliveryPointId == null) MessageBox.Show("Точку видачі не знайдено", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            AppContext.DeliveryPointChanged();
         }
     }
 }

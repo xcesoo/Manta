@@ -1,8 +1,8 @@
 using Manta.Domain.Entities;
 
-namespace Manta.Presentation;
+namespace Manta.Presentation.State;
 
-public static class Globals
+public static class AppContext
 {
     public static User? CurrentUser { get; set; } = null;
     public static int? CurrentDeliveryPointId { get; set; } = null;

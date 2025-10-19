@@ -2,23 +2,31 @@
 using System.Security.Cryptography.X509Certificates;
 using Manta.Application.Services;
 using Manta.Domain.Entities;
+using Manta.Domain.Enums;
 using Manta.Domain.Services;
 using Manta.Infrastructure.Repositories;
+using Manta.Presentation.Services;
 
 namespace Manta.Presentation.Forms;
 
 public partial class FMain : Form
 {
+    //repositories
     private IParcelRepository _parcelRepository;
     private IDeliveryPointRepository _deliveryPointRepository;
     private IDeliveryVehicleRepository _deliveryVehicleRepository;
     private IUserRepository _userRepository;
+    
+    //services
     private ParcelDeliveryService _deliveryService;
     private ParcelStatusService _statusService;
+    private ParcelSearchService _searchService;
+    
+    //forms
     private FShipments _shipmentsForm;
+    private FShipments _shipmentsReadyForPickUpForm;
     private FCashDesk _cashDeskForm;
     private FOptions _optionsForm;
-    private FShipmentsReadyForPickUp _shipmentsReadyForPickUpForm;
     private Button[] _sideMenuButtons;
     public  FMain(IParcelRepository parcelRepository, 
         IDeliveryPointRepository deliveryPointRepository, 
@@ -28,16 +36,21 @@ public partial class FMain : Form
         ParcelStatusService statusService)
     {
         InitializeComponent();
+        
         _parcelRepository = parcelRepository;
         _deliveryPointRepository = deliveryPointRepository;
         _deliveryVehicleRepository = deliveryVehicleRepository;
         _userRepository = userRepository;
+        
         _deliveryService = deliveryService;
         _statusService = statusService;
-        _shipmentsForm = new FShipments(parcelRepository);
+        _searchService = new ParcelSearchService(parcelRepository);
+        
+        _shipmentsForm = new FShipments(_searchService);
         _optionsForm = new FOptions(userRepository, deliveryPointRepository);
-        _shipmentsReadyForPickUpForm = new FShipmentsReadyForPickUp(parcelRepository);
+        _shipmentsReadyForPickUpForm = new FShipments(_searchService, parcel => parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup);
         _cashDeskForm = new FCashDesk(deliveryService);
+        
         _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn];
         _cashDeskForm.TopLevel = false;
         _cashDeskForm.Dock = DockStyle.Fill;

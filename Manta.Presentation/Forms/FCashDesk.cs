@@ -1,5 +1,8 @@
 using Manta.Application.Services;
 using Manta.Presentation.Controls;
+using Manta.Presentation.Services;
+using Manta.Presentation.State;
+using AppContext = Manta.Presentation.State.AppContext;
 
 namespace Manta.Presentation.Forms;
 
@@ -10,39 +13,39 @@ public partial class FCashDesk : Form
     {
         _deliveryService = deliveryService;
         InitializeComponent();
-        CashDesk.ParcelsChanged += CashDesk_ParcelsChanged;
+        CashDeskManager.ParcelsChanged += CashDesk_ParcelsChanged;
     }
 
     private void CashDesk_ParcelsChanged()
     {
         parcelsFlowPanel.Controls.Clear();
-        foreach (var parcel in CashDesk.Parcels)
+        foreach (var parcel in CashDeskManager.Parcels)
         {
             parcelsFlowPanel.Controls.Add(new ParcelCashDesk(parcel));
         }
 
-        toPayLabel.Text = $"До сплати: {CashDesk.Parcels.Sum(x => x.AmountDue)}";
+        toPayLabel.Text = $"До сплати: {CashDeskManager.Parcels.Sum(x => x.AmountDue)}";
     }
 
     private void clearBtn_Click(object sender, EventArgs e)
     {
-        CashDesk.Clear();
+        CashDeskManager.Clear();
     }
 
     private async void payBtn_Click(object sender, EventArgs e)
     {
-        if (CashDesk.Parcels.Count == 0) return;
-        if (Globals.CurrentUser == null)
+        if (CashDeskManager.Parcels.Count == 0) return;
+        if (AppContext.CurrentUser == null)
         {
             MessageBox.Show("Виберіть аккаунт в налаштуваннях", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        foreach (var parcel in CashDesk.Parcels)
+        foreach (var parcel in CashDeskManager.Parcels)
         {
             await _deliveryService.PayForParcel(parcel.Id);
-            await _deliveryService.DeliverParcel(parcel.Id, Globals.CurrentUser);
+            await _deliveryService.DeliverParcel(parcel.Id, AppContext.CurrentUser);
         }
-        CashDesk.Clear();
-        CashDesk.OnDeliveryCompleted();
+        CashDeskManager.Clear();
+        CashDeskManager.Complete();
     }
 }

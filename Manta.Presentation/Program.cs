@@ -54,7 +54,7 @@ static class Program
 
             // Видалення старої бази
             // Створення бази даних
-            // await dbContext.Database.EnsureDeletedAsync();
+            //await dbContext.Database.EnsureDeletedAsync();
             await dbContext.Database.EnsureCreatedAsync();
             if (!dbContext.Users.Any(u => u.Id == 0))
             {
@@ -70,14 +70,13 @@ static class Program
             _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
             _deliveryService = scope.ServiceProvider.GetRequiredService<ParcelDeliveryService>();
             _statusService = scope.ServiceProvider.GetRequiredService<ParcelStatusService>();
-            // await scope.ServiceProvider.GetRequiredService<Seed>().SeedAsync();
+            //await scope.ServiceProvider.GetRequiredService<Seed>().SeedAsync();
             ApplicationConfiguration.Initialize();
            EventsLoader.LoadAllEvents(_statusService);
-           
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,1, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           await _deliveryService.ParcelChangeAmountDue(1, 100m);
+           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1, 1, await _userRepository.GetByEmailAsync("kka@manta.com"));
+           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           // await _deliveryService.ParcelChangeAmountDue(1, 100m);
             
             System.Windows.Forms.Application.Run(new FMain(
                 _parcelRepository,

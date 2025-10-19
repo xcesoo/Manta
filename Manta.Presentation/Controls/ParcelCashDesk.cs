@@ -1,4 +1,5 @@
 using Manta.Domain.Entities;
+using Manta.Presentation.Services;
 
 namespace Manta.Presentation.Controls;
 
@@ -15,6 +16,6 @@ public partial class ParcelCashDesk : UserControl
 
     private void deleteBtn_Click(object sender, EventArgs e)
     {
-        CashDesk.RemoveParcel(_parcel);
+        CashDeskManager.Remove(_parcel);
     }
 }
