@@ -1,6 +1,7 @@
 
 using Manta.Application;
 using Manta.Application.DataSeed;
+using Manta.Application.Events;
 using Manta.Application.Services;
 using Manta.Domain.Entities;
 using Manta.Domain.Services;
@@ -71,6 +72,13 @@ static class Program
             _statusService = scope.ServiceProvider.GetRequiredService<ParcelStatusService>();
             // await scope.ServiceProvider.GetRequiredService<Seed>().SeedAsync();
             ApplicationConfiguration.Initialize();
+           EventsLoader.LoadAllEvents(_statusService);
+           
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,1, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           await _deliveryService.ParcelChangeAmountDue(1, 100m);
+            
             System.Windows.Forms.Application.Run(new FMain(
                 _parcelRepository,
                 _deliveryPointRepository,

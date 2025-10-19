@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Manta.Presentation.Forms;
 
-partial class FShipments
+partial class FShipmentsReadyForPickUp
 {
     /// <summary>
     /// Required designer variable.
@@ -44,7 +44,7 @@ partial class FShipments
         searchTextBox.Name = "searchTextBox";
         searchTextBox.Size = new System.Drawing.Size(732, 29);
         searchTextBox.TabIndex = 0;
-        searchTextBox.KeyDown += textBox1_KeyDown;
+        searchTextBox.KeyDown += searchTextBox_KeyDown;
         // 
         // flowDataPanel
         // 
@@ -61,7 +61,7 @@ partial class FShipments
         columnUserControl.Size = new System.Drawing.Size(643, 24);
         columnUserControl.TabIndex = 3;
         // 
-        // FShipments
+        // FShipmentsReadyForPickUp
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,11 +70,10 @@ partial class FShipments
         Controls.Add(flowDataPanel);
         Controls.Add(searchTextBox);
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-        Text = "FShipments";
+        Text = "FShipmentsReadyForPickUp";
         ResumeLayout(false);
         PerformLayout();
     }
-
     private Manta.Presentation.Controls.Shipment columnUserControl;
 
     private System.Windows.Forms.FlowLayoutPanel flowDataPanel;

@@ -1,19 +1,20 @@
 using Manta.Domain.Entities;
+using Manta.Domain.Enums;
 using Manta.Infrastructure.Repositories;
 using Manta.Presentation.Controls;
 
 namespace Manta.Presentation.Forms;
 
-public partial class FShipments : Form
+public partial class FShipmentsReadyForPickUp : Form
 {
     private IParcelRepository _parcelRepository;
-    public FShipments(IParcelRepository parcelRepository)
+    public FShipmentsReadyForPickUp(IParcelRepository parcelRepository)
     {
         _parcelRepository = parcelRepository;
         InitializeComponent();
         CashDesk.DeliveryCompleted += async () => await LoadDataAsync(searchTextBox.Text);
     }
-    private async Task LoadDataAsync(string search = null)
+        private async Task LoadDataAsync(string search = null)
     {
         flowDataPanel.Controls.Clear();
         IEnumerable<Parcel> parcels;
@@ -26,12 +27,15 @@ public partial class FShipments : Form
         }
         foreach (var parcel in parcels)
         {
-            Shipment shipment = new Shipment(parcel);
-            flowDataPanel.Controls.Add(shipment);
+            if (parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup)
+            {
+                Shipment shipment = new Shipment(parcel);
+                flowDataPanel.Controls.Add(shipment);
+            }
         }
     }
 
-    private async void textBox1_KeyDown(object sender, KeyEventArgs e)
+    private async void searchTextBox_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
@@ -45,5 +49,4 @@ public partial class FShipments : Form
             }
         }
     }
-    
 }

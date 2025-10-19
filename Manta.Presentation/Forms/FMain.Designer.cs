@@ -30,6 +30,8 @@ partial class FMain
     private void InitializeComponent()
     {
         sideMenuPanel = new System.Windows.Forms.Panel();
+        adminToolsBtn = new System.Windows.Forms.Button();
+        optionsBtn = new System.Windows.Forms.Button();
         shipmentsBtn = new System.Windows.Forms.Button();
         returnRequestBtn = new System.Windows.Forms.Button();
         shipmentDeliveryBtn = new System.Windows.Forms.Button();
@@ -42,6 +44,8 @@ partial class FMain
         // sideMenuPanel
         // 
         sideMenuPanel.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+        sideMenuPanel.Controls.Add(adminToolsBtn);
+        sideMenuPanel.Controls.Add(optionsBtn);
         sideMenuPanel.Controls.Add(shipmentsBtn);
         sideMenuPanel.Controls.Add(returnRequestBtn);
         sideMenuPanel.Controls.Add(shipmentDeliveryBtn);
@@ -51,12 +55,44 @@ partial class FMain
         sideMenuPanel.Size = new System.Drawing.Size(180, 590);
         sideMenuPanel.TabIndex = 0;
         // 
+        // adminToolsBtn
+        // 
+        adminToolsBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        adminToolsBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
+        adminToolsBtn.FlatAppearance.BorderSize = 0;
+        adminToolsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        adminToolsBtn.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        adminToolsBtn.ForeColor = System.Drawing.Color.Silver;
+        adminToolsBtn.Location = new System.Drawing.Point(0, 502);
+        adminToolsBtn.Name = "adminToolsBtn";
+        adminToolsBtn.Size = new System.Drawing.Size(180, 44);
+        adminToolsBtn.TabIndex = 7;
+        adminToolsBtn.Text = "AdminTools";
+        adminToolsBtn.UseVisualStyleBackColor = true;
+        // 
+        // optionsBtn
+        // 
+        optionsBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        optionsBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
+        optionsBtn.FlatAppearance.BorderSize = 0;
+        optionsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        optionsBtn.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        optionsBtn.ForeColor = System.Drawing.Color.Silver;
+        optionsBtn.Location = new System.Drawing.Point(0, 546);
+        optionsBtn.Name = "optionsBtn";
+        optionsBtn.Size = new System.Drawing.Size(180, 44);
+        optionsBtn.TabIndex = 6;
+        optionsBtn.Text = "Налаштування";
+        optionsBtn.UseVisualStyleBackColor = true;
+        optionsBtn.Click += optionsBtn_Click;
+        // 
         // shipmentsBtn
         // 
         shipmentsBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
         shipmentsBtn.Dock = System.Windows.Forms.DockStyle.Top;
         shipmentsBtn.FlatAppearance.BorderSize = 0;
         shipmentsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        shipmentsBtn.Font = new System.Drawing.Font("Arial", 9.75F);
         shipmentsBtn.ForeColor = System.Drawing.Color.White;
         shipmentsBtn.Location = new System.Drawing.Point(0, 88);
         shipmentsBtn.Name = "shipmentsBtn";
@@ -72,6 +108,7 @@ partial class FMain
         returnRequestBtn.Dock = System.Windows.Forms.DockStyle.Top;
         returnRequestBtn.FlatAppearance.BorderSize = 0;
         returnRequestBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        returnRequestBtn.Font = new System.Drawing.Font("Arial", 9.75F);
         returnRequestBtn.ForeColor = System.Drawing.Color.White;
         returnRequestBtn.Location = new System.Drawing.Point(0, 44);
         returnRequestBtn.Name = "returnRequestBtn";
@@ -86,6 +123,7 @@ partial class FMain
         shipmentDeliveryBtn.Dock = System.Windows.Forms.DockStyle.Top;
         shipmentDeliveryBtn.FlatAppearance.BorderSize = 0;
         shipmentDeliveryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        shipmentDeliveryBtn.Font = new System.Drawing.Font("Arial", 9.75F);
         shipmentDeliveryBtn.ForeColor = System.Drawing.Color.White;
         shipmentDeliveryBtn.Location = new System.Drawing.Point(0, 0);
         shipmentDeliveryBtn.Name = "shipmentDeliveryBtn";
@@ -93,6 +131,7 @@ partial class FMain
         shipmentDeliveryBtn.TabIndex = 3;
         shipmentDeliveryBtn.Text = "Видача відправлень";
         shipmentDeliveryBtn.UseVisualStyleBackColor = true;
+        shipmentDeliveryBtn.Click += shipmentDelivery_Click;
         // 
         // borderPanel
         // 
@@ -137,6 +176,10 @@ partial class FMain
         sideMenuPanel.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Button adminToolsBtn;
+
+    private System.Windows.Forms.Button optionsBtn;
 
     private System.Windows.Forms.Panel mainPanel;
 

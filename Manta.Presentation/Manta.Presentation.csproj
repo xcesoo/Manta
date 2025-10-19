@@ -41,6 +41,18 @@
       <Compile Update="Controls\Shipment.cs">
         <SubType>UserControl</SubType>
       </Compile>
+      <Compile Update="Forms\FOptions.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\FShipmentsReadyForPickUp.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\FCashDesk.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Controls\ParcelCashDesk.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

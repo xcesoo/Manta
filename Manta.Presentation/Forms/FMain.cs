@@ -15,9 +15,11 @@ public partial class FMain : Form
     private IUserRepository _userRepository;
     private ParcelDeliveryService _deliveryService;
     private ParcelStatusService _statusService;
-    private User _user;
-    private int _currentDeliveryPointId;
     private FShipments _shipmentsForm;
+    private FCashDesk _cashDeskForm;
+    private FOptions _optionsForm;
+    private FShipmentsReadyForPickUp _shipmentsReadyForPickUpForm;
+    private Button[] _sideMenuButtons;
     public  FMain(IParcelRepository parcelRepository, 
         IDeliveryPointRepository deliveryPointRepository, 
         IDeliveryVehicleRepository deliveryVehicleRepository, 
@@ -25,6 +27,7 @@ public partial class FMain : Form
         ParcelDeliveryService deliveryService, 
         ParcelStatusService statusService)
     {
+        InitializeComponent();
         _parcelRepository = parcelRepository;
         _deliveryPointRepository = deliveryPointRepository;
         _deliveryVehicleRepository = deliveryVehicleRepository;
@@ -32,7 +35,16 @@ public partial class FMain : Form
         _deliveryService = deliveryService;
         _statusService = statusService;
         _shipmentsForm = new FShipments(parcelRepository);
-        InitializeComponent();
+        _optionsForm = new FOptions(userRepository, deliveryPointRepository);
+        _shipmentsReadyForPickUpForm = new FShipmentsReadyForPickUp(parcelRepository);
+        _cashDeskForm = new FCashDesk(deliveryService);
+        _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn];
+        _cashDeskForm.TopLevel = false;
+        _cashDeskForm.Dock = DockStyle.Fill;
+        cashDeskPanel.Controls.Add(_cashDeskForm);
+        cashDeskPanel.Tag = _cashDeskForm;
+        _cashDeskForm.BringToFront();
+        _cashDeskForm.Show();
     }
     private bool FormDragged = false;
     private Point StartMousePosition;
@@ -56,8 +68,14 @@ public partial class FMain : Form
 
     private Form _activeForm;
 
-    private void ChangeForm(Form form)
+    private void ChangeForm(Form form, object sender)
     {
+        var clickedBtn = (Button)sender;
+        foreach (var btn in _sideMenuButtons)
+        {
+            btn.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+        }
+        clickedBtn.BackColor = System.Drawing.Color.FromArgb(((int)((byte)54)), ((int)((byte)71)), ((int)((byte)79)));
         if (form == _activeForm) return;
         if (_activeForm != null) _activeForm.Hide();
         _activeForm = form;
@@ -71,8 +89,16 @@ public partial class FMain : Form
 
     private void shipmentDelivery_Click(object sender, EventArgs e)
     {
-        
+        ChangeForm(_shipmentsReadyForPickUpForm, sender);
     }
 
-    private void shipmentsBtn_Click(object sender, EventArgs e) => ChangeForm(_shipmentsForm);
+    private void shipmentsBtn_Click(object sender, EventArgs e)
+    {
+        ChangeForm(_shipmentsForm, sender);
+    }
+
+    private void optionsBtn_Click(object sender, EventArgs e)
+    {
+        ChangeForm(_optionsForm, sender);
+    }
 }
