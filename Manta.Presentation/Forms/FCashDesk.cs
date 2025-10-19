@@ -43,5 +43,6 @@ public partial class FCashDesk : Form
             await _deliveryService.DeliverParcel(parcel.Id, Globals.CurrentUser);
         }
         CashDesk.Clear();
+        CashDesk.OnDeliveryCompleted();
     }
 }

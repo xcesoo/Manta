@@ -101,4 +101,14 @@ public partial class FMain : Form
     {
         ChangeForm(_optionsForm, sender);
     }
+
+    private void exitBtn_Click(object sender, EventArgs e)
+    {
+        System.Windows.Forms.Application.Exit();
+    }
+
+    private void minimizeBtn_Click(object sender, EventArgs e)
+    {
+        this.WindowState = FormWindowState.Minimized; 
+    }
 }

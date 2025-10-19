@@ -36,9 +36,12 @@ partial class FMain
         returnRequestBtn = new System.Windows.Forms.Button();
         shipmentDeliveryBtn = new System.Windows.Forms.Button();
         borderPanel = new System.Windows.Forms.Panel();
+        exitBtn = new System.Windows.Forms.Button();
         cashDeskPanel = new System.Windows.Forms.Panel();
         mainPanel = new System.Windows.Forms.Panel();
+        minimizeBtn = new System.Windows.Forms.Button();
         sideMenuPanel.SuspendLayout();
+        borderPanel.SuspendLayout();
         SuspendLayout();
         // 
         // sideMenuPanel
@@ -136,6 +139,8 @@ partial class FMain
         // borderPanel
         // 
         borderPanel.BackColor = System.Drawing.Color.FromArgb(((int)((byte)54)), ((int)((byte)71)), ((int)((byte)79)));
+        borderPanel.Controls.Add(minimizeBtn);
+        borderPanel.Controls.Add(exitBtn);
         borderPanel.Dock = System.Windows.Forms.DockStyle.Top;
         borderPanel.Location = new System.Drawing.Point(0, 0);
         borderPanel.Name = "borderPanel";
@@ -144,6 +149,22 @@ partial class FMain
         borderPanel.MouseDown += borderPanel_MouseDown;
         borderPanel.MouseMove += borderPanel_MouseMove;
         borderPanel.MouseUp += borderPanel_MouseUp;
+        // 
+        // exitBtn
+        // 
+        exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        exitBtn.Dock = System.Windows.Forms.DockStyle.Right;
+        exitBtn.FlatAppearance.BorderSize = 0;
+        exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        exitBtn.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        exitBtn.ForeColor = System.Drawing.Color.White;
+        exitBtn.Location = new System.Drawing.Point(1102, 0);
+        exitBtn.Name = "exitBtn";
+        exitBtn.Size = new System.Drawing.Size(50, 50);
+        exitBtn.TabIndex = 8;
+        exitBtn.Text = "×";
+        exitBtn.UseVisualStyleBackColor = true;
+        exitBtn.Click += exitBtn_Click;
         // 
         // cashDeskPanel
         // 
@@ -161,6 +182,22 @@ partial class FMain
         mainPanel.Size = new System.Drawing.Size(772, 590);
         mainPanel.TabIndex = 3;
         // 
+        // minimizeBtn
+        // 
+        minimizeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        minimizeBtn.Dock = System.Windows.Forms.DockStyle.Right;
+        minimizeBtn.FlatAppearance.BorderSize = 0;
+        minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        minimizeBtn.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        minimizeBtn.ForeColor = System.Drawing.Color.White;
+        minimizeBtn.Location = new System.Drawing.Point(1052, 0);
+        minimizeBtn.Name = "minimizeBtn";
+        minimizeBtn.Size = new System.Drawing.Size(50, 50);
+        minimizeBtn.TabIndex = 9;
+        minimizeBtn.Text = "-";
+        minimizeBtn.UseVisualStyleBackColor = true;
+        minimizeBtn.Click += minimizeBtn_Click;
+        // 
         // FMain
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -174,8 +211,13 @@ partial class FMain
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         sideMenuPanel.ResumeLayout(false);
+        borderPanel.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Button minimizeBtn;
+
+    private System.Windows.Forms.Button exitBtn;
 
     private System.Windows.Forms.Button adminToolsBtn;
 

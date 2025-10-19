@@ -23,6 +23,10 @@ public static class CashDesk
     {
         Parcels.Clear();
         ParcelsChanged?.Invoke();
+    }
+
+    public static void OnDeliveryCompleted()
+    {
         DeliveryCompleted?.Invoke();
     }
 }

@@ -13,6 +13,8 @@ public partial class FShipmentsReadyForPickUp : Form
         _parcelRepository = parcelRepository;
         InitializeComponent();
         CashDesk.DeliveryCompleted += async () => await LoadDataAsync(searchTextBox.Text);
+        Globals.DeliveryPointChangedEvent += async () => await LoadDataAsync(null);
+        
     }
         private async Task LoadDataAsync(string search = null)
     {

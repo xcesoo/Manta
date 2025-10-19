@@ -41,6 +41,7 @@ public partial class FOptions : Form
                 await _deliveryPointRepository.ExistsAsync(Convert.ToInt32(deliveryPointIdTextBox.Text))
                     ? Convert.ToInt32(deliveryPointIdTextBox.Text) : null;
             if (Globals.CurrentDeliveryPointId == null) MessageBox.Show("Точку видачі не знайдено", "MantaException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Globals.DeliveryPointChanged();
         }
     }
 }
