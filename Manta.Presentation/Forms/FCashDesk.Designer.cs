@@ -120,6 +120,7 @@ partial class FCashDesk
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = System.Drawing.Color.White;
         ClientSize = new System.Drawing.Size(200, 590);
         Controls.Add(parcelsFlowPanel);
         Controls.Add(cashDeskLabel);

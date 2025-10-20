@@ -42,7 +42,7 @@ partial class FShipments
         searchTextBox.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
         searchTextBox.Location = new System.Drawing.Point(13, 13);
         searchTextBox.Name = "searchTextBox";
-        searchTextBox.Size = new System.Drawing.Size(732, 29);
+        searchTextBox.Size = new System.Drawing.Size(747, 29);
         searchTextBox.TabIndex = 0;
         searchTextBox.KeyDown += searchTextBox_KeyDown;
         // 
@@ -51,21 +51,21 @@ partial class FShipments
         flowDataPanel.AutoScroll = true;
         flowDataPanel.Location = new System.Drawing.Point(12, 80);
         flowDataPanel.Name = "flowDataPanel";
-        flowDataPanel.Size = new System.Drawing.Size(732, 470);
+        flowDataPanel.Size = new System.Drawing.Size(748, 470);
         flowDataPanel.TabIndex = 1;
         // 
         // columnUserControl
         // 
         columnUserControl.Location = new System.Drawing.Point(13, 48);
         columnUserControl.Name = "columnUserControl";
-        columnUserControl.Size = new System.Drawing.Size(643, 24);
+        columnUserControl.Size = new System.Drawing.Size(638, 24);
         columnUserControl.TabIndex = 3;
         // 
         // FShipments
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(756, 551);
+        ClientSize = new System.Drawing.Size(772, 590);
         Controls.Add(columnUserControl);
         Controls.Add(flowDataPanel);
         Controls.Add(searchTextBox);

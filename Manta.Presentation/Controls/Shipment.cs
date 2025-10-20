@@ -7,6 +7,9 @@ namespace Manta.Presentation.Controls;
 public partial class Shipment : UserControl
 {
     public Parcel Parcel;
+    public event Action<Parcel> ShipmentClicked;
+
+    private Color _defaultColor { get; init; }
     public Shipment()
     {
         InitializeComponent();
@@ -16,8 +19,18 @@ public partial class Shipment : UserControl
     public Shipment(Parcel parcel)
     {
         InitializeComponent();
+        // this.MouseEnter += Shipment_MouseEnter;
+        // this.MouseLeave += Shipment_MouseLeave;
+        foreach (Control control in Controls)
+        {
+            if (control is Button) continue;
+            control.Click += Shipment_Click;
+            control.MouseEnter += Shipment_MouseEnter;
+            control.MouseLeave += Shipment_MouseLeave;
+        }
         Parcel = parcel;
         
+        _defaultColor = BackColor;
         idLabel.Text = Parcel.Id.ToString();
         recipientNameLabel.Text = Parcel.RecipientName.ToString();
         phoneNumberLabel.Text = Parcel.RecipientPhoneNumber.ToString();
@@ -28,11 +41,20 @@ public partial class Shipment : UserControl
         if (Parcel.Paid)
             amountDueLabel.ForeColor = Color.DimGray;
         
-        cashdeskBtn.Enabled = Parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup;
+        cashdeskBtn.Enabled = Parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup; 
     }
 
     private void cashdeskBtn_Click(object sender, EventArgs e)
     {
         CashDeskManager.Add(Parcel);
     }
+
+    private void Shipment_Click(object sender, EventArgs e)
+    {
+        ShipmentClicked?.Invoke(Parcel);
+    }
+
+    private void Shipment_MouseEnter(object sender, EventArgs e) => BackColor = Color.White;
+
+    private void Shipment_MouseLeave(object sender, EventArgs e) => BackColor = _defaultColor;
 }

@@ -51,7 +51,7 @@ partial class ParcelCashDesk
         // 
         // panel1
         // 
-        panel1.BackColor = System.Drawing.Color.FromArgb(((int)((byte)232)), ((int)((byte)245)), ((int)((byte)233)));
+        panel1.BackColor = System.Drawing.Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200)));
         panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         panel1.Controls.Add(deleteBtn);
         panel1.Controls.Add(toPayLabel);

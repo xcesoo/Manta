@@ -13,13 +13,15 @@ public partial class FShipments : Form
 {
     private readonly ParcelSearchService _searchService;
     private readonly Func<Parcel, bool> _filter;
+    public event Action<Parcel> ShipmentOpenRequested;
     public FShipments(ParcelSearchService parcelSearchService, Func<Parcel, bool>? filter = null)
     {
         _searchService = parcelSearchService;
         _filter = filter ?? (_ => true);
         InitializeComponent();
-        CashDeskManager.DeliveryCompleted += async () => await LoadDataAsync(searchTextBox.Text);
+        
         AppContext.DeliveryPointChangedEvent += async () => await LoadDataAsync(null);
+        ChangeStatusService.OnStatusChanged += async () => await LoadDataAsync(searchTextBox.Text);
     }
     private async Task LoadDataAsync(string? search = null)
     {
@@ -36,8 +38,13 @@ public partial class FShipments : Form
             flowDataPanel.Controls.Add(new Label { Text = "Посилки не знайдені", AutoSize = true });
             return;
         }
+
         foreach (var parcel in parcels)
-            flowDataPanel.Controls.Add(new Shipment(parcel));
+        {
+            var shipment = new Shipment(parcel);
+            flowDataPanel.Controls.Add(shipment);
+            shipment.ShipmentClicked += parcel => ShipmentOpenRequested?.Invoke(parcel);
+        }
     }
 
     private async void searchTextBox_KeyDown(object sender, KeyEventArgs e)

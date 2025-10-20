@@ -5,6 +5,7 @@ using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Services;
 using Manta.Infrastructure.Repositories;
+using Manta.Presentation.Controls;
 using Manta.Presentation.Services;
 
 namespace Manta.Presentation.Forms;
@@ -47,8 +48,17 @@ public partial class FMain : Form
         _searchService = new ParcelSearchService(parcelRepository);
         
         _shipmentsForm = new FShipments(_searchService);
+        _shipmentsForm.ShipmentOpenRequested += parcel =>
+        {
+            ChangeForm(new FShipmentInfo(parcel, deliveryService, parcelRepository), null);
+        };
         _optionsForm = new FOptions(userRepository, deliveryPointRepository);
-        _shipmentsReadyForPickUpForm = new FShipments(_searchService, parcel => parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup);
+        _shipmentsReadyForPickUpForm = new FShipments(_searchService, 
+            parcel => parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup);
+        _shipmentsReadyForPickUpForm.ShipmentOpenRequested += parcel =>
+        {
+            ChangeForm(new FShipmentInfo(parcel, deliveryService, parcelRepository), null);
+        };
         _cashDeskForm = new FCashDesk(deliveryService);
         
         _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn];
@@ -81,14 +91,19 @@ public partial class FMain : Form
 
     private Form _activeForm;
 
-    private void ChangeForm(Form form, object sender)
+    private void ChangeForm(Form form, object? sender)
     {
-        var clickedBtn = (Button)sender;
-        foreach (var btn in _sideMenuButtons)
+        if (sender != null)
         {
-            btn.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+            var clickedBtn = (Button)sender;
+            foreach (var btn in _sideMenuButtons)
+            {
+                btn.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+            }
+
+            clickedBtn.BackColor =
+                System.Drawing.Color.FromArgb(((int)((byte)54)), ((int)((byte)71)), ((int)((byte)79)));
         }
-        clickedBtn.BackColor = System.Drawing.Color.FromArgb(((int)((byte)54)), ((int)((byte)71)), ((int)((byte)79)));
         if (form == _activeForm) return;
         if (_activeForm != null) _activeForm.Hide();
         _activeForm = form;

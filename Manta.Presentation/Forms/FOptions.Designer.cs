@@ -96,7 +96,7 @@ partial class FOptions
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(740, 512);
+        ClientSize = new System.Drawing.Size(772, 590);
         Controls.Add(panel1);
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
         Text = "FOptions";

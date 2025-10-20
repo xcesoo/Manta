@@ -32,8 +32,6 @@ public sealed class Admin : User
     private Admin()
     {
     }
-
-    
     public override EUserRole Role => EUserRole.Admin;
 }
 

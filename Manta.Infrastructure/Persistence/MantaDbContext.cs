@@ -79,7 +79,7 @@ public class MantaDbContext : DbContext
             {
                 history.ToTable("ParcelStatusHistory");
                 history.WithOwner().HasForeignKey("ParcelId");
-                history.Property<int>("Id").ValueGeneratedOnAdd();
+                history.Property<int>("Id")/*.ValueGeneratedOnAdd()*/;
                 history.HasKey("Id");
                 
                 history.Property(s => s.Status)
@@ -107,7 +107,10 @@ public class MantaDbContext : DbContext
                         .HasMaxLength(300);
                     
                     // Ігноруємо Role - це вичислювана властивість
-                    user.Ignore(u => u.Role);
+                    user.Property(u => u.Role)
+                        .HasColumnName("ChangedByRole")
+                        .HasConversion<string>()
+                        .IsRequired();
                 });
             });
 
@@ -192,23 +195,26 @@ public class MantaDbContext : DbContext
                 .IsRequired();
         });
         
-        modelBuilder.Entity<User>(entity =>
+                modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(u => u.Id);
             
             entity.Property(u => u.Id)
                 .ValueGeneratedNever();
             
+            // Email як Value Object через OwnsOne
             entity.OwnsOne(u => u.Email, email =>
             {
                 email.Property(e => e.Value)
                     .HasColumnName("Email")
-                    .HasMaxLength(300);
+                    .HasMaxLength(300)
+                    .IsRequired();
                 
-                // Створюємо індекс на вкладеному рівні
-                email.HasIndex(e => e.Value);
+                // ✅ ПРАВИЛЬНИЙ СИНТАКСИС: Індекс створюється тут, всередині OwnsOne
+                email.HasIndex(e => e.Value).IsUnique();
             });
             
+            // Name як Value Object через OwnsOne
             entity.OwnsOne(u => u.Name, name =>
             {
                 name.Property(n => n.Value)
@@ -217,17 +223,18 @@ public class MantaDbContext : DbContext
                     .IsRequired();
             });
             
-            // Ігноруємо Role - це вичислювана властивість
             entity.Ignore(u => u.Role);
             
-            // Discriminator для TPH
+            // Discriminator для Table-Per-Hierarchy (TPH)
             entity.HasDiscriminator<string>("UserType")
                 .HasValue<Admin>("Admin")
                 .HasValue<Cashier>("Cashier")
                 .HasValue<Driver>("Driver")
                 .HasValue<SystemUser>("SystemUser");
         });
-
+        
+        // Конфігурація Admin (пуста)
+        modelBuilder.Entity<Admin>();
         
         // Конфігурація Cashier
         modelBuilder.Entity<Cashier>(entity =>
@@ -240,22 +247,27 @@ public class MantaDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(c => c.DeliveryPointId)
                 .OnDelete(DeleteBehavior.Restrict);
-        });        
+        });
         
         // Конфігурація Driver
         modelBuilder.Entity<Driver>(entity =>
         {
+            // LicensePlate як Value Object через OwnsOne
             entity.OwnsOne(d => d.LicensePlate, lp =>
             {
                 lp.Property(p => p.Value)
                     .HasColumnName("LicensePlate")
                     .HasMaxLength(10)
                     .IsRequired();
-                
-                // Створюємо індекс на вкладеному рівні
+
+                // ✅ Індекс створюється тут, всередині OwnsOne
                 lp.HasIndex(p => p.Value);
             });
         });
+        
+        // Конфігурація SystemUser (пуста)
+        modelBuilder.Entity<SystemUser>();
+        
 
         base.OnModelCreating(modelBuilder);
     }

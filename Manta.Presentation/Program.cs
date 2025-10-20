@@ -73,10 +73,10 @@ static class Program
             //await scope.ServiceProvider.GetRequiredService<Seed>().SeedAsync();
             ApplicationConfiguration.Initialize();
            EventsLoader.LoadAllEvents(_statusService);
-           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1, 1, await _userRepository.GetByEmailAsync("kka@manta.com"));
-           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           // await _deliveryService.ParcelChangeAmountDue(1, 100m);
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1, 1, await _userRepository.GetByEmailAsync("kka@manta.com"));
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           await _deliveryService.ParcelChangeAmountDue(1, 100.0m);
             
             System.Windows.Forms.Application.Run(new FMain(
                 _parcelRepository,

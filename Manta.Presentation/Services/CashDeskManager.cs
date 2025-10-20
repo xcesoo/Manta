@@ -6,7 +6,6 @@ public static class CashDeskManager
 {
     public static List<Parcel> Parcels { get; set; } = new();
     public static event Action? ParcelsChanged;
-    public static event Action? DeliveryCompleted;
     public static void Add(Parcel parcel)
     {
         if (Parcels.Contains(parcel)) return;
@@ -27,6 +26,6 @@ public static class CashDeskManager
 
     public static void Complete()
     {
-        DeliveryCompleted?.Invoke();
+        ChangeStatusService.ShipmentChangedStatus();
     }
 }

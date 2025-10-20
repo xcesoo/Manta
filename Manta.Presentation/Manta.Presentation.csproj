@@ -54,6 +54,15 @@
       <Compile Update="Controls\ParcelCashDesk.cs">
         <SubType>UserControl</SubType>
       </Compile>
+      <Compile Update="Forms\FShipmentInfo.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Controls\ShipmentInfo.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="Controls\StatusHistory.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

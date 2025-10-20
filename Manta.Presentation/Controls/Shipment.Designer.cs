@@ -37,6 +37,7 @@ partial class Shipment
         amountDueLabel = new System.Windows.Forms.Label();
         cashdeskBtn = new System.Windows.Forms.Button();
         statusLabel = new System.Windows.Forms.Label();
+        panel1 = new System.Windows.Forms.Panel();
         SuspendLayout();
         // 
         // idLabel
@@ -96,6 +97,7 @@ partial class Shipment
         cashdeskBtn.TabIndex = 4;
         cashdeskBtn.Text = "Додати в кошик";
         cashdeskBtn.UseVisualStyleBackColor = true;
+        cashdeskBtn.BackColor = Color.White;
         cashdeskBtn.Click += cashdeskBtn_Click;
         // 
         // statusLabel
@@ -109,10 +111,19 @@ partial class Shipment
         statusLabel.Text = "Статус";
         statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
+        // panel1
+        // 
+        panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+        panel1.Location = new System.Drawing.Point(425, 0);
+        panel1.Name = "panel1";
+        panel1.Size = new System.Drawing.Size(60, 50);
+        panel1.TabIndex = 6;
+        // 
         // Shipment
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        Controls.Add(panel1);
         Controls.Add(statusLabel);
         Controls.Add(cashdeskBtn);
         Controls.Add(amountDueLabel);
@@ -122,6 +133,8 @@ partial class Shipment
         Size = new System.Drawing.Size(700, 50);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Panel panel1;
 
     private System.Windows.Forms.Label statusLabel;
 
