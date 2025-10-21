@@ -69,7 +69,7 @@ public class ParcelRepository : IParcelRepository
     public async Task<IEnumerable<Parcel>> GetByDeliveryPointIdAsync(int deliveryPointId, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
-            .Where(p => p.DeliveryPointId == deliveryPointId)
+            .Where(p => p.DeliveryPointId == deliveryPointId || p.CurrentLocationDeliveryPointId == deliveryPointId)
             .ToListAsync(cancellationToken);
     }
 

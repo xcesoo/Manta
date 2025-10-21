@@ -61,7 +61,7 @@ public partial class FMain : Form
         };
         _cashDeskForm = new FCashDesk(deliveryService);
         
-        _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn];
+        _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn, acceptParcels];
         _cashDeskForm.TopLevel = false;
         _cashDeskForm.Dock = DockStyle.Fill;
         cashDeskPanel.Controls.Add(_cashDeskForm);
@@ -138,5 +138,10 @@ public partial class FMain : Form
     private void minimizeBtn_Click(object sender, EventArgs e)
     {
         this.WindowState = FormWindowState.Minimized; 
+    }
+
+    private void acceptParcels_Click(object sender, EventArgs e)
+    {
+        ChangeForm(new FAcceptShipments(_deliveryService, _parcelRepository), sender);
     }
 }

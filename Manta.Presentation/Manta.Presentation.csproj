@@ -63,6 +63,12 @@
       <Compile Update="Controls\StatusHistory.cs">
         <SubType>UserControl</SubType>
       </Compile>
+      <Compile Update="Forms\FAcceptShipments.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Controls\AcceptShipment.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -20,7 +20,8 @@ public partial class FShipments : Form
         _filter = filter ?? (_ => true);
         InitializeComponent();
         
-        AppContext.DeliveryPointChangedEvent += async () => await LoadDataAsync(null);
+        AppContext.DeliveryPointChangedEvent += async () => await LoadDataAsync(searchTextBox.Text);
+        AppContext.ShipmentChangedEvent += async () => await LoadDataAsync(searchTextBox.Text);
         ChangeStatusService.OnStatusChanged += async () => await LoadDataAsync(searchTextBox.Text);
     }
     private async Task LoadDataAsync(string? search = null)
@@ -38,7 +39,7 @@ public partial class FShipments : Form
             flowDataPanel.Controls.Add(new Label { Text = "Посилки не знайдені", AutoSize = true });
             return;
         }
-
+        parcels = parcels.OrderByDescending(p => p.CurrentStatus.ChangedAt).ToList();
         foreach (var parcel in parcels)
         {
             var shipment = new Shipment(parcel);

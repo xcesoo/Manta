@@ -30,16 +30,17 @@ partial class FMain
     private void InitializeComponent()
     {
         sideMenuPanel = new System.Windows.Forms.Panel();
+        acceptParcels = new System.Windows.Forms.Button();
         adminToolsBtn = new System.Windows.Forms.Button();
         optionsBtn = new System.Windows.Forms.Button();
         shipmentsBtn = new System.Windows.Forms.Button();
         returnRequestBtn = new System.Windows.Forms.Button();
         shipmentDeliveryBtn = new System.Windows.Forms.Button();
         borderPanel = new System.Windows.Forms.Panel();
+        minimizeBtn = new System.Windows.Forms.Button();
         exitBtn = new System.Windows.Forms.Button();
         cashDeskPanel = new System.Windows.Forms.Panel();
         mainPanel = new System.Windows.Forms.Panel();
-        minimizeBtn = new System.Windows.Forms.Button();
         sideMenuPanel.SuspendLayout();
         borderPanel.SuspendLayout();
         SuspendLayout();
@@ -47,6 +48,7 @@ partial class FMain
         // sideMenuPanel
         // 
         sideMenuPanel.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+        sideMenuPanel.Controls.Add(acceptParcels);
         sideMenuPanel.Controls.Add(adminToolsBtn);
         sideMenuPanel.Controls.Add(optionsBtn);
         sideMenuPanel.Controls.Add(shipmentsBtn);
@@ -57,6 +59,22 @@ partial class FMain
         sideMenuPanel.Name = "sideMenuPanel";
         sideMenuPanel.Size = new System.Drawing.Size(180, 590);
         sideMenuPanel.TabIndex = 0;
+        // 
+        // acceptParcels
+        // 
+        acceptParcels.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        acceptParcels.Dock = System.Windows.Forms.DockStyle.Top;
+        acceptParcels.FlatAppearance.BorderSize = 0;
+        acceptParcels.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        acceptParcels.Font = new System.Drawing.Font("Arial", 9.75F);
+        acceptParcels.ForeColor = System.Drawing.Color.White;
+        acceptParcels.Location = new System.Drawing.Point(0, 132);
+        acceptParcels.Name = "acceptParcels";
+        acceptParcels.Size = new System.Drawing.Size(180, 44);
+        acceptParcels.TabIndex = 8;
+        acceptParcels.Text = "Прийом відправлень";
+        acceptParcels.UseVisualStyleBackColor = true;
+        acceptParcels.Click += acceptParcels_Click;
         // 
         // adminToolsBtn
         // 
@@ -150,6 +168,22 @@ partial class FMain
         borderPanel.MouseMove += borderPanel_MouseMove;
         borderPanel.MouseUp += borderPanel_MouseUp;
         // 
+        // minimizeBtn
+        // 
+        minimizeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        minimizeBtn.Dock = System.Windows.Forms.DockStyle.Right;
+        minimizeBtn.FlatAppearance.BorderSize = 0;
+        minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        minimizeBtn.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        minimizeBtn.ForeColor = System.Drawing.Color.White;
+        minimizeBtn.Location = new System.Drawing.Point(1052, 0);
+        minimizeBtn.Name = "minimizeBtn";
+        minimizeBtn.Size = new System.Drawing.Size(50, 50);
+        minimizeBtn.TabIndex = 9;
+        minimizeBtn.Text = "-";
+        minimizeBtn.UseVisualStyleBackColor = true;
+        minimizeBtn.Click += minimizeBtn_Click;
+        // 
         // exitBtn
         // 
         exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -182,22 +216,6 @@ partial class FMain
         mainPanel.Size = new System.Drawing.Size(772, 590);
         mainPanel.TabIndex = 3;
         // 
-        // minimizeBtn
-        // 
-        minimizeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-        minimizeBtn.Dock = System.Windows.Forms.DockStyle.Right;
-        minimizeBtn.FlatAppearance.BorderSize = 0;
-        minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        minimizeBtn.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        minimizeBtn.ForeColor = System.Drawing.Color.White;
-        minimizeBtn.Location = new System.Drawing.Point(1052, 0);
-        minimizeBtn.Name = "minimizeBtn";
-        minimizeBtn.Size = new System.Drawing.Size(50, 50);
-        minimizeBtn.TabIndex = 9;
-        minimizeBtn.Text = "-";
-        minimizeBtn.UseVisualStyleBackColor = true;
-        minimizeBtn.Click += minimizeBtn_Click;
-        // 
         // FMain
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -214,6 +232,8 @@ partial class FMain
         borderPanel.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Button acceptParcels;
 
     private System.Windows.Forms.Button minimizeBtn;
 
