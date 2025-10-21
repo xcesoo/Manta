@@ -21,7 +21,8 @@ public class Parcel
     
     public virtual ICollection<ParcelStatus> StatusHistory { get; private set; } = new List<ParcelStatus>();
     public ParcelStatus CurrentStatus => StatusHistory.Last();
-    
+    public DateTime? ArrivedAt { get; private set; } = null;
+    public DateTime? Storage => ArrivedAt?.ToLocalTime() + TimeSpan.FromDays(3);
     private Parcel() { }
     private Parcel(int id, int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
     {
@@ -79,4 +80,5 @@ public class Parcel
     {
         ChangeStatus(EParcelStatus.ShipmentCancelled, cancelledBy);
     }
+    internal void ChangeArrivedAt(DateTime arrivedAt) => ArrivedAt = arrivedAt;
 }

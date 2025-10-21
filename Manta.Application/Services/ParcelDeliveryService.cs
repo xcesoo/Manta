@@ -66,6 +66,10 @@ public class ParcelDeliveryService
         var context = RuleContext.ForDelivery(parcel, changedBy, deliveryPoint);
         if (_statusService.ApplyRule<AcceptAtDeliveryPointPolicy>(context))
         {
+            if (parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup)
+            {
+                parcel.ChangeArrivedAt(parcel.CurrentStatus.ChangedAt);
+            }
             if (parcel.CurrentVehicleId != null)
                 await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
             parcel.MoveToLocation(deliveryPoint.Id);
@@ -214,6 +218,7 @@ public class ParcelDeliveryService
         if (parcel.CurrentVehicleId != null)
             await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
         parcel.ChangeStatus(EParcelStatus.ReadyForPickup, changedBy);
+        parcel.ChangeArrivedAt(parcel.CurrentStatus.ChangedAt);
         parcel.MoveToLocation(deliveryPoint.Id);
         DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
         await _parcelRepository.UpdateAsync(parcel);

@@ -26,9 +26,10 @@ public partial class ShipmentInfo : UserControl
     {
         id.Text = $"Номер замовлення - {Parcel.Id}";
         weight.Text = $"Вага - {Parcel.Weight} кг.";
-        //storage.Text = Parcel. todo
-        currentStatus.Text = $"{Parcel.CurrentStatus.Status}";
-        createdAt.Text = $"Створена - {Parcel.StatusHistory.First(s => s.Status == EParcelStatus.Processing).ChangedAt.Date}";
+        storage.Text = Parcel.Storage is DateTime storageDate
+            ? $"Зберігання до - {storageDate.ToLocalTime():dd.MM.yyyy}"
+            : "";        currentStatus.Text = $"{Parcel.CurrentStatus.Status}";
+        createdAt.Text = $"Створена - {Parcel.StatusHistory.First(s => s.Status == EParcelStatus.Processing).ChangedAt.ToLocalTime()}";
         recipientPhoneNumber.Text = $"{Parcel.RecipientPhoneNumber}";
         recipientName.Text = $"{Parcel.RecipientName}";
         foreach (var status in Parcel.StatusHistory) statusHistoryFlowPanel.Controls.Add(new StatusHistory(status));

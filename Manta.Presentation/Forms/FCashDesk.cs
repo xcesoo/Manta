@@ -14,6 +14,7 @@ public partial class FCashDesk : Form
         _deliveryService = deliveryService;
         InitializeComponent();
         CashDeskManager.ParcelsChanged += CashDesk_ParcelsChanged;
+        AppContext.DeliveryPointChangedEvent += CashDeskManager.Clear;
     }
 
     private void CashDesk_ParcelsChanged()

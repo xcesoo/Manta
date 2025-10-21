@@ -35,6 +35,8 @@ public class MantaDbContext : DbContext
             
             entity.Property(p => p.Weight)
                 .IsRequired();
+            entity.Property(p => p.ArrivedAt)
+                .HasColumnName("ArrivedAt");
             
             // Value Objects
             entity.OwnsOne(p => p.RecipientName, name =>

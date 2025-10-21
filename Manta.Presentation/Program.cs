@@ -2,7 +2,9 @@
 using Manta.Application;
 using Manta.Application.DataSeed;
 using Manta.Application.Events;
+using Manta.Application.Factories;
 using Manta.Application.Services;
+using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
 using Manta.Domain.Services;
 using Manta.Infrastructure;
@@ -73,10 +75,14 @@ static class Program
             //await scope.ServiceProvider.GetRequiredService<Seed>().SeedAsync();
             ApplicationConfiguration.Initialize();
            EventsLoader.LoadAllEvents(_statusService);
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1, 1, await _userRepository.GetByEmailAsync("kka@manta.com"));
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
-           await _deliveryService.ParcelChangeAmountDue(1, 100.0m);
+           // await ParcelFactory.Create(new ParcelCreationOptions(1, 732.0m, 4.8, "test", "+380689320388", "test@gmail.com",
+           //    await _userRepository.GetByEmailAsync("zmo@manta.com")), _parcelRepository);
+           // await _deliveryService.AcceptedAtDeliveryPoint(1, 95,
+           //     await _userRepository.GetByEmailAsync("kka@manta.com"));
+            //await _deliveryService.ForceAcceptedAtDeliveryPoint(1, 1, await _userRepository.GetByEmailAsync("kka@manta.com"));
+           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,4, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           // await _deliveryService.ForceAcceptedAtDeliveryPoint(1,6, SystemUser.Instance); // TODO ВИДАЛИТИ!!! (для перевірки каси)
+           // await _deliveryService.ParcelChangeAmountDue(1, 100.0m);
             
             System.Windows.Forms.Application.Run(new FMain(
                 _parcelRepository,

@@ -6,6 +6,7 @@ public static class CashDeskManager
 {
     public static List<Parcel> Parcels { get; set; } = new();
     public static event Action? ParcelsChanged;
+    
     public static void Add(Parcel parcel)
     {
         if (Parcels.Contains(parcel)) return;
