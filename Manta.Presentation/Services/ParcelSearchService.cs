@@ -16,7 +16,8 @@ public class ParcelSearchService
         if (string.IsNullOrEmpty(search)) return await _parcelRepository.GetByDeliveryPointIdAsync(deliveryPointId);
         else
         {
-            return await _parcelRepository.GetByRecipientPhoneAsync(search);
+            var result = await _parcelRepository.GetByRecipientPhoneAsync(search);
+            return result.Where(p => p.DeliveryPointId == deliveryPointId);
         }
     }
 }
