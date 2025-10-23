@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Manta.Presentation.Forms;
 
-partial class FToReturn
+partial class FToTransit
 {
     /// <summary>
     /// Required designer variable.
@@ -32,78 +32,98 @@ partial class FToReturn
     private void InitializeComponent()
     {
         flowDataPanel = new System.Windows.Forms.FlowLayoutPanel();
-        infoPanel = new System.Windows.Forms.Panel();
-        returnRequest = new System.Windows.Forms.Button();
-        selectAll = new System.Windows.Forms.CheckBox();
+        vehicleSearch = new System.Windows.Forms.TextBox();
+        label = new System.Windows.Forms.Label();
         panel1 = new System.Windows.Forms.Panel();
+        toTransit = new System.Windows.Forms.Button();
+        selectAll = new System.Windows.Forms.CheckBox();
+        panel2 = new System.Windows.Forms.Panel();
         label4 = new System.Windows.Forms.Label();
         label3 = new System.Windows.Forms.Label();
         label2 = new System.Windows.Forms.Label();
         label1 = new System.Windows.Forms.Label();
-        infoPanel.SuspendLayout();
+        panel1.SuspendLayout();
         SuspendLayout();
         // 
         // flowDataPanel
         // 
         flowDataPanel.AutoScroll = true;
-        flowDataPanel.Location = new System.Drawing.Point(12, 80);
+        flowDataPanel.Location = new System.Drawing.Point(13, 136);
         flowDataPanel.Name = "flowDataPanel";
-        flowDataPanel.Size = new System.Drawing.Size(768, 470);
+        flowDataPanel.Size = new System.Drawing.Size(768, 442);
         flowDataPanel.TabIndex = 0;
-        
         // 
-        // infoPanel
+        // vehicleSearch
         // 
-        infoPanel.Controls.Add(returnRequest);
-        infoPanel.Controls.Add(selectAll);
-        infoPanel.Controls.Add(panel1);
-        infoPanel.Controls.Add(label4);
-        infoPanel.Controls.Add(label3);
-        infoPanel.Controls.Add(label2);
-        infoPanel.Controls.Add(label1);
-        infoPanel.Location = new System.Drawing.Point(12, 24);
-        infoPanel.Name = "infoPanel";
-        infoPanel.Size = new System.Drawing.Size(748, 50);
-        infoPanel.TabIndex = 1;
+        vehicleSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        vehicleSearch.Font = new System.Drawing.Font("Arial", 14.25F);
+        vehicleSearch.Location = new System.Drawing.Point(13, 45);
+        vehicleSearch.Name = "vehicleSearch";
+        vehicleSearch.Size = new System.Drawing.Size(747, 29);
+        vehicleSearch.TabIndex = 1;
+        vehicleSearch.KeyDown += vehicleSearch_KeyDown;
         // 
-        // returnRequest
+        // label
         // 
-        returnRequest.Dock = System.Windows.Forms.DockStyle.Right;
-        returnRequest.FlatAppearance.BorderSize = 0;
-        returnRequest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        returnRequest.Location = new System.Drawing.Point(578, 0);
-        returnRequest.Name = "returnRequest";
-        returnRequest.Size = new System.Drawing.Size(50, 50);
-        returnRequest.TabIndex = 6;
-        returnRequest.Text = "✔️";
-        returnRequest.UseVisualStyleBackColor = true;
-        returnRequest.Click += returnRequest_Click;
+        label.Font = new System.Drawing.Font("Arial", 9.75F);
+        label.Location = new System.Drawing.Point(13, 18);
+        label.Name = "label";
+        label.Size = new System.Drawing.Size(747, 25);
+        label.TabIndex = 2;
+        label.Text = "Введіть номер машини";
+        // 
+        // panel1
+        // 
+        panel1.Controls.Add(toTransit);
+        panel1.Controls.Add(selectAll);
+        panel1.Controls.Add(panel2);
+        panel1.Controls.Add(label4);
+        panel1.Controls.Add(label3);
+        panel1.Controls.Add(label2);
+        panel1.Controls.Add(label1);
+        panel1.Location = new System.Drawing.Point(12, 80);
+        panel1.Name = "panel1";
+        panel1.Size = new System.Drawing.Size(748, 50);
+        panel1.TabIndex = 3;
+        // 
+        // toTransit
+        // 
+        toTransit.Dock = System.Windows.Forms.DockStyle.Right;
+        toTransit.FlatAppearance.BorderSize = 0;
+        toTransit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        toTransit.Location = new System.Drawing.Point(578, 0);
+        toTransit.Name = "toTransit";
+        toTransit.Size = new System.Drawing.Size(50, 50);
+        toTransit.TabIndex = 6;
+        toTransit.Text = "✔️";
+        toTransit.UseVisualStyleBackColor = true;
+        toTransit.Click += toTransit_Click;
         // 
         // selectAll
         // 
         selectAll.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
         selectAll.Dock = System.Windows.Forms.DockStyle.Right;
         selectAll.Font = new System.Drawing.Font("Arial", 9.75F);
+        selectAll.ForeColor = System.Drawing.Color.Black;
         selectAll.Location = new System.Drawing.Point(628, 0);
         selectAll.Name = "selectAll";
         selectAll.Size = new System.Drawing.Size(100, 50);
-        selectAll.TabIndex = 4;
+        selectAll.TabIndex = 5;
         selectAll.Text = "Обрати всі";
         selectAll.UseVisualStyleBackColor = true;
         // 
-        // panel1
+        // panel2
         // 
-        panel1.Dock = System.Windows.Forms.DockStyle.Right;
-        panel1.Location = new System.Drawing.Point(728, 0);
-        panel1.Name = "panel1";
-        panel1.Size = new System.Drawing.Size(20, 50);
-        panel1.TabIndex = 5;
+        panel2.Dock = System.Windows.Forms.DockStyle.Right;
+        panel2.Location = new System.Drawing.Point(728, 0);
+        panel2.Name = "panel2";
+        panel2.Size = new System.Drawing.Size(20, 50);
+        panel2.TabIndex = 4;
         // 
         // label4
         // 
         label4.Dock = System.Windows.Forms.DockStyle.Left;
         label4.Font = new System.Drawing.Font("Arial", 9.75F);
-        label4.ForeColor = System.Drawing.Color.Black;
         label4.Location = new System.Drawing.Point(325, 0);
         label4.Name = "label4";
         label4.Size = new System.Drawing.Size(150, 50);
@@ -115,7 +135,6 @@ partial class FToReturn
         // 
         label3.Dock = System.Windows.Forms.DockStyle.Left;
         label3.Font = new System.Drawing.Font("Arial", 9.75F);
-        label3.ForeColor = System.Drawing.Color.Black;
         label3.Location = new System.Drawing.Point(175, 0);
         label3.Name = "label3";
         label3.Size = new System.Drawing.Size(150, 50);
@@ -127,7 +146,6 @@ partial class FToReturn
         // 
         label2.Dock = System.Windows.Forms.DockStyle.Left;
         label2.Font = new System.Drawing.Font("Arial", 9.75F);
-        label2.ForeColor = System.Drawing.Color.Black;
         label2.Location = new System.Drawing.Point(25, 0);
         label2.Name = "label2";
         label2.Size = new System.Drawing.Size(150, 50);
@@ -139,7 +157,6 @@ partial class FToReturn
         // 
         label1.Dock = System.Windows.Forms.DockStyle.Left;
         label1.Font = new System.Drawing.Font("Arial", 9.75F);
-        label1.ForeColor = System.Drawing.Color.DimGray;
         label1.Location = new System.Drawing.Point(0, 0);
         label1.Name = "label1";
         label1.Size = new System.Drawing.Size(25, 50);
@@ -147,24 +164,27 @@ partial class FToReturn
         label1.Text = "№";
         label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
-        // FToReturn
+        // FToTransit
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(772, 590);
-        Controls.Add(infoPanel);
+        Controls.Add(panel1);
+        Controls.Add(label);
+        Controls.Add(vehicleSearch);
         Controls.Add(flowDataPanel);
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-        Text = "ToReturn";
-        infoPanel.ResumeLayout(false);
+        Text = "FToTransit";
+        panel1.ResumeLayout(false);
         ResumeLayout(false);
+        PerformLayout();
     }
 
-    private System.Windows.Forms.Button returnRequest;
-
-    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Button toTransit;
 
     private System.Windows.Forms.CheckBox selectAll;
+
+    private System.Windows.Forms.Panel panel2;
 
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label3;
@@ -172,9 +192,14 @@ partial class FToReturn
 
     private System.Windows.Forms.Label label1;
 
-    private System.Windows.Forms.Panel infoPanel;
+    private System.Windows.Forms.Panel panel1;
+
+    private System.Windows.Forms.Label label;
+
+    private System.Windows.Forms.TextBox vehicleSearch;
 
     private System.Windows.Forms.FlowLayoutPanel flowDataPanel;
+
 
     #endregion
 }

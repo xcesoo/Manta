@@ -30,6 +30,7 @@ partial class FMain
     private void InitializeComponent()
     {
         sideMenuPanel = new System.Windows.Forms.Panel();
+        inTransitBtn = new System.Windows.Forms.Button();
         acceptParcels = new System.Windows.Forms.Button();
         adminToolsBtn = new System.Windows.Forms.Button();
         optionsBtn = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@ partial class FMain
         // sideMenuPanel
         // 
         sideMenuPanel.BackColor = System.Drawing.Color.FromArgb(((int)((byte)59)), ((int)((byte)77)), ((int)((byte)86)));
+        sideMenuPanel.Controls.Add(inTransitBtn);
         sideMenuPanel.Controls.Add(acceptParcels);
         sideMenuPanel.Controls.Add(adminToolsBtn);
         sideMenuPanel.Controls.Add(optionsBtn);
@@ -59,6 +61,22 @@ partial class FMain
         sideMenuPanel.Name = "sideMenuPanel";
         sideMenuPanel.Size = new System.Drawing.Size(180, 590);
         sideMenuPanel.TabIndex = 0;
+        // 
+        // inTransitBtn
+        // 
+        inTransitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+        inTransitBtn.Dock = System.Windows.Forms.DockStyle.Top;
+        inTransitBtn.FlatAppearance.BorderSize = 0;
+        inTransitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        inTransitBtn.Font = new System.Drawing.Font("Arial", 9.75F);
+        inTransitBtn.ForeColor = System.Drawing.Color.White;
+        inTransitBtn.Location = new System.Drawing.Point(0, 176);
+        inTransitBtn.Name = "inTransitBtn";
+        inTransitBtn.Size = new System.Drawing.Size(180, 44);
+        inTransitBtn.TabIndex = 9;
+        inTransitBtn.Text = "Відвантаження";
+        inTransitBtn.UseVisualStyleBackColor = true;
+        inTransitBtn.Click += inTransitBtn_Click;
         // 
         // acceptParcels
         // 
@@ -233,6 +251,8 @@ partial class FMain
         borderPanel.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Button inTransitBtn;
 
     private System.Windows.Forms.Button acceptParcels;
 

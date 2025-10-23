@@ -130,7 +130,6 @@ public class ParcelDeliveryService
         {
             deliveryVehicle.LoadParcel(parcel.Id, parcel.Weight);
             parcel.ChangeDeliveryVehicle(deliveryVehicle.Id);
-            parcel.MoveToLocation(null);
             await _deliveryVehicleRepository.UpdateAsync(deliveryVehicle);
             await _deliveryVehicleRepository.SaveChangesAsync();
             await _parcelRepository.UpdateAsync(parcel);
@@ -190,6 +189,7 @@ public class ParcelDeliveryService
             {
                 if (parcel.CurrentVehicleId != null)
                     await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
+                parcel.MoveToLocation(null);
                 await _parcelRepository.UpdateAsync(parcel);
                 await _parcelRepository.SaveChangesAsync();
             }

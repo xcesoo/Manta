@@ -9,14 +9,16 @@ public partial class ShipmentToReturn : UserControl
     public delegate void CheckChangedHandler(ShipmentToReturn sender, bool isChecked);
     public event CheckChangedHandler CheckChanged;
     public event Action<Parcel> ShipmentClicked;
+    private EParcelStatus[] _blockStatuses { get; init; }
     
     private Color _defoultColor { get; init; }
 
-    public ShipmentToReturn(Parcel parcel)
+    public ShipmentToReturn(Parcel parcel, params EParcelStatus[] blockStatuses)
     {
         InitializeComponent();
         Parcel = parcel;
         _defoultColor = BackColor;
+        _blockStatuses = blockStatuses;
         idLabel.Text = Parcel.Id.ToString();
         recipientNameLabel.Text = Parcel.RecipientName.ToString();
         phoneNumberLabel.Text = Parcel.RecipientPhoneNumber.ToString();
@@ -34,7 +36,10 @@ public partial class ShipmentToReturn : UserControl
         {
             CheckChanged?.Invoke(this, check.Checked);
         };
-        if(parcel.CurrentStatus.Status is EParcelStatus.ReturnRequested or EParcelStatus.ReaddressRequested) check.Enabled = false;
+        foreach (var block in _blockStatuses)
+        {
+            if (block == parcel.CurrentStatus.Status) check.Enabled = false;
+        }
     }
 
     public void SetChecked(bool value)

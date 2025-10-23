@@ -48,7 +48,7 @@ public partial class FMain : Form
         _cashDeskForm = new FCashDesk(deliveryService);
         _optionsForm = new FOptions(userRepository, deliveryPointRepository);
         
-        _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn, acceptParcels];
+        _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn, acceptParcels, inTransitBtn];
         _cashDeskForm.TopLevel = false;
         _cashDeskForm.Dock = DockStyle.Fill;
         cashDeskPanel.Controls.Add(_cashDeskForm);
@@ -148,5 +148,11 @@ public partial class FMain : Form
         var toReturnForm = new FToReturn(_parcelRepository, _deliveryService);
         toReturnForm.ShipmentOpenRequested += parcel => ChangeForm(new FShipmentInfo(parcel, _deliveryService, _parcelRepository), null);
         ChangeForm(toReturnForm, sender);
+    }
+
+    private void inTransitBtn_Click(object sender, EventArgs e)
+    {
+        var toTransitForm = new FToTransit(_parcelRepository, _deliveryService, _deliveryVehicleRepository);
+        ChangeForm(toTransitForm, sender);
     }
 }

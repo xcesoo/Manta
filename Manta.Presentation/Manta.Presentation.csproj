@@ -75,6 +75,9 @@
       <Compile Update="Forms\FToReturn.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="Forms\FToTransit.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
