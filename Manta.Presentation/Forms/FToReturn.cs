@@ -34,6 +34,7 @@ public partial class FToReturn : Form
         var parcels = await _parcelRepository.GetByDeliveryPointIdAsync((int)State.AppContext.CurrentDeliveryPointId!);
         parcels = parcels.Where(p => p.CurrentStatus.Status is EParcelStatus.WrongLocation
             or EParcelStatus.ShipmentCancelled or EParcelStatus.ReaddressRequested or EParcelStatus.StorageExpired or EParcelStatus.ReturnRequested)
+            .Where(p =>p.CurrentLocationDeliveryPointId ==  State.AppContext.CurrentDeliveryPointId!)
             .ToList();
         selectAll.CheckedChanged += HeaderSelectAll;
 

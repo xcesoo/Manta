@@ -46,7 +46,9 @@ public partial class FToTransit : Form
         }
         _selectedVehicle = vehicle;
         var parcels = await _parcelRepository.GetByDeliveryPointIdAsync((int)State.AppContext.CurrentDeliveryPointId!);
-        _toTransitParcles = parcels.Where(p => p.CurrentStatus.Status is EParcelStatus.ReaddressRequested or EParcelStatus.ReturnRequested).ToList();
+        _toTransitParcles = parcels.Where(p => p.CurrentStatus.Status is EParcelStatus.ReaddressRequested or EParcelStatus.ReturnRequested)
+            .Where(p => p.CurrentLocationDeliveryPointId ==  State.AppContext.CurrentDeliveryPointId!)
+            .ToList();
         selectAll.CheckedChanged += HeaderSelectAll;
         foreach (var parcel in _toTransitParcles)
         {
