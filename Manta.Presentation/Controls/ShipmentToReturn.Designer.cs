@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Manta.Presentation.Controls;
 
-partial class Shipment
+partial class ShipmentToReturn
 {
     /// <summary> 
     /// Required designer variable.
@@ -34,9 +34,8 @@ partial class Shipment
         idLabel = new System.Windows.Forms.Label();
         phoneNumberLabel = new System.Windows.Forms.Label();
         recipientNameLabel = new System.Windows.Forms.Label();
-        amountDueLabel = new System.Windows.Forms.Label();
-        cashdeskBtn = new System.Windows.Forms.Button();
         statusLabel = new System.Windows.Forms.Label();
+        check = new System.Windows.Forms.CheckBox();
         panel1 = new System.Windows.Forms.Panel();
         SuspendLayout();
         // 
@@ -47,7 +46,7 @@ partial class Shipment
         idLabel.ForeColor = System.Drawing.Color.DimGray;
         idLabel.Location = new System.Drawing.Point(0, 0);
         idLabel.Name = "idLabel";
-        idLabel.Size = new System.Drawing.Size(50, 50);
+        idLabel.Size = new System.Drawing.Size(25, 50);
         idLabel.TabIndex = 0;
         idLabel.Text = "№";
         idLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -56,7 +55,7 @@ partial class Shipment
         // 
         phoneNumberLabel.Dock = System.Windows.Forms.DockStyle.Left;
         phoneNumberLabel.Font = new System.Drawing.Font("Arial", 9.75F);
-        phoneNumberLabel.Location = new System.Drawing.Point(50, 0);
+        phoneNumberLabel.Location = new System.Drawing.Point(25, 0);
         phoneNumberLabel.Name = "phoneNumberLabel";
         phoneNumberLabel.Size = new System.Drawing.Size(150, 50);
         phoneNumberLabel.TabIndex = 1;
@@ -67,66 +66,49 @@ partial class Shipment
         // 
         recipientNameLabel.Dock = System.Windows.Forms.DockStyle.Left;
         recipientNameLabel.Font = new System.Drawing.Font("Arial", 9.75F);
-        recipientNameLabel.Location = new System.Drawing.Point(200, 0);
+        recipientNameLabel.Location = new System.Drawing.Point(175, 0);
         recipientNameLabel.Name = "recipientNameLabel";
         recipientNameLabel.Size = new System.Drawing.Size(150, 50);
         recipientNameLabel.TabIndex = 2;
         recipientNameLabel.Text = "Одержувач";
         recipientNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
-        // amountDueLabel
-        // 
-        amountDueLabel.Dock = System.Windows.Forms.DockStyle.Left;
-        amountDueLabel.Font = new System.Drawing.Font("Arial", 9.75F);
-        amountDueLabel.Location = new System.Drawing.Point(350, 0);
-        amountDueLabel.Name = "amountDueLabel";
-        amountDueLabel.Size = new System.Drawing.Size(100, 50);
-        amountDueLabel.TabIndex = 3;
-        amountDueLabel.Text = "Оплата";
-        amountDueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        // 
-        // cashdeskBtn
-        // 
-        cashdeskBtn.BackColor = System.Drawing.Color.White;
-        cashdeskBtn.Dock = System.Windows.Forms.DockStyle.Right;
-        cashdeskBtn.FlatAppearance.BorderSize = 0;
-        cashdeskBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        cashdeskBtn.Font = new System.Drawing.Font("Arial", 9.75F);
-        cashdeskBtn.Location = new System.Drawing.Point(635, 0);
-        cashdeskBtn.Name = "cashdeskBtn";
-        cashdeskBtn.Size = new System.Drawing.Size(65, 50);
-        cashdeskBtn.TabIndex = 4;
-        cashdeskBtn.Text = "Додати в кошик";
-        cashdeskBtn.UseVisualStyleBackColor = false;
-        cashdeskBtn.Click += cashdeskBtn_Click;
-        // 
         // statusLabel
         // 
-        statusLabel.Dock = System.Windows.Forms.DockStyle.Right;
+        statusLabel.Dock = System.Windows.Forms.DockStyle.Left;
         statusLabel.Font = new System.Drawing.Font("Arial", 9.75F);
-        statusLabel.Location = new System.Drawing.Point(460, 0);
+        statusLabel.Location = new System.Drawing.Point(325, 0);
         statusLabel.Name = "statusLabel";
-        statusLabel.Size = new System.Drawing.Size(175, 50);
-        statusLabel.TabIndex = 5;
+        statusLabel.Size = new System.Drawing.Size(150, 50);
+        statusLabel.TabIndex = 3;
         statusLabel.Text = "Статус";
         statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        // 
+        // check
+        // 
+        check.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        check.Dock = System.Windows.Forms.DockStyle.Right;
+        check.Location = new System.Drawing.Point(650, 0);
+        check.Name = "check";
+        check.Size = new System.Drawing.Size(50, 50);
+        check.TabIndex = 4;
+        check.UseVisualStyleBackColor = true;
         // 
         // panel1
         // 
         panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-        panel1.Location = new System.Drawing.Point(450, 0);
+        panel1.Location = new System.Drawing.Point(475, 0);
         panel1.Name = "panel1";
-        panel1.Size = new System.Drawing.Size(10, 50);
-        panel1.TabIndex = 6;
+        panel1.Size = new System.Drawing.Size(175, 50);
+        panel1.TabIndex = 5;
         // 
-        // Shipment
+        // ShipmentToReturn
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         Controls.Add(panel1);
+        Controls.Add(check);
         Controls.Add(statusLabel);
-        Controls.Add(cashdeskBtn);
-        Controls.Add(amountDueLabel);
         Controls.Add(recipientNameLabel);
         Controls.Add(phoneNumberLabel);
         Controls.Add(idLabel);
@@ -136,13 +118,10 @@ partial class Shipment
 
     private System.Windows.Forms.Panel panel1;
 
-    private System.Windows.Forms.Label statusLabel;
-
-    private System.Windows.Forms.Button cashdeskBtn;
-
-    private System.Windows.Forms.Label amountDueLabel;
+    private System.Windows.Forms.CheckBox check;
 
     private System.Windows.Forms.Label recipientNameLabel;
+    private System.Windows.Forms.Label statusLabel;
 
     private System.Windows.Forms.Label phoneNumberLabel;
 

@@ -24,6 +24,21 @@ public partial class ShipmentInfo : UserControl
 
     private void ShipmentInfo_Load()
     {
+        top.BackColor = Parcel.CurrentStatus.Status switch
+        {
+            EParcelStatus.WrongLocation => Color.FromArgb(((int)((byte)252)), ((int)((byte)191)), ((int)((byte)73))),
+            EParcelStatus.ShipmentCancelled or 
+                EParcelStatus.StorageExpired => Color.FromArgb(((int)((byte)255)), ((int)((byte)129)), ((int)((byte)91))),
+            EParcelStatus.Delivered => Color.FromArgb(((int)((byte)200)), ((int)((byte)230)), ((int)((byte)201))),
+            EParcelStatus.ReadyForPickup => Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200))),
+            EParcelStatus.ReturnRequested or 
+                EParcelStatus.InReturnTransit or 
+                EParcelStatus.Returned => Color.FromArgb(((int)((byte)69)), ((int)((byte)69)), ((int)((byte)69))),
+            EParcelStatus.Processing or 
+                EParcelStatus.InTransit or 
+                EParcelStatus.ReaddressRequested => Color.FromArgb(((int)((byte)220)), ((int)((byte)220)), ((int)((byte)220))),
+        };
+        statusHistoryFlowPanel.Controls.Clear();
         id.Text = $"Номер замовлення - {Parcel.Id}";
         weight.Text = $"Вага - {Parcel.Weight} кг.";
         storage.Text = Parcel.Storage is DateTime storageDate

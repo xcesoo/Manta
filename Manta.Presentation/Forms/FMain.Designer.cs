@@ -137,6 +137,7 @@ partial class FMain
         returnRequestBtn.TabIndex = 4;
         returnRequestBtn.Text = "Потрібно відправити";
         returnRequestBtn.UseVisualStyleBackColor = true;
+        returnRequestBtn.Click += returnRequestBtn_Click;
         // 
         // shipmentDeliveryBtn
         // 

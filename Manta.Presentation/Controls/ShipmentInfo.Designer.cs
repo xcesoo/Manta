@@ -31,7 +31,7 @@ partial class ShipmentInfo
     /// </summary>
     private void InitializeComponent()
     {
-        panel1 = new System.Windows.Forms.Panel();
+        top = new System.Windows.Forms.Panel();
         storage = new System.Windows.Forms.Label();
         currentStatus = new System.Windows.Forms.Label();
         weight = new System.Windows.Forms.Label();
@@ -54,26 +54,26 @@ partial class ShipmentInfo
         label3 = new System.Windows.Forms.Label();
         cashDeskBtn = new System.Windows.Forms.Button();
         shipmentCancel = new System.Windows.Forms.Button();
-        panel1.SuspendLayout();
+        top.SuspendLayout();
         panel3.SuspendLayout();
         panel4.SuspendLayout();
         panel5.SuspendLayout();
         panel6.SuspendLayout();
         SuspendLayout();
         // 
-        // panel1
+        // top
         // 
-        panel1.BackColor = System.Drawing.Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200)));
-        panel1.Controls.Add(storage);
-        panel1.Controls.Add(currentStatus);
-        panel1.Controls.Add(weight);
-        panel1.Controls.Add(panel2);
-        panel1.Controls.Add(id);
-        panel1.Dock = System.Windows.Forms.DockStyle.Top;
-        panel1.Location = new System.Drawing.Point(0, 0);
-        panel1.Name = "panel1";
-        panel1.Size = new System.Drawing.Size(772, 50);
-        panel1.TabIndex = 0;
+        top.BackColor = System.Drawing.Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200)));
+        top.Controls.Add(storage);
+        top.Controls.Add(currentStatus);
+        top.Controls.Add(weight);
+        top.Controls.Add(panel2);
+        top.Controls.Add(id);
+        top.Dock = System.Windows.Forms.DockStyle.Top;
+        top.Location = new System.Drawing.Point(0, 0);
+        top.Name = "top";
+        top.Size = new System.Drawing.Size(772, 50);
+        top.TabIndex = 0;
         // 
         // storage
         // 
@@ -185,13 +185,13 @@ partial class ShipmentInfo
         // statusHistoryFlowPanel
         // 
         statusHistoryFlowPanel.AutoScroll = true;
-        statusHistoryFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-        statusHistoryFlowPanel.WrapContents = false;
         statusHistoryFlowPanel.Dock = System.Windows.Forms.DockStyle.Top;
+        statusHistoryFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
         statusHistoryFlowPanel.Location = new System.Drawing.Point(0, 175);
         statusHistoryFlowPanel.Name = "statusHistoryFlowPanel";
         statusHistoryFlowPanel.Size = new System.Drawing.Size(772, 100);
         statusHistoryFlowPanel.TabIndex = 7;
+        statusHistoryFlowPanel.WrapContents = false;
         // 
         // label1
         // 
@@ -338,9 +338,9 @@ partial class ShipmentInfo
         Controls.Add(statusHistoryFlowPanel);
         Controls.Add(panel4);
         Controls.Add(panel3);
-        Controls.Add(panel1);
+        Controls.Add(top);
         Size = new System.Drawing.Size(772, 522);
-        panel1.ResumeLayout(false);
+        top.ResumeLayout(false);
         panel3.ResumeLayout(false);
         panel4.ResumeLayout(false);
         panel5.ResumeLayout(false);
@@ -388,7 +388,7 @@ partial class ShipmentInfo
 
     private System.Windows.Forms.Label parcelId;
 
-    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Panel top;
 
     #endregion
 }

@@ -54,7 +54,7 @@ partial class FCashDesk
         // 
         parcelsFlowPanel.Location = new System.Drawing.Point(12, 35);
         parcelsFlowPanel.Name = "parcelsFlowPanel";
-        parcelsFlowPanel.Size = new System.Drawing.Size(176, 443);
+        parcelsFlowPanel.Size = new System.Drawing.Size(196, 443);
         parcelsFlowPanel.TabIndex = 1;
         // 
         // payBtn

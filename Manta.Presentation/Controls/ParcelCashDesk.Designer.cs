@@ -45,14 +45,13 @@ partial class ParcelCashDesk
         parcelIdLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
         parcelIdLabel.Location = new System.Drawing.Point(0, 0);
         parcelIdLabel.Name = "parcelIdLabel";
-        parcelIdLabel.Size = new System.Drawing.Size(168, 15);
+        parcelIdLabel.Size = new System.Drawing.Size(170, 15);
         parcelIdLabel.TabIndex = 0;
         parcelIdLabel.Text = "Номер посилки: ";
         // 
         // panel1
         // 
         panel1.BackColor = System.Drawing.Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200)));
-        panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         panel1.Controls.Add(deleteBtn);
         panel1.Controls.Add(toPayLabel);
         panel1.Controls.Add(panel2);
@@ -80,7 +79,7 @@ partial class ParcelCashDesk
         toPayLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
         toPayLabel.Location = new System.Drawing.Point(0, 30);
         toPayLabel.Name = "toPayLabel";
-        toPayLabel.Size = new System.Drawing.Size(168, 15);
+        toPayLabel.Size = new System.Drawing.Size(170, 15);
         toPayLabel.TabIndex = 3;
         toPayLabel.Text = "До сплати: ";
         // 
@@ -89,7 +88,7 @@ partial class ParcelCashDesk
         panel2.Dock = System.Windows.Forms.DockStyle.Top;
         panel2.Location = new System.Drawing.Point(0, 15);
         panel2.Name = "panel2";
-        panel2.Size = new System.Drawing.Size(168, 15);
+        panel2.Size = new System.Drawing.Size(170, 15);
         panel2.TabIndex = 2;
         // 
         // ParcelCashDesk
@@ -97,7 +96,7 @@ partial class ParcelCashDesk
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         Controls.Add(panel1);
-        Size = new System.Drawing.Size(176, 100);
+        Size = new System.Drawing.Size(176, 85);
         panel1.ResumeLayout(false);
         ResumeLayout(false);
     }

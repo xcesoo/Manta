@@ -24,8 +24,6 @@ public partial class FMain : Form
     private ParcelSearchService _searchService;
     
     //forms
-    private FShipments _shipmentsForm;
-    private FShipments _shipmentsReadyForPickUpForm;
     private FCashDesk _cashDeskForm;
     private FOptions _optionsForm;
     private Button[] _sideMenuButtons;
@@ -47,19 +45,8 @@ public partial class FMain : Form
         _statusService = statusService;
         _searchService = new ParcelSearchService(parcelRepository);
         
-        _shipmentsForm = new FShipments(_searchService);
-        _shipmentsForm.ShipmentOpenRequested += parcel =>
-        {
-            ChangeForm(new FShipmentInfo(parcel, deliveryService, parcelRepository), null);
-        };
-        _optionsForm = new FOptions(userRepository, deliveryPointRepository);
-        _shipmentsReadyForPickUpForm = new FShipments(_searchService, 
-            parcel => parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup);
-        _shipmentsReadyForPickUpForm.ShipmentOpenRequested += parcel =>
-        {
-            ChangeForm(new FShipmentInfo(parcel, deliveryService, parcelRepository), null);
-        };
         _cashDeskForm = new FCashDesk(deliveryService);
+        _optionsForm = new FOptions(userRepository, deliveryPointRepository);
         
         _sideMenuButtons = [shipmentDeliveryBtn, shipmentsBtn, returnRequestBtn, adminToolsBtn, optionsBtn, acceptParcels];
         _cashDeskForm.TopLevel = false;
@@ -117,12 +104,23 @@ public partial class FMain : Form
 
     private void shipmentDelivery_Click(object sender, EventArgs e)
     {
-        ChangeForm(_shipmentsReadyForPickUpForm, sender);
+        var shipmentsReadyForPickUpForm = new FShipments(_searchService,
+            parcel => parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup);
+        shipmentsReadyForPickUpForm.ShipmentOpenRequested += parcel =>
+        {
+            ChangeForm(new FShipmentInfo(parcel, _deliveryService, _parcelRepository), null);
+        };
+        ChangeForm(shipmentsReadyForPickUpForm, sender);
     }
 
     private void shipmentsBtn_Click(object sender, EventArgs e)
     {
-        ChangeForm(_shipmentsForm, sender);
+        var shipmentsForm = new FShipments(_searchService);
+        shipmentsForm.ShipmentOpenRequested += parcel =>
+        {
+            ChangeForm(new FShipmentInfo(parcel, _deliveryService, _parcelRepository), null);
+        };
+        ChangeForm(shipmentsForm, sender);
     }
 
     private void optionsBtn_Click(object sender, EventArgs e)
@@ -143,5 +141,12 @@ public partial class FMain : Form
     private void acceptParcels_Click(object sender, EventArgs e)
     {
         ChangeForm(new FAcceptShipments(_deliveryService, _parcelRepository), sender);
+    }
+
+    private void returnRequestBtn_Click(object sender, EventArgs e)
+    {
+        var toReturnForm = new FToReturn(_parcelRepository, _deliveryService);
+        toReturnForm.ShipmentOpenRequested += parcel => ChangeForm(new FShipmentInfo(parcel, _deliveryService, _parcelRepository), null);
+        ChangeForm(toReturnForm, sender);
     }
 }

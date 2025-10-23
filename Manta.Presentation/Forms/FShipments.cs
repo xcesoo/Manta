@@ -23,6 +23,7 @@ public partial class FShipments : Form
         AppContext.DeliveryPointChangedEvent += async () => await LoadDataAsync(searchTextBox.Text);
         AppContext.ShipmentChangedEvent += async () => await LoadDataAsync(searchTextBox.Text);
         ChangeStatusService.OnStatusChanged += async () => await LoadDataAsync(searchTextBox.Text);
+        LoadDataAsync();
     }
     private async Task LoadDataAsync(string? search = null)
     {

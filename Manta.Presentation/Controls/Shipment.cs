@@ -41,7 +41,21 @@ public partial class Shipment : UserControl
         if (Parcel.Paid)
             amountDueLabel.ForeColor = Color.DimGray;
         
-        cashdeskBtn.Enabled = Parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup; 
+        cashdeskBtn.Enabled = Parcel.CurrentStatus.Status == EParcelStatus.ReadyForPickup;
+        panel1.BackColor = Parcel.CurrentStatus.Status switch
+        {
+                        EParcelStatus.WrongLocation => Color.FromArgb(((int)((byte)252)), ((int)((byte)191)), ((int)((byte)73))),
+            EParcelStatus.ShipmentCancelled or 
+                EParcelStatus.StorageExpired => Color.FromArgb(((int)((byte)255)), ((int)((byte)129)), ((int)((byte)91))),
+            EParcelStatus.Delivered => Color.FromArgb(((int)((byte)200)), ((int)((byte)230)), ((int)((byte)201))),
+            EParcelStatus.ReadyForPickup => Color.FromArgb(((int)((byte)221)), ((int)((byte)238)), ((int)((byte)200))),
+            EParcelStatus.ReturnRequested or 
+                EParcelStatus.InReturnTransit or 
+                EParcelStatus.Returned => Color.FromArgb(((int)((byte)69)), ((int)((byte)69)), ((int)((byte)69))),
+            EParcelStatus.Processing or 
+                EParcelStatus.InTransit or 
+                EParcelStatus.ReaddressRequested => Color.FromArgb(((int)((byte)220)), ((int)((byte)220)), ((int)((byte)220))),
+        };
     }
 
     private void cashdeskBtn_Click(object sender, EventArgs e)

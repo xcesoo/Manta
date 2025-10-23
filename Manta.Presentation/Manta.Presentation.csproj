@@ -69,6 +69,12 @@
       <Compile Update="Controls\AcceptShipment.cs">
         <SubType>UserControl</SubType>
       </Compile>
+      <Compile Update="Controls\ShipmentToReturn.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="Forms\FToReturn.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -38,16 +38,16 @@ partial class FAcceptShipments
         // acceptedFlowPanel
         // 
         acceptedFlowPanel.AutoScroll = true;
-        acceptedFlowPanel.Location = new System.Drawing.Point(12, 56);
+        acceptedFlowPanel.Location = new System.Drawing.Point(13, 56);
         acceptedFlowPanel.Name = "acceptedFlowPanel";
-        acceptedFlowPanel.Size = new System.Drawing.Size(740, 522);
+        acceptedFlowPanel.Size = new System.Drawing.Size(748, 522);
         acceptedFlowPanel.TabIndex = 0;
         // 
         // acceptTextBox
         // 
         acceptTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         acceptTextBox.Font = new System.Drawing.Font("Arial", 14.25F);
-        acceptTextBox.Location = new System.Drawing.Point(12, 21);
+        acceptTextBox.Location = new System.Drawing.Point(13, 13);
         acceptTextBox.Name = "acceptTextBox";
         acceptTextBox.Size = new System.Drawing.Size(748, 29);
         acceptTextBox.TabIndex = 1;

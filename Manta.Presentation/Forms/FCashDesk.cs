@@ -43,7 +43,7 @@ public partial class FCashDesk : Form
         }
         foreach (var parcel in CashDeskManager.Parcels)
         {
-            await _deliveryService.PayForParcel(parcel.Id);
+            if(!parcel.Paid) await _deliveryService.PayForParcel(parcel.Id);
             await _deliveryService.DeliverParcel(parcel.Id, AppContext.CurrentUser);
         }
         CashDeskManager.Clear();
