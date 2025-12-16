@@ -13,12 +13,9 @@ public static class DependencyInjection
         this IServiceCollection services, 
         IConfiguration configuration)
     {
-        // Реєстрація DbContext з SQLite
         services.AddDbContext<MantaDbContext>(options =>
             options.UseSqlite(
                 configuration.GetConnectionString("DefaultConnection")));
-
-        // Реєстрація репозиторіїв
         services.AddScoped<IParcelRepository, ParcelRepository>();
         services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
         services.AddScoped<IDeliveryVehicleRepository, DeliveryVehicleRepository>();

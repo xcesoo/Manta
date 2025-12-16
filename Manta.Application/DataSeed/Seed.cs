@@ -2,6 +2,7 @@ using Manta.Application.Factories;
 using Manta.Application.Services;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
+using Manta.Domain.Enums;
 using Manta.Domain.Interfaces;
 
 namespace Manta.Application.DataSeed;
@@ -26,7 +27,17 @@ public class Seed : ISeed
     }
     public async Task SeedAsync()
     {
-        // Створення тестових даних
+        //add singleton
+        var systemUser = await _userRepository.GetByIdAsync(0)
+            ?? null;
+        if (systemUser == null)
+        {
+            await _userRepository.AddAsync(SystemUser.Instance);
+            await _userRepository.SaveChangesAsync();
+        }
+        //якщо є точки не заповнюємо
+        if((await _parcelRepository.GetAllAsync()).Any()) return;
+        
         await DeliveryVehicleFactory.Create(new DeliveryVehicleCreationOptions(
             LicensePlate: "AI0000KA",
             CarModel: ("Mercedes", "Sprinter"),
