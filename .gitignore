@@ -21,7 +21,6 @@ Thumbs.db
 
 # NuGet
 *.nupkg
-# Можна додати caching
 *.cache
 
 Migrations/
@@ -42,3 +41,6 @@ TestResults/
 *.db
 *.pdb
 *.pid
+
+#sqlite
+*.sqlite
