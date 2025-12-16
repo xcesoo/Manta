@@ -1,6 +1,6 @@
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
-using Manta.Infrastructure.Repositories;
+using Manta.Domain.Interfaces;
 
 namespace Manta.Application.Factories;
 

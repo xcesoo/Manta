@@ -2,7 +2,7 @@ using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Infrastructure.Repositories;
+namespace Manta.Domain.Interfaces;
 
 public interface IParcelRepository
 {

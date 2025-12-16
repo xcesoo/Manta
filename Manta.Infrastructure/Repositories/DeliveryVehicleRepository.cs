@@ -2,6 +2,7 @@
     using Manta.Domain.ValueObjects;
     using Manta.Infrastructure.Persistence;
     using Microsoft.EntityFrameworkCore;
+    using Manta.Domain.Interfaces;
 
     namespace Manta.Infrastructure.Repositories;
 

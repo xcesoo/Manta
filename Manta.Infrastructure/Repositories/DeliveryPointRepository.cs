@@ -1,4 +1,5 @@
 using Manta.Domain.Entities;
+using Manta.Domain.Interfaces;
 using Manta.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 

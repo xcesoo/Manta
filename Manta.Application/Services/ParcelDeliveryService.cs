@@ -1,14 +1,12 @@
-using System.Data;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Events;
+using Manta.Domain.Interfaces;
 using Manta.Domain.Services;
 using Manta.Domain.StatusRules;
 using Manta.Domain.StatusRules.Implementations;
 using Manta.Domain.StatusRules.Policies;
 using Manta.Domain.ValueObjects;
-using Manta.Infrastructure.EventDispatcher;
-using Manta.Infrastructure.Repositories;
 
 namespace Manta.Application.Services;
 
@@ -50,7 +48,6 @@ public class ParcelDeliveryService
 
         if (_statusService.ApplyRule<DeliveredRule>(context))
         {
-            DomainEvents.Raise(new ParcelDeliveredEvent(parcel, changeBy));
             await _parcelRepository.UpdateAsync(parcel);
             await _parcelRepository.SaveChangesAsync();
         }
@@ -73,7 +70,6 @@ public class ParcelDeliveryService
             if (parcel.CurrentVehicleId != null)
                 await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
             parcel.MoveToLocation(deliveryPoint.Id);
-            DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
             await _parcelRepository.UpdateAsync(parcel);
             await _parcelRepository.SaveChangesAsync();
         }
@@ -202,7 +198,6 @@ public class ParcelDeliveryService
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
         parcel.ChangeStatus(EParcelStatus.Delivered, changeBy);
         // Не виконуємо перевірки статусів
-        DomainEvents.Raise(new ParcelDeliveredEvent(parcel, changeBy));
         await _parcelRepository.UpdateAsync(parcel);
         await _parcelRepository.SaveChangesAsync();
     }
@@ -220,7 +215,6 @@ public class ParcelDeliveryService
         parcel.ChangeStatus(EParcelStatus.ReadyForPickup, changedBy);
         parcel.ChangeArrivedAt(parcel.CurrentStatus.ChangedAt);
         parcel.MoveToLocation(deliveryPoint.Id);
-        DomainEvents.Raise(new ParcelAddedToDeliveryPointEvent(parcel, deliveryPoint, changedBy));
         await _parcelRepository.UpdateAsync(parcel);
         await _parcelRepository.SaveChangesAsync();
     }

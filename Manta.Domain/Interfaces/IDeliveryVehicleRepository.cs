@@ -1,7 +1,7 @@
 using Manta.Domain.Entities;
 using Manta.Domain.ValueObjects;
 
-namespace Manta.Infrastructure.Repositories;
+namespace Manta.Domain.Interfaces;
 
 public interface IDeliveryVehicleRepository
 {

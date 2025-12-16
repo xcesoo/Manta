@@ -1,0 +1,6 @@
+@Manta.WebApi_HostAddress = http://localhost:5024
+
+GET {{Manta.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

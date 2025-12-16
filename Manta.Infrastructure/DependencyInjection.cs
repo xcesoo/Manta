@@ -1,3 +1,4 @@
+using Manta.Domain.Interfaces;
 using Manta.Infrastructure.Persistence;
 using Manta.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;

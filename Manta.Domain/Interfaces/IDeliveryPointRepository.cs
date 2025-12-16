@@ -1,6 +1,6 @@
 using Manta.Domain.Entities;
 
-namespace Manta.Infrastructure.Repositories;
+namespace Manta.Domain.Interfaces;
 
 public interface IDeliveryPointRepository
 {

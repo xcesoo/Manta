@@ -2,8 +2,7 @@ using Manta.Application.Factories;
 using Manta.Application.Services;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
-using Manta.Infrastructure.Persistence;
-using Manta.Infrastructure.Repositories;
+using Manta.Domain.Interfaces;
 
 namespace Manta.Application.DataSeed;
 

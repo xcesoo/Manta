@@ -2,6 +2,8 @@ using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Manta.Domain.Interfaces;
+
 
 namespace Manta.Infrastructure.Repositories;
 

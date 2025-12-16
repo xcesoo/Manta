@@ -10,7 +10,11 @@ namespace Manta.Domain.Services;
 
 public class ParcelStatusService
 {
-    private readonly List<IParcelStatusRule> _rules = RuleLoader.LoadAllRules;
+    private readonly List<IParcelStatusRule> _rules;
+    public ParcelStatusService(List<IParcelStatusRule> rules)
+    {
+        _rules = rules;
+    }
     
     public bool ApplyRule<TRule>(RuleContext context) 
         where TRule : IParcelStatusRule
