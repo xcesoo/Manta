@@ -9,15 +9,15 @@ public class Parcel
     public int Id {get; private set;}
     public int DeliveryPointId {get; private set;}
     public int? CurrentLocationDeliveryPointId { get; private set; }
-    public LicensePlate? CurrentVehicleId { get; private set; }
-    public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId;
-    public decimal AmountDue { get; private set; }
-    public bool Paid => AmountDue == 0;
-    public double Weight { get; private set; }
+    public LicensePlate? CurrentVehicleId { get; private set; } // Визначає в якому траспортному засобі знаходиться посилка
+    public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId; // Визначає чи посилка знаходиться у пункті призначення
+    public decimal AmountDue { get; private set; } // Сума до сплати
+    public bool Paid => AmountDue == 0; // Визначає, чи сплачено
+    public double Weight { get; private set; } // Вага посилки
     
-    public Name RecipientName { get; private set; }
-    public PhoneNumber RecipientPhoneNumber { get; private set; }
-    public Email RecipientEmail { get; private set; }
+    public Name RecipientName { get; private set; } // Ім’я отримувача як об’єкт-значення
+    public PhoneNumber RecipientPhoneNumber { get; private set; } // Номер телефона отримувача як об’єкт-значення
+    public Email RecipientEmail { get; private set; } // Email отримувача як об’єкт-значення
     
     public virtual ICollection<ParcelStatus> StatusHistory { get; private set; } = new List<ParcelStatus>();
     public ParcelStatus CurrentStatus => StatusHistory.Last();
