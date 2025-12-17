@@ -1,6 +1,5 @@
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
-using Manta.Domain.Events;
 using Manta.Domain.Interfaces;
 using Manta.Domain.Services;
 using Manta.Domain.StatusRules;
