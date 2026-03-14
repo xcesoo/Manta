@@ -3,15 +3,11 @@ using MediatR;
 
 namespace Manta.Application.Queries.Parcel;
 
-public class GetParcelByIdQueryHandler : IRequestHandler<GetParcelByIdQuery, Manta.Domain.Entities.Parcel>
+public class GetParcelByIdQueryHandler(IParcelRepository parcelRepository)
+    : IRequestHandler<GetParcelByIdQuery, Manta.Domain.Entities.Parcel>
 {
-    private readonly IParcelRepository _parcelRepository;
-    public GetParcelByIdQueryHandler(IParcelRepository parcelRepository)
+    public async Task<Domain.Entities.Parcel?> Handle(GetParcelByIdQuery request, CancellationToken cancellationToken)
     {
-        _parcelRepository = parcelRepository;
-    }
-    public async Task<Manta.Domain.Entities.Parcel> Handle(GetParcelByIdQuery request, CancellationToken cancellationToken)
-    {
-        return await _parcelRepository.GetByIdAsync(request.Id);
+        return await parcelRepository.GetByIdAsync(request.Id);
     }
 }
