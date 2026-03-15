@@ -1,3 +1,4 @@
+using Manta.Application.Commands.DeliveryPoint;
 using Manta.Application.Queries.DeliveryPoint;
 using Manta.Domain.Interfaces;
 using MediatR;
@@ -24,5 +25,20 @@ public class DeliveryPointController(
         var deliveryPoint = await _mediator.Send(new GetDeliveryPointByIdQuery(id));
         if (deliveryPoint == null) return NotFound($"Відділення з ID {id} не знайдено.");
         return Ok(deliveryPoint);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateDeliveryPointCommand command)
+    {
+        try
+        {
+            var deliveryPointId = await _mediator.Send(command);
+            var deliveryPoint = await _mediator.Send(new GetDeliveryPointByIdQuery(deliveryPointId));
+            return CreatedAtAction(nameof(GetById), new { id = deliveryPoint.Id }, deliveryPoint);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
     }
 }

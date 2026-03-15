@@ -53,7 +53,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException($"Failed to deliver the parcel {nameof(parcel)}");
     }
 
-    public async Task AcceptedAtDeliveryPoint(int deliveryPointId, int parcelId, User changedBy)
+    public async Task<int> AcceptedAtDeliveryPoint(int deliveryPointId, int parcelId, User changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -71,6 +71,7 @@ public class ParcelDeliveryService
             parcel.MoveToLocation(deliveryPoint.Id);
             await _parcelRepository.UpdateAsync(parcel);
             await _parcelRepository.SaveChangesAsync();
+            return parcel.Id;
         }
         else throw new ArgumentException("Failed to accept the parcel", nameof(parcel));
     }

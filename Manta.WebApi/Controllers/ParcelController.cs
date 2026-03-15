@@ -17,6 +17,7 @@ public class ParcelsController : ControllerBase
     private readonly ParcelDeliveryService _parcelDeliveryService;
     private readonly ILogger<ParcelsController> _logger;
     private readonly IMediator _mediator;
+    public record AcceptParcelRequest(int DeliveryPointId, int SenderId);
 
     public ParcelsController(IParcelRepository parcelRepository, ParcelDeliveryService parcelDeliveryService,
         ILogger<ParcelsController> logger, IMediator mediator)
@@ -45,6 +46,22 @@ public class ParcelsController : ControllerBase
             return CreatedAtAction(nameof(GetById), new { id = parcelId }, parcel);
         }
         catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id}/accept")]
+    public async Task<IActionResult> Accept(int id, [FromBody] AcceptParcelRequest request)
+    {
+        try
+        {
+            var command = new AcceptParcelAtDeliveryPointCommand(id, request.DeliveryPointId, request.SenderId);
+            var parcelId = await _mediator.Send(command);
+            var parcel = await _mediator.Send(new GetParcelByIdQuery(parcelId));
+            return Ok(parcel);
+        }
+        catch (Exception ex)
         {
             return BadRequest(new { error = ex.Message });
         }
