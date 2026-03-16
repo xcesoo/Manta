@@ -1,4 +1,5 @@
 using Manta.Application.Factories;
+using Manta.Application.Interfaces;
 using Manta.Application.Services;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
@@ -13,20 +14,24 @@ public class Seed : ISeed
     private IDeliveryPointRepository _deliveryPointRepository;
     private IDeliveryVehicleRepository _deliveryVehicleRepository;
     private IUserRepository _userRepository;
+    private IPasswordHasher _passwordHasher;
 
     public Seed(
         IParcelRepository parcelRepository,
         IDeliveryPointRepository deliveryPointRepository,
         IDeliveryVehicleRepository deliveryVehicleRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IPasswordHasher passwordHasher)
     {
         _parcelRepository = parcelRepository;
         _deliveryPointRepository = deliveryPointRepository;
         _deliveryVehicleRepository = deliveryVehicleRepository;
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
     public async Task SeedAsync()
     {
+        string defaultHash = _passwordHasher.Hash("1234");
         //add singleton
         var systemUser = await _userRepository.GetByIdAsync(0)
             ?? null;
@@ -36,7 +41,7 @@ public class Seed : ISeed
             await _userRepository.SaveChangesAsync();
         }
         //якщо є точки не заповнюємо
-        if((await _parcelRepository.GetAllAsync()).Any()) return;
+        if((await _deliveryVehicleRepository.GetAllAsync()).Any()) return;
         
         await DeliveryVehicleFactory.Create(new DeliveryVehicleCreationOptions(
             LicensePlate: "AI0000KA",
@@ -57,23 +62,23 @@ public class Seed : ISeed
         await DeliveryPointFactory.Create(new DeliveryPointCreationOptions(Address: "Donetsk"), _deliveryPointRepository);
 
         var admin1 = await UserFactory.Create<Admin>(new UserCreationOptions(
-            Name: "Карпета Кирило Андрійович", Email: "kka@manta.com"), _userRepository);
+            Name: "Карпета Кирило Андрійович", Email: "kka@manta.com", PasswordHash: defaultHash), _userRepository);
         var admin2 = await UserFactory.Create<Admin>(new UserCreationOptions(
-            Name: "Жирнова Марія Олегівна", Email: "zmo@manta.com"), _userRepository);
+            Name: "Жирнова Марія Олегівна", Email: "zmo@manta.com", PasswordHash: defaultHash), _userRepository);
         var driver1 = await UserFactory.Create<Driver>(new UserCreationOptions(
-            Name: "Кривовух Микола Потапович", Email: "krivovuh@gmail.com", VehicleId: "AI0000KA"), _userRepository);
+            Name: "Кривовух Микола Потапович", Email: "krivovuh@gmail.com", PasswordHash: defaultHash ,VehicleId: "AI0000KA"), _userRepository);
         var driver2 = await UserFactory.Create<Driver>(new UserCreationOptions(
-            Name: "Потужний Микола Олександрович", Email: "potuzmy@gmail.com", VehicleId: "BO0000OM"), _userRepository);
+            Name: "Потужний Микола Олександрович", Email: "potuzmy@gmail.com", PasswordHash: defaultHash, VehicleId: "BO0000OM"), _userRepository);
         var driver3 = await UserFactory.Create<Driver>(new UserCreationOptions(
-            Name: "Зубенко Михайло Петрович", Email: "zubenko@gmail.com", VehicleId: "PO0000MA"), _userRepository);
+            Name: "Зубенко Михайло Петрович", Email: "zubenko@gmail.com", PasswordHash: defaultHash, VehicleId: "PO0000MA"), _userRepository);
         var cashier1 = await UserFactory.Create<Cashier>(new UserCreationOptions(
-            Name: "Петрик Микола Андрійович", Email: "petryk@gmail.com", DeliveryPointId: 1), _userRepository);
+            Name: "Петрик Микола Андрійович", Email: "petryk@gmail.com", PasswordHash: defaultHash, DeliveryPointId: 1), _userRepository);
         var cashier2 = await UserFactory.Create<Cashier>(new UserCreationOptions(
-            Name: "Іваненко Олександр Петрович", Email: "alexander.ivanenko@gmail.com", DeliveryPointId: 2), _userRepository);
+            Name: "Іваненко Олександр Петрович", Email: "alexander.ivanenko@gmail.com", PasswordHash: defaultHash, DeliveryPointId: 2), _userRepository);
         var cashier3 = await UserFactory.Create<Cashier>(new UserCreationOptions(
-            Name: "Коваленко Марія Дмитрівна", Email: "maria.kovalenko@yahoo.com", DeliveryPointId: 3), _userRepository);
+            Name: "Коваленко Марія Дмитрівна", Email: "maria.kovalenko@yahoo.com", PasswordHash: defaultHash, DeliveryPointId: 3), _userRepository);
         var cashier4 = await UserFactory.Create<Cashier>(new UserCreationOptions(
-            Name: "Шевчук Олег Васильович", Email: "oleg.shevchuk@ukr.net", DeliveryPointId: 4), _userRepository);
+            Name: "Шевчук Олег Васильович", Email: "oleg.shevchuk@ukr.net", PasswordHash: defaultHash, DeliveryPointId: 4), _userRepository);
 
         await ParcelFactory.Create(new ParcelCreationOptions(
             DeliveryPointId: 1, AmountDue: 52m, Weight: 4,

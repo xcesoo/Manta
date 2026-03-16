@@ -203,6 +203,9 @@ public class MantaDbContext : DbContext
             
             entity.Property(u => u.Id)
                 .ValueGeneratedNever();
+            entity.Property(u => u.PasswordHash)
+                .HasColumnName("PasswordHash")
+                .IsRequired();
             
             // Email як Value Object через OwnsOne
             entity.OwnsOne(u => u.Email, email =>

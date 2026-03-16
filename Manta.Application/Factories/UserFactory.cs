@@ -13,11 +13,11 @@ public static class UserFactory
         object instance = typeof(TUser) switch
         {
             var t when t == typeof(Admin) =>
-                new Admin((int)newOptions.Id, newOptions.Name, newOptions.Email),
+                new Admin((int)newOptions.Id, newOptions.Name, newOptions.Email,  newOptions.PasswordHash),
             var t when t == typeof(Cashier) =>
-                new Cashier((int)newOptions.Id!, newOptions.Name, newOptions.Email, (int)newOptions.DeliveryPointId!),
+                new Cashier((int)newOptions.Id!, newOptions.Name, newOptions.Email, (int)newOptions.DeliveryPointId!,  newOptions.PasswordHash),
             var t when t == typeof(Driver) =>
-                new Driver((int)newOptions.Id!, newOptions.Name, newOptions.Email, newOptions.VehicleId!),
+                new Driver((int)newOptions.Id!, newOptions.Name, newOptions.Email, newOptions.PasswordHash, newOptions.VehicleId!),
             var t when t == typeof(SystemUser) => SystemUser.Instance,                
             _ => throw new ArgumentException("Invalid user type")
         };

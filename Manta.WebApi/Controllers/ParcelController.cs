@@ -4,6 +4,7 @@ using Manta.Application.Queries.Parcel;
 using Manta.Application.Services;
 using Manta.Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manta.WebApi.Controllers;
@@ -29,6 +30,7 @@ public class ParcelsController : ControllerBase
     }
     
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(int id)
     {
         var parcel = await _mediator.Send(new GetParcelByIdQuery(id));

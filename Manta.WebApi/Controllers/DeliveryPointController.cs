@@ -2,6 +2,7 @@ using Manta.Application.Commands.DeliveryPoint;
 using Manta.Application.Queries.DeliveryPoint;
 using Manta.Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manta.WebApi.Controllers;
@@ -20,6 +21,7 @@ public class DeliveryPointController(
 
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(int id)
     {
         var deliveryPoint = await _mediator.Send(new GetDeliveryPointByIdQuery(id));
