@@ -56,9 +56,11 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<MantaDbContext>();
-        await context.Database.EnsureCreatedAsync();
-        //var seeder = services.GetRequiredService<Seed>();
-        //await seeder.SeedAsync();
+        if (await context.Database.EnsureCreatedAsync())
+        {
+            var seeder = services.GetRequiredService<Seed>();
+            await seeder.SeedAsync();
+        }
     }
     catch (Exception e)
     {

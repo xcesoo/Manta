@@ -23,6 +23,11 @@ public sealed record  LicensePlate
     }
 
     public static implicit operator string(LicensePlate licensePlate) => licensePlate.Value;
-    public static implicit operator LicensePlate(string licensePlate) => Create(licensePlate);
-    
+
+    public static implicit operator LicensePlate?(string? licensePlate)
+    {
+        if (string.IsNullOrWhiteSpace(licensePlate)) return null;
+        return Create(licensePlate);
+    }
+
 }

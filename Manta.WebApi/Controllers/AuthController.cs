@@ -1,3 +1,4 @@
+using Manta.Application.Commands.User;
 using Manta.Application.Queries.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,20 @@ public class AuthController : ControllerBase
         {
             string token = await _mediator.Send(loginQuery);
             return Ok(token);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] CreateUserCommand command)
+    {
+        try
+        {
+            int id = await _mediator.Send(command);
+            return Ok(id);
         }
         catch (Exception ex)
         {
