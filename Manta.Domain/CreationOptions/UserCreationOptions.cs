@@ -7,6 +7,5 @@ public record UserCreationOptions(
     Email Email,
     string PasswordHash,
     int? DeliveryPointId = null,
-    LicensePlate? VehicleId = null,
-    int? Id = null
+    LicensePlate? VehicleId = null
     );

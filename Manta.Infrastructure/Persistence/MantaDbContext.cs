@@ -21,7 +21,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(e => e.Id);
             
             entity.Property(p => p.Id)
-                .ValueGeneratedNever();
+                .UseIdentityByDefaultColumn();
             
             entity.Property(p => p.DeliveryPointId)
                 .IsRequired();
@@ -81,7 +81,7 @@ public class MantaDbContext : DbContext
             {
                 history.ToTable("ParcelStatusHistory");
                 history.WithOwner().HasForeignKey("ParcelId");
-                history.Property<int>("Id")/*.ValueGeneratedOnAdd()*/;
+                history.Property<int>("Id").UseIdentityByDefaultColumn();
                 history.HasKey("Id");
                 
                 history.Property(s => s.Status)
@@ -146,7 +146,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(dp => dp.Id);
             
             entity.Property(dp => dp.Id)
-                .ValueGeneratedNever();
+                .UseIdentityByDefaultColumn();
             
             entity.Property(dp => dp.Address)
                 .HasMaxLength(500)
@@ -160,7 +160,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(v => v.Id);
             
             entity.Property(v => v.Id)
-                .ValueGeneratedNever();
+                .UseIdentityByDefaultColumn();
             
             entity.Property(v => v.LicensePlateId)
                 .HasConversion(
@@ -205,7 +205,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(u => u.Id);
             
             entity.Property(u => u.Id)
-                .ValueGeneratedNever();
+                .UseIdentityByDefaultColumn();
             entity.Property(u => u.PasswordHash)
                 .HasColumnName("PasswordHash")
                 .IsRequired();

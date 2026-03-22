@@ -6,7 +6,7 @@ namespace Manta.Domain.Entities;
 
 public class Parcel
 {
-    public int Id {get; private set;}
+    public int Id { get; private set; } = 0;
     public int DeliveryPointId {get; private set;}
     public int? CurrentLocationDeliveryPointId { get; private set; }
     public LicensePlate? CurrentVehicleId { get; private set; } // Визначає в якому траспортному засобі знаходиться посилка
@@ -24,9 +24,8 @@ public class Parcel
     public DateTime? ArrivedAt { get; private set; } = null;
     public DateTime? Storage => ArrivedAt?.ToLocalTime() + TimeSpan.FromDays(3);
     private Parcel() { }
-    private Parcel(int id, int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
+    private Parcel(int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
     {
-        Id=id;
         DeliveryPointId=deliveryPointId;
         RecipientName = recipientName;
         RecipientPhoneNumber = recipientPhoneNumber;
@@ -38,13 +37,10 @@ public class Parcel
 
     internal static Parcel Create(ParcelCreationOptions options)
     {
-        if(options.Id<=0) 
-            throw new ArgumentOutOfRangeException(nameof(options.Id) + "Id can't be null");
         if(options.DeliveryPointId<=0) 
             throw new ArgumentOutOfRangeException(nameof(options.DeliveryPointId) + "DeliveryPointId can't be null");
         
         var parcel = new Parcel(
-            (int)options.Id!,
             options.DeliveryPointId,
             options.RecipientName,
             options.RecipientPhoneNumber,

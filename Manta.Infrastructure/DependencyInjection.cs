@@ -6,7 +6,6 @@ using Manta.WebApi.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Manta.Infrastructure;
 
 public static class DependencyInjection
@@ -16,7 +15,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddDbContext<MantaDbContext>(options =>
-            options.UseSqlite(
+            options.UseNpgsql(
                 configuration.GetConnectionString("DefaultConnection")));
         services.AddScoped<IParcelRepository, ParcelRepository>();
         services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();

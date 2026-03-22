@@ -10,5 +10,4 @@ public record ParcelCreationOptions (
     Name RecipientName,
     PhoneNumber RecipientPhoneNumber,
     Email RecipientEmail,
-    User CreatedBy,
-    int? Id = null);
+    User CreatedBy);

@@ -18,7 +18,6 @@ public class CreateDeliveryVehicleCommandHandler : IRequestHandler<CreateDeliver
     public async Task<int> Handle(CreateDeliveryVehicleCommand request, CancellationToken cancellationToken)
     {
         var options = new DeliveryVehicleCreationOptions(
-            await _deliveryVehicleRepository.GetNextIdAsync(cancellationToken),
             request.LicensePlate!,
             (request.Brand, request.Model),
             request.Capacity);

@@ -122,12 +122,12 @@ public class Seed : ISeed
             ));
         var parcelsCommands = parcelsGenerate.Generate(300);
         foreach (var command in parcelsCommands) await _mediator.Send(command);
-        //е
+        //
         timerp.Stop();
         
         Console.WriteLine($"Seeding delivery points {timerdp.Elapsed.TotalSeconds:F2}sec");
         Console.WriteLine($"Seeding delivery vehicles {timerdv.Elapsed.TotalSeconds:F2}sec");
         Console.WriteLine($"Seeding delivery users {timeru.Elapsed.TotalSeconds:F2}sec");
-        Console.WriteLine($"Seeding delivery parcels 30000 {timerp.Elapsed.TotalSeconds:F2}sec");
+        Console.WriteLine($"Seeding delivery parcels {timerp.Elapsed.TotalSeconds:F2}sec");
     }
 }

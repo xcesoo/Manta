@@ -17,8 +17,7 @@ public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryP
     public async Task<int> Handle(CreateDeliveryPointCommand request, CancellationToken cancellationToken)
     {
         var options = new DeliveryPointCreationOptions(
-            Address:request.Address,
-            Id: await _deliveryPointRepository.GetNextIdAsync(cancellationToken)
+            Address:request.Address
             );
         var deliveryPoint = await DeliveryPointFactory.Create(options);
         if (deliveryPoint == null) throw new ArgumentException($"Failed to create delivery point");

@@ -25,7 +25,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
         if(await _userRepository.ExistsByEmailAsync(request.Email))
             throw new ArgumentException("User with this email already exists");
         var options = new UserCreationOptions(
-            Id: await _userRepository.GetNextIdAsync(cancellationToken),
             Name: request.Name,
             Email: request.Email,
             PasswordHash: _passwordHasher.Hash(request.Password),

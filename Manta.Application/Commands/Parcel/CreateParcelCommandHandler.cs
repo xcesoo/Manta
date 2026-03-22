@@ -26,7 +26,6 @@ public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, i
         //todo check delivery point
         var options = new ParcelCreationOptions
             (
-                Id: await _parcelRepository.GetNextIdAsync(cancellationToken),
                 DeliveryPointId: request.DeliveryPointId,
                 AmountDue: request.AmountDue,
                 Weight: request.Weight,
