@@ -6,25 +6,22 @@ namespace Manta.Application.Factories;
 
 public static class UserFactory
 {
-    public static async Task<TUser?> Create<TUser>(UserCreationOptions options, IUserRepository context)
+    public static async Task<TUser?> Create<TUser>(UserCreationOptions options)
     where TUser : User
     {
-        var newOptions = options with{Id = await context.GetNextIdAsync()};
         object instance = typeof(TUser) switch
         {
             var t when t == typeof(Admin) =>
-                new Admin((int)newOptions.Id, newOptions.Name, newOptions.Email,  newOptions.PasswordHash),
+                new Admin((int)options.Id, options.Name, options.Email,  options.PasswordHash),
             var t when t == typeof(Cashier) =>
-                new Cashier((int)newOptions.Id!, newOptions.Name, newOptions.Email, (int)newOptions.DeliveryPointId!,  newOptions.PasswordHash),
+                new Cashier((int)options.Id!, options.Name, options.Email, (int)options.DeliveryPointId!,  options.PasswordHash),
             var t when t == typeof(Driver) =>
-                new Driver((int)newOptions.Id!, newOptions.Name, newOptions.Email, newOptions.PasswordHash, newOptions.VehicleId!),
-            var t when t == typeof(SystemUser) => SystemUser.Instance,                
+                new Driver((int)options.Id!, options.Name, options.Email, options.PasswordHash, options.VehicleId!),
+            var t when t == typeof(SystemUser) => SystemUser.Instance,
+            var t when t == typeof(UnknownUser) => 
+                new UnknownUser((int)options.Id, options.Name, options.Email, options.PasswordHash),
             _ => throw new ArgumentException("Invalid user type")
         };
-        if(await context.ExistsByEmailAsync(newOptions.Email))
-            throw new ArgumentException("User with this email already exists");
-        await context.AddAsync(instance as User);
-        await context.SaveChangesAsync();
         return instance as TUser;
     }
 }

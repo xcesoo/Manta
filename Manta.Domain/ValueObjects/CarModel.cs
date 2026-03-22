@@ -16,8 +16,6 @@ public sealed record CarModel
     {
         if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(model))
             throw new ArgumentException($"CarModel cannot be null or whitespace. -> {nameof(brand)}: {brand}, {model}");
-        if (!brand.All(c => char.IsLetter(c)))
-            throw new ArgumentException("The brand should only contain letters.");
         return new CarModel(brand, model);
     }
     

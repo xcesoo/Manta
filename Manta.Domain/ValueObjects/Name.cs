@@ -9,8 +9,10 @@ public sealed record  Name
     {
         if(string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Name cannot be null or empty.", nameof(value));
-        if(!value.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-            throw new ArgumentException("Name can only contain letters and spaces.", nameof(value));
+        if(!value.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || c == '\'' || c == '’' || c == 'ʼ'))
+        {
+            throw new ArgumentException("Name can only contain letters, spaces, and apostrophes.", nameof(value));
+        }
         Value = value;
     }
     public override string ToString() => Value;

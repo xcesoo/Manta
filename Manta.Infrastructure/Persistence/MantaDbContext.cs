@@ -130,7 +130,7 @@ public class MantaDbContext : DbContext
             
             entity.HasOne<DeliveryVehicle>()
                 .WithMany()
-                .HasPrincipalKey(v => v.Id)
+                .HasPrincipalKey(v => v.LicensePlateId)
                 .HasForeignKey(p => p.CurrentVehicleId)
                 .OnDelete(DeleteBehavior.SetNull);
             
@@ -160,6 +160,9 @@ public class MantaDbContext : DbContext
             entity.HasKey(v => v.Id);
             
             entity.Property(v => v.Id)
+                .ValueGeneratedNever();
+            
+            entity.Property(v => v.LicensePlateId)
                 .HasConversion(
                     lp => lp.Value,
                     v => LicensePlate.Create(v))
@@ -235,7 +238,8 @@ public class MantaDbContext : DbContext
                 .HasValue<Admin>("Admin")
                 .HasValue<Cashier>("Cashier")
                 .HasValue<Driver>("Driver")
-                .HasValue<SystemUser>("SystemUser");
+                .HasValue<SystemUser>("SystemUser")
+                .HasValue<UnknownUser>("UnknownUser");
         });
         
         // Конфігурація Admin (пуста)
@@ -272,7 +276,8 @@ public class MantaDbContext : DbContext
         
         // Конфігурація SystemUser (пуста)
         modelBuilder.Entity<SystemUser>();
-        
+
+        modelBuilder.Entity<UnknownUser>();
 
         base.OnModelCreating(modelBuilder);
     }

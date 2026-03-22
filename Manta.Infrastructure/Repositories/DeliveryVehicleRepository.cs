@@ -15,13 +15,28 @@
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<DeliveryVehicle?> GetByIdAsync(LicensePlate id, CancellationToken cancellationToken = default)
+        public async Task<DeliveryVehicle?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
+            if (id < 0)
                 throw new ArgumentNullException(nameof(id));
 
             return await _context.DeliveryVehicles
                 .FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
+        }
+
+        public async Task<DeliveryVehicle?> GetByLicensePlateIdAsync(LicensePlate licensePlate,
+            CancellationToken cancellationToken = default)
+        {
+            if (licensePlate == null)
+                throw new ArgumentNullException(nameof(licensePlate));
+            return await  _context.DeliveryVehicles
+                .FirstOrDefaultAsync(v => v.LicensePlateId == licensePlate, cancellationToken);
+        }
+
+        public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
+        {
+            var maxId = await _context.DeliveryVehicles.MaxAsync(v => (int?)v.Id, cancellationToken) ?? 0;
+            return maxId + 1;
         }
 
         public async Task<IEnumerable<DeliveryVehicle>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -46,7 +61,7 @@
             return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(LicensePlate id, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var vehicle = await GetByIdAsync(id, cancellationToken);
             if (vehicle != null)
@@ -55,14 +70,15 @@
             }
         }
 
-        public async Task<bool> ExistsAsync(LicensePlate id, CancellationToken cancellationToken = default)
+        public async Task<bool> ExistsAsync(LicensePlate licensePlateId, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (licensePlateId == null)
+                throw new ArgumentNullException(nameof(licensePlateId));
 
             return await _context.DeliveryVehicles
-                .AnyAsync(v => v.Id == id, cancellationToken);
+                .AnyAsync(v => v.LicensePlateId == licensePlateId, cancellationToken);
         }
+        //todo
 
         public async Task<IEnumerable<DeliveryVehicle>> GetAvailableVehiclesAsync(double requiredCapacity, CancellationToken cancellationToken = default)
         {

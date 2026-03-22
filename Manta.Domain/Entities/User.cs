@@ -27,6 +27,16 @@ public abstract class User
     
 }
 
+public sealed class UnknownUser : User
+{
+    public UnknownUser(int id, string name, string email, string passwordHash)
+        : base(id, name, email, passwordHash){}
+    private UnknownUser()
+    {
+    }
+    public override EUserRole Role => EUserRole.Unknown;
+}
+
 public sealed class Admin : User
 {
     public Admin(int id, string fullname, string email, string passwordHash) 
@@ -39,12 +49,12 @@ public sealed class Admin : User
 
 public sealed class Cashier : User
 {
-    public int DeliveryPointId { get; private set; }
+    public int? DeliveryPointId { get; private set; }
     private Cashier()
     {
     }
 
-    public Cashier(int id, string name, string email, int deliveryPointId, string passwordHash)
+    public Cashier(int id, string name, string email, int? deliveryPointId, string passwordHash)
         : base(id, name, email, passwordHash)
     {
         DeliveryPointId = deliveryPointId;
@@ -54,12 +64,12 @@ public sealed class Cashier : User
 
 public sealed class Driver : User
 {
-    public LicensePlate LicensePlate { get; private set; }
+    public LicensePlate? LicensePlate { get; private set; }
     private Driver()
     {
     }
 
-    public Driver(int id, string name, string email, string passwordHash, LicensePlate licensePlate) : base(id, name, email, passwordHash)
+    public Driver(int id, string name, string email, string passwordHash, LicensePlate? licensePlate) : base(id, name, email, passwordHash)
     {
         LicensePlate = licensePlate;
     }

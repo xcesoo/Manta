@@ -119,13 +119,13 @@ public class ParcelDeliveryService
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        var deliveryVehicle = await _deliveryVehicleRepository.GetByIdAsync(deliveryVehicleId) ??
+        var deliveryVehicle = await _deliveryVehicleRepository.GetByLicensePlateIdAsync(deliveryVehicleId) ??
                               throw new ArgumentException($"DeliveryVehicle with id {deliveryVehicleId} not found.");
         var context = RuleContext.ForVehicle(parcel, changeBy, deliveryVehicle);
         if (_statusService.ApplyRule<TransitRule>(context))
         {
             deliveryVehicle.LoadParcel(parcel.Id, parcel.Weight);
-            parcel.ChangeDeliveryVehicle(deliveryVehicle.Id);
+            parcel.ChangeDeliveryVehicle(deliveryVehicle.LicensePlateId);
             await _deliveryVehicleRepository.UpdateAsync(deliveryVehicle);
             await _deliveryVehicleRepository.SaveChangesAsync();
             await _parcelRepository.UpdateAsync(parcel);
@@ -137,7 +137,7 @@ public class ParcelDeliveryService
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        var deliveryVehicle = await _deliveryVehicleRepository.GetByIdAsync(deliveryVehicleId) ??
+        var deliveryVehicle = await _deliveryVehicleRepository.GetByLicensePlateIdAsync(deliveryVehicleId) ??
                               throw new ArgumentException($"DeliveryVehicle with id {deliveryVehicleId} not found.");
         deliveryVehicle.UnloadParcel(parcel.Id, parcel.Weight);
         parcel.ChangeDeliveryVehicle(null);

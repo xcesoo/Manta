@@ -20,7 +20,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     }
     public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        int rawValue = (int)request.Role;
+        Console.WriteLine($"DEBUG: Role Name = {request.Role}, Numeric Value = {rawValue}");
+        if(await _userRepository.ExistsByEmailAsync(request.Email))
+            throw new ArgumentException("User with this email already exists");
         var options = new UserCreationOptions(
+            Id: await _userRepository.GetNextIdAsync(cancellationToken),
             Name: request.Name,
             Email: request.Email,
             PasswordHash: _passwordHasher.Hash(request.Password),
@@ -28,12 +33,15 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
             VehicleId: request.VehicleId ?? null);
         Domain.Entities.User? user = request.Role switch
         {
-            EUserRole.Admin => await UserFactory.Create<Admin>(options, _userRepository),
-            EUserRole.Cashier => await UserFactory.Create<Cashier>(options, _userRepository),
-            EUserRole.Driver => await UserFactory.Create<Driver>(options, _userRepository),
+            EUserRole.Admin => await UserFactory.Create<Admin>(options),
+            EUserRole.Cashier => await UserFactory.Create<Cashier>(options),
+            EUserRole.Driver => await UserFactory.Create<Driver>(options),
+            EUserRole.Unknown => await UserFactory.Create<UnknownUser>(options),
             _ => throw new ArgumentException("Invalid role")
         };
         if(user == null) throw new ArgumentException("Failed to create user"); 
+        await _userRepository.AddAsync(user, cancellationToken);
+        await _userRepository.SaveChangesAsync(cancellationToken);
         return user.Id;
     }
 }

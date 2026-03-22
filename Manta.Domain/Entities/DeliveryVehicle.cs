@@ -5,7 +5,8 @@ namespace Manta.Domain.Entities;
 
 public class DeliveryVehicle
 {
-    public LicensePlate Id { get; private set; }
+    public int Id { get; private set; }
+    public LicensePlate LicensePlateId { get; private set; }
     public CarModel CarModel { get; private set; }
     public double Capacity { get; private set; }
     public double CurrentLoad { get; private set; } = 0;
@@ -14,9 +15,10 @@ public class DeliveryVehicle
     
     private DeliveryVehicle() { }
 
-    private DeliveryVehicle(LicensePlate id, CarModel carModel, double capacity)
+    private DeliveryVehicle(int id, LicensePlate licensePlateId, CarModel carModel, double capacity)
     {
         Id = id;
+        LicensePlateId = licensePlateId;
         CarModel = carModel;
         Capacity = capacity;
     }
@@ -28,6 +30,7 @@ public class DeliveryVehicle
         if (options.Capacity <= 0)
             throw new ArgumentException("The capacity must be greater than zero.", nameof(options.Capacity));
         return new DeliveryVehicle(
+            options.Id,
             options.LicensePlate,
             options.CarModel,
             options.Capacity);
@@ -38,7 +41,7 @@ public class DeliveryVehicle
         if(parcelWeight + CurrentLoad > Capacity)
             throw new ArgumentException("Delivery vehicle is full.");
         if(ParcelsIds.Contains(parcelId))
-            throw new ArgumentException($"The parcel with id {parcelId} is already loaded in the delivery vehicle {Id}.");
+            throw new ArgumentException($"The parcel with id {parcelId} is already loaded in the delivery vehicle {LicensePlateId}.");
         ParcelsIds.Add(parcelId);
         CurrentLoad += parcelWeight;
     }
@@ -46,7 +49,7 @@ public class DeliveryVehicle
     internal void UnloadParcel(int parcelId, double parcelWeight)
     {
         if (!ParcelsIds.Contains(parcelId))
-            throw new ArgumentException($"The parcel with ID {parcelId} does not exist in the delivery vehicle {Id}.");
+            throw new ArgumentException($"The parcel with ID {parcelId} does not exist in the delivery vehicle {LicensePlateId}.");
         ParcelsIds.Remove(parcelId);
         CurrentLoad -= parcelWeight;
     }

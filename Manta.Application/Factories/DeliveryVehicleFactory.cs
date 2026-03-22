@@ -6,10 +6,9 @@ namespace Manta.Application.Factories;
 
 public static class DeliveryVehicleFactory
 {
-    public static async Task Create(DeliveryVehicleCreationOptions options, IDeliveryVehicleRepository context)
+    public static async Task<DeliveryVehicle> Create(DeliveryVehicleCreationOptions options)
     {
         var vehicle = DeliveryVehicle.Create(options);
-        await context.AddAsync(vehicle);
-        await context.SaveChangesAsync();
+        return vehicle;
     }
 }

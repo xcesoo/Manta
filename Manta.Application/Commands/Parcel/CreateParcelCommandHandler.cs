@@ -26,6 +26,7 @@ public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, i
         //todo check delivery point
         var options = new ParcelCreationOptions
             (
+                Id: await _parcelRepository.GetNextIdAsync(cancellationToken),
                 DeliveryPointId: request.DeliveryPointId,
                 AmountDue: request.AmountDue,
                 Weight: request.Weight,
@@ -33,6 +34,10 @@ public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, i
                 RecipientName: request.RecipientName,
                 RecipientPhoneNumber: request.RecipientPhone,
                 CreatedBy: sender);
-        return await ParcelFactory.Create(options, _parcelRepository);
+        var parcel = await ParcelFactory.Create(options);
+        if (parcel == null) throw new ArgumentException("Failed to create parcel");
+        await _parcelRepository.AddAsync(parcel, cancellationToken);
+        await _parcelRepository.SaveChangesAsync(cancellationToken);
+        return parcel.Id;
     }
 }

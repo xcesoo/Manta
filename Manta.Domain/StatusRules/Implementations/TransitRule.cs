@@ -12,7 +12,7 @@ public sealed class TransitRule: IParcelStatusRule
                     EParcelStatus.Processing or 
                     EParcelStatus.ReaddressRequested or 
                     EParcelStatus.WrongLocation}}, 
-            DeliveryVehicle:{Id: var vehicleId}} 
+            DeliveryVehicle:{LicensePlateId: var vehicleId}} 
             when currentVehicleId != vehicleId =>
             RuleResult.Ok(EParcelStatus.InTransit),
         
@@ -20,7 +20,7 @@ public sealed class TransitRule: IParcelStatusRule
                 EParcelStatus.ReturnRequested or 
                 EParcelStatus.StorageExpired or 
                 EParcelStatus.ShipmentCancelled}, CurrentVehicleId: var currentVehicleId},
-                DeliveryVehicle:{Id: var vehicleId}}
+                DeliveryVehicle:{LicensePlateId: var vehicleId}}
             when currentVehicleId != vehicleId =>
             RuleResult.Ok(EParcelStatus.InReturnTransit),
                 

@@ -18,7 +18,12 @@ public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryP
     {
         var options = new DeliveryPointCreationOptions(
             Address:request.Address,
-            Id:request.Id);
-        return await DeliveryPointFactory.Create(options, _deliveryPointRepository);
+            Id: await _deliveryPointRepository.GetNextIdAsync(cancellationToken)
+            );
+        var deliveryPoint = await DeliveryPointFactory.Create(options);
+        if (deliveryPoint == null) throw new ArgumentException($"Failed to create delivery point");
+        await _deliveryPointRepository.AddAsync(deliveryPoint, cancellationToken);
+        await _deliveryPointRepository.SaveChangesAsync(cancellationToken);
+        return deliveryPoint.Id;
     }
 }
