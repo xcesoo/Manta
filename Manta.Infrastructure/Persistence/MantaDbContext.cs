@@ -158,9 +158,9 @@ public class MantaDbContext : DbContext
         {
             // Використовуємо LicensePlate як первинний ключ
             entity.HasKey(v => v.Id);
-            
+
             entity.Property(v => v.Id)
-                .UseIdentityByDefaultColumn();
+                .ValueGeneratedNever();
             
             entity.Property(v => v.LicensePlateId)
                 .HasConversion(
