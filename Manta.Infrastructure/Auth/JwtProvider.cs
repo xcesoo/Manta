@@ -28,7 +28,7 @@ public class JwtProvider : IJwtProvider
         };
         if (user is Cashier userCashier)
         {
-            claims.Add(new Claim("DeliveryPointId", userCashier.DeliveryPointId.ToString()));
+            claims.Add(new Claim("DeliveryPointId", userCashier.DeliveryPointId.ToString() ?? string.Empty));
         }
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

@@ -18,7 +18,7 @@ public class ParcelsController : ControllerBase
     private readonly ParcelDeliveryService _parcelDeliveryService;
     private readonly ILogger<ParcelsController> _logger;
     private readonly IMediator _mediator;
-    public record AcceptParcelRequest(int DeliveryPointId, int SenderId);
+    public record AcceptParcelRequest(Guid DeliveryPointId, Guid SenderId);
 
     public ParcelsController(IParcelRepository parcelRepository, ParcelDeliveryService parcelDeliveryService,
         ILogger<ParcelsController> logger, IMediator mediator)
@@ -31,7 +31,7 @@ public class ParcelsController : ControllerBase
     
     [HttpGet("{id}")]
     [Authorize]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var parcel = await _mediator.Send(new GetParcelByIdQuery(id));
         if (parcel == null) return NotFound($"Посилку з ID {id} не знайдено.");
@@ -54,7 +54,7 @@ public class ParcelsController : ControllerBase
     }
 
     [HttpPost("{id}/accept")]
-    public async Task<IActionResult> Accept(int id, [FromBody] AcceptParcelRequest request)
+    public async Task<IActionResult> Accept(Guid id, [FromBody] AcceptParcelRequest request)
     {
         try
         {

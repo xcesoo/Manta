@@ -14,16 +14,11 @@ public class DeliveryPointRepository : IDeliveryPointRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<DeliveryPoint?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<DeliveryPoint?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.DeliveryPoints
             .FirstOrDefaultAsync(dp => dp.Id == id, cancellationToken);
     }
-    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
-    {
-        var maxId = await _context.DeliveryPoints.MaxAsync(dp => (int?)dp.Id, cancellationToken) ?? 0;
-        return maxId + 1;
-    }   
 
     public async Task<IEnumerable<DeliveryPoint>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -47,7 +42,7 @@ public class DeliveryPointRepository : IDeliveryPointRepository
         return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var deliveryPoint = await GetByIdAsync(id, cancellationToken);
         if (deliveryPoint != null)
@@ -56,7 +51,7 @@ public class DeliveryPointRepository : IDeliveryPointRepository
         }
     }
 
-    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.DeliveryPoints
             .AnyAsync(dp => dp.Id == id, cancellationToken);

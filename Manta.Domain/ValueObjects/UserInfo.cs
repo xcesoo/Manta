@@ -5,10 +5,10 @@
 
     public sealed record UserInfo
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         public string Email { get; init; }
         public string Name { get; init; }   
-        public EUserRole  Role { get; init; }
+        public EUserRole Role { get; init; }
 
         private UserInfo(){}
         private UserInfo(User user)

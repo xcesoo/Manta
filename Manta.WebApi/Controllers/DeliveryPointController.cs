@@ -21,8 +21,8 @@ public class DeliveryPointController(
 
 
     [HttpGet("{id}")]
-    [Authorize]
-    public async Task<IActionResult> GetById(int id)
+    // [Authorize]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var deliveryPoint = await _mediator.Send(new GetDeliveryPointByIdQuery(id));
         if (deliveryPoint == null) return NotFound($"Відділення з ID {id} не знайдено.");

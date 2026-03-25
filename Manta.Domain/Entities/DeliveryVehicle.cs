@@ -11,7 +11,7 @@ public class DeliveryVehicle
     public double Capacity { get; private set; }
     public double CurrentLoad { get; private set; } = 0;
     
-    public virtual ICollection<int> ParcelsIds { get; private set; } = new List<int>();
+    public virtual ICollection<Guid> ParcelsIds { get; private set; } = new List<Guid>();
     
     private DeliveryVehicle() { }
 
@@ -34,7 +34,7 @@ public class DeliveryVehicle
             options.Capacity);
     }
 
-    internal void LoadParcel(int parcelId, double parcelWeight)
+    internal void LoadParcel(Guid parcelId, double parcelWeight)
     {
         if(parcelWeight + CurrentLoad > Capacity)
             throw new ArgumentException("Delivery vehicle is full.");
@@ -44,7 +44,7 @@ public class DeliveryVehicle
         CurrentLoad += parcelWeight;
     }
 
-    internal void UnloadParcel(int parcelId, double parcelWeight)
+    internal void UnloadParcel(Guid parcelId, double parcelWeight)
     {
         if (!ParcelsIds.Contains(parcelId))
             throw new ArgumentException($"The parcel with ID {parcelId} does not exist in the delivery vehicle {LicensePlateId}.");

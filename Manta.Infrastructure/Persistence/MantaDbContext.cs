@@ -21,7 +21,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(e => e.Id);
             
             entity.Property(p => p.Id)
-                .UseIdentityByDefaultColumn();
+                .ValueGeneratedNever();
             
             entity.Property(p => p.DeliveryPointId)
                 .IsRequired();
@@ -144,9 +144,9 @@ public class MantaDbContext : DbContext
         modelBuilder.Entity<DeliveryPoint>(entity =>
         {
             entity.HasKey(dp => dp.Id);
-            
+
             entity.Property(dp => dp.Id)
-                .UseIdentityByDefaultColumn();
+                .ValueGeneratedNever();
             
             entity.Property(dp => dp.Address)
                 .HasMaxLength(500)
@@ -196,7 +196,7 @@ public class MantaDbContext : DbContext
                 .HasColumnName("ParcelsIds")
                 .HasConversion(
                     v => string.Join(',', v),
-                    v => string.IsNullOrEmpty(v) ? new List<int>() : v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList())
+                    v => string.IsNullOrEmpty(v) ? new List<Guid>() : v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Guid.Parse).ToList())
                 .IsRequired();
         });
         
@@ -205,7 +205,7 @@ public class MantaDbContext : DbContext
             entity.HasKey(u => u.Id);
             
             entity.Property(u => u.Id)
-                .UseIdentityByDefaultColumn();
+                .ValueGeneratedNever();
             entity.Property(u => u.PasswordHash)
                 .HasColumnName("PasswordHash")
                 .IsRequired();

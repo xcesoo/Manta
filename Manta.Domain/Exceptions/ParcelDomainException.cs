@@ -6,8 +6,8 @@ namespace Manta.Domain.Exceptions;
 
 public class ParcelDomainException : Exception
 {
-    public int ParcelId { get; }
-    public int? DeliveryPointId { get; }
+    public Guid ParcelId { get; }
+    public Guid? DeliveryPointId { get; }
     public string CurrentStatus { get; }
     public ERuleResultError ErrorCode { get; }
 //todo видалити прив'язку до deliverypoint та parcel

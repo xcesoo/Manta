@@ -12,6 +12,7 @@ using Manta.Application.Commands.DeliveryPoint;
 using Manta.Application.Commands.DeliveryVehicle;
 using Manta.Application.Commands.Parcel;
 using Manta.Application.Commands.User;
+using MassTransit;
 
 namespace Manta.Application.DataSeed;
 
@@ -19,22 +20,25 @@ public class Seed : ISeed
 {
     private IDeliveryPointRepository _deliveryPointRepository;
     private IUserRepository _userRepository;
+    private IParcelRepository _parcelRepository;
     private IMediator _mediator;
 
     public Seed(
         IDeliveryPointRepository deliveryPointRepository,
         IUserRepository userRepository,
-        IMediator mediator)
+        IMediator mediator,
+        IParcelRepository parcelRepository)
     {
         _deliveryPointRepository = deliveryPointRepository;
         _userRepository = userRepository;
         _mediator = mediator;
+        _parcelRepository = parcelRepository;
     }
 
     public async Task SeedAsync()
     {
         //add system user
-        var systemUser = await _userRepository.GetByIdAsync(0)
+        var systemUser = await _userRepository.GetByIdAsync(Guid.Empty)
                          ?? null;
         if (systemUser == null)
         {
@@ -54,7 +58,7 @@ public class Seed : ISeed
                 ));
         var deliveryPointsCommands = deliveryPointsGenerate.Generate(30);
         foreach (var command in deliveryPointsCommands) await _mediator.Send(command);
-        var deliveryPointRange = await _deliveryPointRepository.GetNextIdAsync() - 1;
+        var allDeliveryPoints = await _deliveryPointRepository.GetAllAsync();
         //
         timerdp.Stop();
 
@@ -86,9 +90,8 @@ public class Seed : ISeed
             {
                 var role = f.PickRandom(usersRoles);
                 
-                int? deliveryPointId = role is EUserRole.Cashier ?
-                    f.Random.Number(1, deliveryPointRange) :
-                    null;
+                Guid? deliveryPointId = role is EUserRole.Cashier ?
+                    f.PickRandom(allDeliveryPoints.Select(dp => dp.Id)) : null;
                 
                 string? deliveryVehicle  = role is EUserRole.Driver && unusedVehicles.Count > 0 ? 
                     unusedVehicles.Dequeue() : 
@@ -104,25 +107,30 @@ public class Seed : ISeed
             });
         var usersCommands = usersGenerate.Generate(30);
         foreach (var command in usersCommands) await _mediator.Send(command);
-        var userRange = await _userRepository.GetNextIdAsync() -1;
+        var allUsers = await _userRepository.GetAllAsync();
         //
         timeru.Stop();
         
         var timerp =Stopwatch.StartNew();
         //seed parcels
-        var parcelsGenerate = new Faker<CreateParcelCommand>("uk")
-            .CustomInstantiator(f => new CreateParcelCommand(
+        var parcelsGenerate = new Faker<ParcelCreationOptions>("uk")
+            .CustomInstantiator(f => new ParcelCreationOptions(
+                Id: NewId.NextGuid(),
                 RecipientName: f.Name.FullName(),
-                RecipientPhone: f.Phone.PhoneNumber("+380#########"),
+                RecipientPhoneNumber: f.Phone.PhoneNumber("+380#########"),
                 RecipientEmail: f.Internet.Email(),
                 Weight: f.Random.Double(0, 100),
                 AmountDue: f.Random.Decimal(0, 10000),
-                SenderId: f.Random.Number(1, userRange),
-                DeliveryPointId: f.Random.Number(1, deliveryPointRange)
+                CreatedBy: f.PickRandom(allUsers),
+                DeliveryPointId: f.PickRandom(allDeliveryPoints.Select(dp => dp.Id))
             ));
-        var parcelsCommands = parcelsGenerate.Generate(300);
-        foreach (var command in parcelsCommands) await _mediator.Send(command);
+        var parcelsOptions = parcelsGenerate.Generate(300);
+        var parcels = new List<Parcel>();
+        foreach (var option in parcelsOptions) parcels.Add(await ParcelFactory.Create(option));
+        await _parcelRepository.AddRangeAsync(parcels);
+        await _parcelRepository.SaveChangesAsync();
         //
+        
         timerp.Stop();
         
         Console.WriteLine($"Seeding delivery points {timerdp.Elapsed.TotalSeconds:F2}sec");

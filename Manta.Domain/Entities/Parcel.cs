@@ -6,9 +6,9 @@ namespace Manta.Domain.Entities;
 
 public class Parcel
 {
-    public int Id { get; private set; } = 0;
-    public int DeliveryPointId {get; private set;}
-    public int? CurrentLocationDeliveryPointId { get; private set; }
+    public Guid Id { get; private set; }
+    public Guid DeliveryPointId {get; private set;}
+    public Guid? CurrentLocationDeliveryPointId { get; private set; }
     public LicensePlate? CurrentVehicleId { get; private set; } // Визначає в якому траспортному засобі знаходиться посилка
     public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId; // Визначає чи посилка знаходиться у пункті призначення
     public decimal AmountDue { get; private set; } // Сума до сплати
@@ -24,8 +24,9 @@ public class Parcel
     public DateTime? ArrivedAt { get; private set; } = null;
     public DateTime? Storage => ArrivedAt?.ToLocalTime() + TimeSpan.FromDays(3);
     private Parcel() { }
-    private Parcel(int deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
+    private Parcel(Guid id, Guid deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
     {
+        Id = id;
         DeliveryPointId=deliveryPointId;
         RecipientName = recipientName;
         RecipientPhoneNumber = recipientPhoneNumber;
@@ -37,10 +38,8 @@ public class Parcel
 
     internal static Parcel Create(ParcelCreationOptions options)
     {
-        if(options.DeliveryPointId<=0) 
-            throw new ArgumentOutOfRangeException(nameof(options.DeliveryPointId) + "DeliveryPointId can't be null");
-        
         var parcel = new Parcel(
+            options.Id,
             options.DeliveryPointId,
             options.RecipientName,
             options.RecipientPhoneNumber,
@@ -68,8 +67,8 @@ public class Parcel
     
     internal void ChangeWeight(double newWeight) => Weight = newWeight;
 
-    internal void Readdress(int newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
-    internal void  MoveToLocation(int? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
+    internal void Readdress(Guid newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
+    internal void  MoveToLocation(Guid? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
 
     internal void ChangeDeliveryVehicle(LicensePlate? newVehicleId) => CurrentVehicleId = newVehicleId;
     internal void Cancel(User cancelledBy)

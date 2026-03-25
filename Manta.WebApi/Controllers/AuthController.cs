@@ -35,7 +35,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            int id = await _mediator.Send(command);
+            Guid id = await _mediator.Send(command);
             return Ok(id);
         }
         catch (Exception ex)

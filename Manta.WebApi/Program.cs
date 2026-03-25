@@ -46,8 +46,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-// Додаємо сервіс авторизації (перевірка ролей тощо)
-builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

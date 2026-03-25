@@ -5,7 +5,7 @@ namespace Manta.Domain.Entities;
 
 public abstract class User
 {
-    public int Id { get; protected set; } = 0;
+    public Guid Id { get; protected set; }
     public Email Email { get; protected set; }
     public Name Name { get; protected set; }
     public string PasswordHash { get; protected set; }
@@ -15,10 +15,11 @@ public abstract class User
     {
     }
 
-    protected User(string name, string email, string passwordHash)
+    protected User(Guid id, string name, string email, string passwordHash)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Username cannot be null or empty", nameof(name));
+        Id = id;
         Name = name;
         Email = email;
         PasswordHash = passwordHash;
@@ -28,8 +29,8 @@ public abstract class User
 
 public sealed class UnknownUser : User
 {
-    public UnknownUser(string name, string email, string passwordHash)
-        : base(name, email, passwordHash){}
+    public UnknownUser(Guid id, string name, string email, string passwordHash)
+        : base(id, name, email, passwordHash){}
     private UnknownUser()
     {
     }
@@ -38,8 +39,8 @@ public sealed class UnknownUser : User
 
 public sealed class Admin : User
 {
-    public Admin(string fullname, string email, string passwordHash) 
-        : base(fullname, email, passwordHash){}
+    public Admin(Guid id, string fullname, string email, string passwordHash) 
+        : base(id ,fullname, email, passwordHash){}
     private Admin()
     {
     }
@@ -48,13 +49,13 @@ public sealed class Admin : User
 
 public sealed class Cashier : User
 {
-    public int? DeliveryPointId { get; private set; }
+    public Guid? DeliveryPointId { get; private set; }
     private Cashier()
     {
     }
 
-    public Cashier(string name, string email, int? deliveryPointId, string passwordHash)
-        : base(name, email, passwordHash)
+    public Cashier(Guid id, string name, string email, Guid? deliveryPointId, string passwordHash)
+        : base(id, name, email, passwordHash)
     {
         DeliveryPointId = deliveryPointId;
     }
@@ -68,7 +69,7 @@ public sealed class Driver : User
     {
     }
 
-    public Driver(string name, string email, string passwordHash, LicensePlate? licensePlate) : base(name, email, passwordHash)
+    public Driver(Guid id, string name, string email, string passwordHash, LicensePlate? licensePlate) : base(id, name, email, passwordHash)
     {
         LicensePlate = licensePlate;
     }
@@ -78,6 +79,6 @@ public sealed class Driver : User
 public sealed class SystemUser : User
 {
     public static readonly SystemUser Instance = new SystemUser();
-    private SystemUser() : base("system", "system@manta.com", ""){}
+    private SystemUser() : base(Guid.Empty,"system", "system@manta.com", ""){}
     public override EUserRole Role => EUserRole.System;
 }

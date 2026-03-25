@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Manta.Application.Commands.Parcel;
 
-public class AcceptParcelAtDeliveryPointCommandHandler : IRequestHandler<AcceptParcelAtDeliveryPointCommand, int>
+public class AcceptParcelAtDeliveryPointCommandHandler : IRequestHandler<AcceptParcelAtDeliveryPointCommand, Guid>
 {
     private IUserRepository _userRepository;
     private ParcelDeliveryService _parcelDeliveryService;
@@ -18,7 +18,7 @@ public class AcceptParcelAtDeliveryPointCommandHandler : IRequestHandler<AcceptP
         _parcelDeliveryService = parcelDeliveryService;
     }
     
-    public async Task<int> Handle(AcceptParcelAtDeliveryPointCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AcceptParcelAtDeliveryPointCommand request, CancellationToken cancellationToken)
     {
         var sender = await _userRepository.GetByIdAsync(request.SenderId);
         if (sender == null)

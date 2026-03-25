@@ -16,16 +16,11 @@ public class UserRepository : IUserRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Users
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
-    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
-    {
-        var maxId = await _context.Users.MaxAsync(u => (int?)u.Id, cancellationToken) ?? 0;
-        return maxId + 1;
-    }   
 
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -49,7 +44,7 @@ public class UserRepository : IUserRepository
         return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await GetByIdAsync(id, cancellationToken);
         if (user != null)
@@ -58,7 +53,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Users
             .AnyAsync(u => u.Id == id, cancellationToken);
@@ -84,7 +79,7 @@ public class UserRepository : IUserRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<Cashier?> GetCashierByDeliveryPointAsync(int deliveryPointId, CancellationToken cancellationToken = default)
+    public async Task<Cashier?> GetCashierByDeliveryPointAsync(Guid deliveryPointId, CancellationToken cancellationToken = default)
     {
         return await _context.Users.OfType<Cashier>()
             .FirstOrDefaultAsync(c => c.DeliveryPointId == deliveryPointId, cancellationToken);

@@ -4,11 +4,12 @@ using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.Interfaces;
+using MassTransit;
 using MediatR;
 
 namespace Manta.Application.Commands.User;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
 {
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
@@ -18,13 +19,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
     }
-    public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         int rawValue = (int)request.Role;
         Console.WriteLine($"DEBUG: Role Name = {request.Role}, Numeric Value = {rawValue}");
         if(await _userRepository.ExistsByEmailAsync(request.Email))
             throw new ArgumentException("User with this email already exists");
         var options = new UserCreationOptions(
+            Id: NewId.NextGuid(),
             Name: request.Name,
             Email: request.Email,
             PasswordHash: _passwordHasher.Hash(request.Password),

@@ -4,7 +4,8 @@ using Manta.Domain.ValueObjects;
 namespace Manta.Domain.CreationOptions;
 
 public record ParcelCreationOptions (
-    int DeliveryPointId,
+    Guid Id,
+    Guid DeliveryPointId,
     decimal AmountDue,
     double Weight,
     Name RecipientName,

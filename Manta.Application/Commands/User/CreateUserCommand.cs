@@ -8,5 +8,5 @@ public record CreateUserCommand(
     string Email,
     string Password,
     EUserRole Role,
-    int? DeliveryPointId = null,
-    string? VehicleId = null) : IRequest <int>;
+    Guid? DeliveryPointId = null,
+    string? VehicleId = null) : IRequest <Guid>;

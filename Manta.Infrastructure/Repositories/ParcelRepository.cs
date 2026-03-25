@@ -18,16 +18,11 @@ public class ParcelRepository : IParcelRepository
     }
 
     // Базові CRUD операції
-    public async Task<Parcel?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Parcel?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
-    public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
-    {
-        var maxId = await _context.Parcels.MaxAsync(p => (int?)p.Id, cancellationToken) ?? 0;
-        return maxId + 1;
-    }   
 
     public async Task<IEnumerable<Parcel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -52,7 +47,7 @@ public class ParcelRepository : IParcelRepository
         return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var parcel = await GetByIdAsync(id, cancellationToken);
         if (parcel != null)
@@ -61,21 +56,21 @@ public class ParcelRepository : IParcelRepository
         }
     }
 
-    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
             .AnyAsync(p => p.Id == id, cancellationToken);
     }
 
     // Пошук за критеріями
-    public async Task<IEnumerable<Parcel>> GetByDeliveryPointIdAsync(int deliveryPointId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Parcel>> GetByDeliveryPointIdAsync(Guid deliveryPointId, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
             .Where(p => p.DeliveryPointId == deliveryPointId || p.CurrentLocationDeliveryPointId == deliveryPointId)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Parcel>> GetByCurrentLocationAsync(int? locationId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Parcel>> GetByCurrentLocationAsync(Guid? locationId, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
             .Where(p => p.CurrentLocationDeliveryPointId == locationId)
@@ -144,7 +139,7 @@ public class ParcelRepository : IParcelRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Parcel>> GetReadyForDeliveryAsync(int deliveryPointId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Parcel>> GetReadyForDeliveryAsync(Guid deliveryPointId, CancellationToken cancellationToken = default)
     {
         var parcels = await _context.Parcels
             .Where(p => p.DeliveryPointId == deliveryPointId 
@@ -165,7 +160,7 @@ public class ParcelRepository : IParcelRepository
         return parcels.Count(p => p.CurrentStatus.Status == status);
     }
 
-    public async Task<int> CountByDeliveryPointAsync(int deliveryPointId, CancellationToken cancellationToken = default)
+    public async Task<int> CountByDeliveryPointAsync(Guid deliveryPointId, CancellationToken cancellationToken = default)
     {
         return await _context.Parcels
             .CountAsync(p => p.DeliveryPointId == deliveryPointId, cancellationToken);
@@ -188,7 +183,7 @@ public class ParcelRepository : IParcelRepository
     }
 
     // Пакетні операції
-    public async Task<IEnumerable<Parcel>> GetByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Parcel>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     {
         if (ids == null)
             throw new ArgumentNullException(nameof(ids));

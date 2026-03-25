@@ -1,11 +1,12 @@
 using Manta.Application.Factories;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Interfaces;
+using MassTransit;
 using MediatR;
 
 namespace Manta.Application.Commands.DeliveryPoint;
 
-public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryPointCommand, int>
+public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryPointCommand, Guid>
 {
     private IDeliveryPointRepository _deliveryPointRepository;
 
@@ -14,9 +15,10 @@ public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryP
         _deliveryPointRepository = deliveryPointRepository;
     }
     
-    public async Task<int> Handle(CreateDeliveryPointCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateDeliveryPointCommand request, CancellationToken cancellationToken)
     {
         var options = new DeliveryPointCreationOptions(
+            Id: NewId.NextGuid(),
             Address:request.Address
             );
         var deliveryPoint = await DeliveryPointFactory.Create(options);

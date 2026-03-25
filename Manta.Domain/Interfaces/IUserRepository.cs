@@ -5,20 +5,19 @@ namespace Manta.Domain.Interfaces;
 
 public interface IUserRepository
 {
-    Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-    Task<int> GetNextIdAsync(CancellationToken cancellationToken = default);
+    Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default);
     Task AddAsync(User? user, CancellationToken cancellationToken = default);
     Task UpdateAsync(User user, CancellationToken cancellationToken = default);
-    Task DeleteAsync(int id, CancellationToken cancellationToken = default);
-    Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
     Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default);
     
     Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
     Task<IEnumerable<User>> GetByRoleAsync(EUserRole role, CancellationToken cancellationToken = default);
     
     // Специфічні методи для підкласів
-    Task<Cashier?> GetCashierByDeliveryPointAsync(int deliveryPointId, CancellationToken cancellationToken = default);
+    Task<Cashier?> GetCashierByDeliveryPointAsync(Guid deliveryPointId, CancellationToken cancellationToken = default);
     Task<Driver?> GetDriverByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken = default);
     Task<IEnumerable<Admin>> GetAllAdminsAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<Cashier>> GetAllCashiersAsync(CancellationToken cancellationToken = default);

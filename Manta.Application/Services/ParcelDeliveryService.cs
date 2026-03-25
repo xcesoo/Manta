@@ -31,7 +31,7 @@ public class ParcelDeliveryService
         _userRepository = userRepository;
     }
 
-    public async Task PayForParcel(int parcelId)
+    public async Task PayForParcel(Guid parcelId)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -39,7 +39,7 @@ public class ParcelDeliveryService
         parcel.Pay();
     }
 
-    public async Task DeliverParcel(int parcelId, User changeBy)
+    public async Task DeliverParcel(Guid parcelId, User changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -53,7 +53,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException($"Failed to deliver the parcel {nameof(parcel)}");
     }
 
-    public async Task<int> AcceptedAtDeliveryPoint(int deliveryPointId, int parcelId, User changedBy)
+    public async Task<Guid> AcceptedAtDeliveryPoint(Guid deliveryPointId, Guid parcelId, User changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -76,7 +76,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException("Failed to accept the parcel", nameof(parcel));
     }
 
-    public async Task ReaddressParcel(int deliveryPointId, int parcelId, User changedBy)
+    public async Task ReaddressParcel(Guid deliveryPointId, Guid parcelId, User changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -92,7 +92,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException("Failed to readdress the parcel", nameof(parcel));
     }
 
-    public async Task ReaddressParcel(int parcelId, User changedBy)
+    public async Task ReaddressParcel(Guid parcelId, User changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -105,7 +105,7 @@ public class ParcelDeliveryService
         }
         else throw new ArgumentException("Failed to readdress the parcel", nameof(parcel));
     }
-    public async Task ParcelChangeAmountDue(int parcelId, decimal amountDue)
+    public async Task ParcelChangeAmountDue(Guid parcelId, decimal amountDue)
     {
         if (amountDue < 0) throw new ArgumentException("Amount due must be positive", nameof(amountDue));
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
@@ -115,7 +115,7 @@ public class ParcelDeliveryService
 
     private bool CanReaddressParcel(RuleContext context) => _statusService.ApplyRule<ReaddressRequestedRule>(context);
 
-    public async Task LoadInDeliveryVehicle(LicensePlate deliveryVehicleId, int parcelId, User changeBy)
+    public async Task LoadInDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, User changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -133,7 +133,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task UnloadFromDeliveryVehicle(LicensePlate deliveryVehicleId, int parcelId, User changeBy)
+    public async Task UnloadFromDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, User changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -147,7 +147,7 @@ public class ParcelDeliveryService
         await _parcelRepository.SaveChangesAsync();
     }
 
-    public async Task CancelParcel(int parcelId, User cancelledBy)
+    public async Task CancelParcel(Guid parcelId, User cancelledBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -159,7 +159,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task ReturnRequestParcels(User changedBy, params int[] parcelIds)
+    public async Task ReturnRequestParcels(User changedBy, params Guid[] parcelIds)
     {
         foreach (var parcelId in parcelIds)
         {
@@ -174,7 +174,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task ReturnParcel(User changedBy, params int[] parcelIds)
+    public async Task ReturnParcel(User changedBy, params Guid[] parcelIds)
     {
         foreach (var parcelId in parcelIds)
         {
@@ -191,85 +191,4 @@ public class ParcelDeliveryService
             }
         }
     }
-
-    public async Task ForceDeliverParcel(int parcelId, User changeBy)
-    {
-        var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                     throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        parcel.ChangeStatus(EParcelStatus.Delivered, changeBy);
-        // Не виконуємо перевірки статусів
-        await _parcelRepository.UpdateAsync(parcel);
-        await _parcelRepository.SaveChangesAsync();
-    }
-
-    public async Task ForceAcceptedAtDeliveryPoint(int deliveryPointId, int parcelId, User changedBy)
-    {
-        var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                     throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        var deliveryPoint = await _deliveryPointRepository.GetByIdAsync(deliveryPointId) ??
-                            throw new ArgumentException($"DeliveryPoint with id {deliveryPointId} not found.");
-
-        // Примусове розвантаження з транспортного засобу
-        if (parcel.CurrentVehicleId != null)
-            await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
-        parcel.ChangeStatus(EParcelStatus.ReadyForPickup, changedBy);
-        parcel.ChangeArrivedAt(parcel.CurrentStatus.ChangedAt);
-        parcel.MoveToLocation(deliveryPoint.Id);
-        await _parcelRepository.UpdateAsync(parcel);
-        await _parcelRepository.SaveChangesAsync();
-    }
-
-    public async Task ForceReaddressParcel(int deliveryPointId, int parcelId, User changedBy)
-    {
-        var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                     throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        var deliveryPoint = await _deliveryPointRepository.GetByIdAsync(deliveryPointId) ??
-                            throw new ArgumentException($"DeliveryPoint with id {deliveryPointId} not found.");
-
-        // Примусове перенаправлення без перевірок
-        parcel.Readdress(deliveryPoint.Id);
-        await _parcelRepository.UpdateAsync(parcel);
-        await _parcelRepository.SaveChangesAsync();
-    }
-
-    public async Task ForceCancelParcel(int parcelId, User cancelledBy)
-    {
-        var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                     throw new ArgumentException($"Parcel with id {parcelId} not found.");
-        parcel.Cancel(cancelledBy);
-        // Примусове скасування без перевірок правил
-        await _parcelRepository.UpdateAsync(parcel);
-        await _parcelRepository.SaveChangesAsync();
-    }
-
-    public async Task ForceReturnRequestParcels(User changedBy, params int[] parcelIds)
-    {
-        foreach (var parcelId in parcelIds)
-        {
-            var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                         throw new ArgumentException($"Parcel with id {parcelId} not found.");
-
-            if (parcel.CurrentVehicleId != null)
-                await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
-            
-            parcel.ChangeStatus(EParcelStatus.ReaddressRequested, changedBy);
-            await _parcelRepository.UpdateAsync(parcel);
-            await _parcelRepository.SaveChangesAsync();
-        }
-    }
-    
-    public async Task ForceReturnParcel(User changedBy, params int[] parcelIds)
-    {
-        foreach (var parcelId in parcelIds)
-        {
-            var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
-                         throw new ArgumentException($"Parcel with id {parcelId} not found.");
-                if (parcel.CurrentVehicleId != null)
-                    await UnloadFromDeliveryVehicle(parcel.CurrentVehicleId, parcel.Id, changedBy);
-                parcel.ChangeStatus(EParcelStatus.Returned, changedBy);
-                await _parcelRepository.UpdateAsync(parcel);
-                await _parcelRepository.SaveChangesAsync();
-        }
-    }
-
 }
