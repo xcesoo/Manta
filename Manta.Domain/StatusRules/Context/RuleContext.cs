@@ -1,22 +1,23 @@
 using Manta.Domain.Entities;
+using Manta.Domain.ValueObjects;
 
-namespace Manta.Domain.StatusRules;
+namespace Manta.Domain.StatusRules.Context;
 
 public sealed record RuleContext
 {
     public Parcel Parcel { get; init; }
-    public User User { get; init; }
+    public UserInfo User { get; init; }
     public DeliveryPoint? DeliveryPoint { get; init; }
     public DeliveryVehicle? DeliveryVehicle { get; init; }
 
-    public static RuleContext ForParcel(Parcel parcel, User user) =>
+    public static RuleContext ForParcel(Parcel parcel, UserInfo user) =>
         new RuleContext
         {
             Parcel = parcel,
             User = user
         };
 
-    public static RuleContext ForDelivery(Parcel parcel, User user, DeliveryPoint deliveryPoint) =>
+    public static RuleContext ForDelivery(Parcel parcel, UserInfo user, DeliveryPoint deliveryPoint) =>
         new RuleContext
         {
             Parcel = parcel,
@@ -24,7 +25,7 @@ public sealed record RuleContext
             DeliveryPoint = deliveryPoint
         };
 
-    public static RuleContext ForVehicle(Parcel parcel, User user, DeliveryVehicle deliveryVehicle) =>
+    public static RuleContext ForVehicle(Parcel parcel, UserInfo user, DeliveryVehicle deliveryVehicle) =>
         new RuleContext()
         {
             Parcel = parcel,

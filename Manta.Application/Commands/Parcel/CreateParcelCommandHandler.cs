@@ -2,6 +2,7 @@ using Manta.Application.Factories;
 using Manta.Application.Interfaces;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Interfaces;
+using Manta.Domain.ValueObjects;
 using MassTransit;
 using MediatR;
 
@@ -11,19 +12,21 @@ public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, G
 {
     private readonly IParcelRepository _parcelRepository;
     private readonly IUserRepository _userRepository;
+    private readonly ICurrentUserService _currentUser;
     private readonly IDeliveryPointRepository _deliveryPointRepository;
-    public CreateParcelCommandHandler(IParcelRepository parcelRepository, IUserRepository userRepository, IDeliveryPointRepository deliveryPointRepository)
+    public CreateParcelCommandHandler(IParcelRepository parcelRepository, 
+        IUserRepository userRepository, 
+        IDeliveryPointRepository deliveryPointRepository, 
+        ICurrentUserService currentUser)
     {
         _parcelRepository = parcelRepository;
         _userRepository = userRepository;
         _deliveryPointRepository = deliveryPointRepository;
+        _currentUser = currentUser;
     }
 
     public async Task<Guid> Handle(CreateParcelCommand request, CancellationToken cancellationToken)
     {
-        var sender = await _userRepository.GetByIdAsync(request.SenderId); //todo take user snap from jwt
-        if (sender == null)
-            throw new ArgumentException($"User with ID {request.SenderId} not found");
         //todo check delivery point
         var parcelId = NewId.NextGuid();
         var options = new ParcelCreationOptions
@@ -35,7 +38,7 @@ public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, G
                 RecipientEmail: request.RecipientEmail,
                 RecipientName: request.RecipientName,
                 RecipientPhoneNumber: request.RecipientPhone,
-                CreatedBy: sender);
+                CreatedBy: new UserInfo(_currentUser.UserId, _currentUser.Email, _currentUser.UserName, _currentUser.Role));
         var parcel = await ParcelFactory.Create(options);
         if (parcel == null) throw new ArgumentException("Failed to create parcel");
         await _parcelRepository.AddAsync(parcel, cancellationToken);

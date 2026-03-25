@@ -10,13 +10,12 @@
         public string Name { get; init; }   
         public EUserRole Role { get; init; }
 
-        private UserInfo(){}
-        private UserInfo(User user)
+        public UserInfo(Guid id, string email, string name, EUserRole role)
         {
-            Id = user.Id;
-            Email = user.Email;
-            Name = user.Name;
-            Role = user.Role;
+            Id = id;
+            Email = email;
+            Name = name;
+            Role = role;
         }
-        public static implicit operator UserInfo(User user) => new UserInfo(user);
+        public static implicit operator UserInfo(User user) => new UserInfo(user.Id, user.Email, user.Name, user.Role);
     }

@@ -18,8 +18,6 @@ public class ParcelsController : ControllerBase
     private readonly ParcelDeliveryService _parcelDeliveryService;
     private readonly ILogger<ParcelsController> _logger;
     private readonly IMediator _mediator;
-    public record AcceptParcelRequest(Guid DeliveryPointId, Guid SenderId);
-
     public ParcelsController(IParcelRepository parcelRepository, ParcelDeliveryService parcelDeliveryService,
         ILogger<ParcelsController> logger, IMediator mediator)
     {
@@ -39,6 +37,7 @@ public class ParcelsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateParcelCommand command)
     {
         try 
@@ -53,12 +52,12 @@ public class ParcelsController : ControllerBase
         }
     }
 
-    [HttpPost("{id}/accept")]
-    public async Task<IActionResult> Accept(Guid id, [FromBody] AcceptParcelRequest request)
+    [HttpPost("accept")]
+    [Authorize]
+    public async Task<IActionResult> Accept([FromBody]AcceptParcelAtDeliveryPointCommand command)
     {
         try
         {
-            var command = new AcceptParcelAtDeliveryPointCommand(id, request.DeliveryPointId, request.SenderId);
             var parcelId = await _mediator.Send(command);
             var parcel = await _mediator.Send(new GetParcelByIdQuery(parcelId));
             return Ok(parcel);

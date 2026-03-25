@@ -1,4 +1,5 @@
 using Manta.Domain.Entities;
+using Manta.Domain.Enums;
 using Manta.Domain.ValueObjects;
 
 namespace Manta.Domain.CreationOptions;
@@ -11,4 +12,4 @@ public record ParcelCreationOptions (
     Name RecipientName,
     PhoneNumber RecipientPhoneNumber,
     Email RecipientEmail,
-    User CreatedBy);
+    UserInfo CreatedBy);

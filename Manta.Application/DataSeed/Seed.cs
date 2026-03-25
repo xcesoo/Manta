@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using Manta.Application.Factories;
-using Manta.Application.Interfaces;
-using Manta.Application.Services;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
@@ -10,7 +8,6 @@ using MediatR;
 using Bogus;
 using Manta.Application.Commands.DeliveryPoint;
 using Manta.Application.Commands.DeliveryVehicle;
-using Manta.Application.Commands.Parcel;
 using Manta.Application.Commands.User;
 using MassTransit;
 

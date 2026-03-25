@@ -1,6 +1,7 @@
 using System.Data;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
+using Manta.Domain.StatusRules.Context;
 using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.ValueObjects;
 

@@ -3,6 +3,7 @@ using Manta.Domain.Enums;
 using Manta.Domain.Interfaces;
 using Manta.Domain.Services;
 using Manta.Domain.StatusRules;
+using Manta.Domain.StatusRules.Context;
 using Manta.Domain.StatusRules.Implementations;
 using Manta.Domain.StatusRules.Policies;
 using Manta.Domain.ValueObjects;
@@ -39,7 +40,7 @@ public class ParcelDeliveryService
         parcel.Pay();
     }
 
-    public async Task DeliverParcel(Guid parcelId, User changeBy)
+    public async Task DeliverParcel(Guid parcelId, UserInfo changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -53,7 +54,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException($"Failed to deliver the parcel {nameof(parcel)}");
     }
 
-    public async Task<Guid> AcceptedAtDeliveryPoint(Guid deliveryPointId, Guid parcelId, User changedBy)
+    public async Task<Guid> AcceptedAtDeliveryPoint(Guid deliveryPointId, Guid parcelId, UserInfo changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -76,7 +77,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException("Failed to accept the parcel", nameof(parcel));
     }
 
-    public async Task ReaddressParcel(Guid deliveryPointId, Guid parcelId, User changedBy)
+    public async Task ReaddressParcel(Guid deliveryPointId, Guid parcelId, UserInfo changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -92,7 +93,7 @@ public class ParcelDeliveryService
         else throw new ArgumentException("Failed to readdress the parcel", nameof(parcel));
     }
 
-    public async Task ReaddressParcel(Guid parcelId, User changedBy)
+    public async Task ReaddressParcel(Guid parcelId, UserInfo changedBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -115,7 +116,7 @@ public class ParcelDeliveryService
 
     private bool CanReaddressParcel(RuleContext context) => _statusService.ApplyRule<ReaddressRequestedRule>(context);
 
-    public async Task LoadInDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, User changeBy)
+    public async Task LoadInDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, UserInfo changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -133,7 +134,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task UnloadFromDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, User changeBy)
+    public async Task UnloadFromDeliveryVehicle(LicensePlate deliveryVehicleId, Guid parcelId, UserInfo changeBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -147,7 +148,7 @@ public class ParcelDeliveryService
         await _parcelRepository.SaveChangesAsync();
     }
 
-    public async Task CancelParcel(Guid parcelId, User cancelledBy)
+    public async Task CancelParcel(Guid parcelId, UserInfo cancelledBy)
     {
         var parcel = await _parcelRepository.GetByIdAsync(parcelId) ??
                      throw new ArgumentException($"Parcel with id {parcelId} not found.");
@@ -159,7 +160,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task ReturnRequestParcels(User changedBy, params Guid[] parcelIds)
+    public async Task ReturnRequestParcels(UserInfo changedBy, params Guid[] parcelIds)
     {
         foreach (var parcelId in parcelIds)
         {
@@ -174,7 +175,7 @@ public class ParcelDeliveryService
         }
     }
 
-    public async Task ReturnParcel(User changedBy, params Guid[] parcelIds)
+    public async Task ReturnParcel(UserInfo changedBy, params Guid[] parcelIds)
     {
         foreach (var parcelId in parcelIds)
         {

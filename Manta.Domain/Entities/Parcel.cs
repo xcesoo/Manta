@@ -51,7 +51,7 @@ public class Parcel
         return parcel;
     }
 
-    internal void ChangeStatus(EParcelStatus newStatus, User changedBy) =>
+    internal void ChangeStatus(EParcelStatus newStatus, UserInfo changedBy) =>
         StatusHistory.Add(new ParcelStatus(newStatus, changedBy));
     
     internal void Pay() => AmountDue = 0m;
@@ -71,7 +71,7 @@ public class Parcel
     internal void  MoveToLocation(Guid? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
 
     internal void ChangeDeliveryVehicle(LicensePlate? newVehicleId) => CurrentVehicleId = newVehicleId;
-    internal void Cancel(User cancelledBy)
+    internal void Cancel(UserInfo cancelledBy)
     {
         ChangeStatus(EParcelStatus.ShipmentCancelled, cancelledBy);
     }

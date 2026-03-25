@@ -2,6 +2,7 @@ using Manta.Application.Interfaces;
 using Manta.Domain.Interfaces;
 using Manta.Infrastructure.Persistence;
 using Manta.Infrastructure.Repositories;
+using Manta.Infrastructure.Services;
 using Manta.WebApi.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
         services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;
     }
 }

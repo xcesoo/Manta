@@ -33,20 +33,4 @@ public class ParcelStatusService
         context.Parcel.ChangeStatus(result.NewStatus.Value, context.User);
         return true;
     }
-
-    public bool TryApplyRule<TRule>(RuleContext context) where TRule : IParcelStatusRule
-    {
-        var rule = _rules.OfType<TRule>().FirstOrDefault()
-            ?? throw new InvalidOperationException($"Rule {typeof(TRule).Name} not registered");
-        if(context.Parcel is null || context.User is null)
-            throw new ArgumentException("RuleContext must contain Parcel and ChangedBy.");
-        
-        var result = rule.ShouldApply(context);
-        
-        if (result.IsFailed)
-            return false;
-        
-        context.Parcel.ChangeStatus(result.NewStatus.Value, context.User);
-        return true;
-    }
 }
