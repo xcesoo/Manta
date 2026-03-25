@@ -5,7 +5,7 @@ namespace Manta.Domain.Entities;
 
 public class DeliveryVehicle
 {
-    public int Id { get; private set; } = 0;
+    public Guid Id { get; private set; } 
     public LicensePlate LicensePlateId { get; private set; }
     public CarModel CarModel { get; private set; }
     public double Capacity { get; private set; }
@@ -15,8 +15,9 @@ public class DeliveryVehicle
     
     private DeliveryVehicle() { }
 
-    private DeliveryVehicle(LicensePlate licensePlateId, CarModel carModel, double capacity)
+    private DeliveryVehicle(Guid id, LicensePlate licensePlateId, CarModel carModel, double capacity)
     {
+        Id = id;
         LicensePlateId = licensePlateId;
         CarModel = carModel;
         Capacity = capacity;
@@ -29,6 +30,7 @@ public class DeliveryVehicle
         if (options.Capacity <= 0)
             throw new ArgumentException("The capacity must be greater than zero.", nameof(options.Capacity));
         return new DeliveryVehicle(
+            options.Id,
             options.LicensePlate,
             options.CarModel,
             options.Capacity);

@@ -15,11 +15,8 @@
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<DeliveryVehicle?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<DeliveryVehicle?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            if (id < 0)
-                throw new ArgumentNullException(nameof(id));
-
             return await _context.DeliveryVehicles
                 .FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
         }
@@ -32,12 +29,7 @@
             return await  _context.DeliveryVehicles
                 .FirstOrDefaultAsync(v => v.LicensePlateId == licensePlate, cancellationToken);
         }
-
-        public async Task<int> GetNextIdAsync(CancellationToken cancellationToken = default)
-        {
-            var maxId = await _context.DeliveryVehicles.MaxAsync(v => (int?)v.Id, cancellationToken) ?? 0;
-            return maxId + 1;
-        }
+        
 
         public async Task<IEnumerable<DeliveryVehicle>> GetAllAsync(CancellationToken cancellationToken = default)
         {
@@ -61,7 +53,7 @@
             return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var vehicle = await GetByIdAsync(id, cancellationToken);
             if (vehicle != null)

@@ -5,14 +5,13 @@ namespace Manta.Domain.Interfaces;
 
 public interface IDeliveryVehicleRepository
 {
-    Task<DeliveryVehicle?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<DeliveryVehicle?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<DeliveryVehicle?> GetByLicensePlateIdAsync(LicensePlate vehicleId, CancellationToken cancellationToken = default);
-    Task<int> GetNextIdAsync(CancellationToken cancellationToken = default);
 
     Task<IEnumerable<DeliveryVehicle>> GetAllAsync(CancellationToken cancellationToken = default);
     Task AddAsync(DeliveryVehicle vehicle, CancellationToken cancellationToken = default);
     Task UpdateAsync(DeliveryVehicle vehicle, CancellationToken cancellationToken = default);
-    Task DeleteAsync(int id, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     Task<bool> ExistsAsync(LicensePlate id, CancellationToken cancellationToken = default);
     
     Task<IEnumerable<DeliveryVehicle>> GetAvailableVehiclesAsync(double requiredCapacity, CancellationToken cancellationToken = default);
