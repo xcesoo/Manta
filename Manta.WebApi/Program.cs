@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json.Serialization;
 using Manta.Application;
 using Manta.Application.DataSeed;
 using Manta.Infrastructure;
 using Manta.Infrastructure.Persistence;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -11,7 +13,8 @@ using Microsoft.OpenApi;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -44,6 +47,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true
         };
     });
+
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddHttpContextAccessor();
@@ -56,11 +61,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<MantaDbContext>();
-        if (await context.Database.EnsureCreatedAsync())
-        {
-            var seeder = services.GetRequiredService<Seed>();
-            await seeder.SeedAsync();
-        }
+        await context.Database.EnsureCreatedAsync();
     }
     catch (Exception e)
     {
@@ -68,6 +69,7 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(e, "An error occurred while initializing the database.");
     }
 }
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -83,4 +85,25 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.StartAsync();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        var seeder = services.GetRequiredService<Seed>();
+        
+        logger.LogInformation("Seeding database...");
+        await seeder.SeedAsync(); 
+        logger.LogInformation("Seeding database complete.");
+    }
+    catch (Exception e)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(e, "An error occurred while initializing the database.");
+    }
+}
+
+await app.WaitForShutdownAsync();

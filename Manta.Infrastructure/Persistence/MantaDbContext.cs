@@ -12,9 +12,32 @@ public class MantaDbContext : DbContext
     public DbSet<DeliveryPoint> DeliveryPoints {get; set;}
     public DbSet<DeliveryVehicle> DeliveryVehicles {get; set;}
     public DbSet<User> Users {get; set;}
+    
+    public DbSet<OutboxMessage> OutboxMessages {get; set;}
+    public DbSet<ProcessedLog> ProcessedLogs {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<OutboxMessage>(entity =>
+        {
+            entity.HasKey(e => e.MessageId);
+            entity.Property(e => e.MessageId).ValueGeneratedNever();
+            entity.Property(e => e.MessageType).IsRequired();
+            entity.Property(e => e.Payload)
+                .HasColumnType("jsonb")
+                .IsRequired();
+            entity.HasIndex(e => e.CreatedAt);
+            entity.Property(e => e.CreatedAt).IsRequired();
+            entity.HasIndex(e => e.SentAt);
+            entity.Property(e => e.SentAt).IsRequired(false);
+        });
+        modelBuilder.Entity<ProcessedLog>(entity =>
+        {
+            entity.HasKey(e => e.MessageId);
+            entity.Property(e => e.MessageId).ValueGeneratedNever();
+            entity.HasIndex(e => e.ProcessedAt);
+            entity.Property(e=>e.ProcessedAt).IsRequired();
+        });
         // Конфігурація Parcel
         modelBuilder.Entity<Parcel>(entity =>
         {

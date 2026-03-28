@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Manta.Application.Interfaces;
 using Manta.Domain.Enums;
+using Manta.Domain.ValueObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Manta.Infrastructure.Services;
@@ -8,30 +9,32 @@ namespace Manta.Infrastructure.Services;
 public class CurrentUserService : ICurrentUserService
 {
     private readonly IHttpContextAccessor  _accessor;
+    private UserInfo? _systemUser;
     public  CurrentUserService(IHttpContextAccessor accessor)
     {
         _accessor = accessor;
     }
 
-    public Guid UserId
+    public void SetSystemUser(Guid userId, string email, string name, EUserRole role)
     {
-        get
-        {
-            var id = _accessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Guid.TryParse(id, out var result) ? result : Guid.Empty;
-        }
+        _systemUser = new UserInfo(userId, email, name, role);
     }
+    public Guid UserId => _systemUser?.Id ?? GetGuidClaim(ClaimTypes.NameIdentifier);
+    
+    public EUserRole Role => _systemUser?.Role ?? ParseRoleClaim();
 
-    public EUserRole Role {
-        get
-        {
-            var role = _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value;
-            if(Enum.TryParse<EUserRole>(role,true, out var result)) return result;
-            return EUserRole.Unknown;
-        }
+    public string Email => _systemUser?.Email ?? _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value ?? string.Empty;
+
+    public string UserName => _systemUser?.Name ?? _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
+    
+    private Guid GetGuidClaim(string type)
+    {
+        var val = _accessor.HttpContext?.User.FindFirst(type)?.Value;
+        return Guid.TryParse(val, out var id) ? id : Guid.Empty;
     }
-
-    public string Email => _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value ?? string.Empty;
-
-    public string UserName => _accessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
+    private EUserRole ParseRoleClaim()
+    {
+        var roleStr = _accessor.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value;
+        return Enum.TryParse<EUserRole>(roleStr, true, out var role) ? role : EUserRole.Unknown;
+    }
 }

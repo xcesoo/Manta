@@ -6,7 +6,7 @@ namespace Manta.Application.Factories;
 
 public static class ParcelFactory
 {
-    public static async Task<Parcel> Create(ParcelCreationOptions options)
+    public static Parcel Create(ParcelCreationOptions options)
     {
         var parcel = Parcel.Create(options);
         return parcel;

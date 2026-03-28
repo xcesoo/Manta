@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Infrastructure", "Man
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.WebApi", "Manta.WebApi\Manta.WebApi.csproj", "{DCBD3A74-0433-4900-9265-0127B1CC0A23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manta.Contracts", "Manta.Contracts\Manta.Contracts.csproj", "{F3732A86-96C1-455E-BE0E-DAA718D88557}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,18 @@ Global
 		{DCBD3A74-0433-4900-9265-0127B1CC0A23}.Release|x64.Build.0 = Release|Any CPU
 		{DCBD3A74-0433-4900-9265-0127B1CC0A23}.Release|x86.ActiveCfg = Release|Any CPU
 		{DCBD3A74-0433-4900-9265-0127B1CC0A23}.Release|x86.Build.0 = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|x64.Build.0 = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Debug|x86.Build.0 = Debug|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|x64.ActiveCfg = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|x64.Build.0 = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3732A86-96C1-455E-BE0E-DAA718D88557}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

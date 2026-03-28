@@ -1,9 +1,13 @@
 using Manta.Application.Interfaces;
+using Manta.Contracts;
 using Manta.Domain.Interfaces;
+using Manta.Infrastructure.Consumers;
+using Manta.Infrastructure.Messaging;
 using Manta.Infrastructure.Persistence;
 using Manta.Infrastructure.Repositories;
 using Manta.Infrastructure.Services;
 using Manta.WebApi.Auth;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +21,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<MantaDbContext>(options =>
             options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection")));
+                configuration.GetConnectionString("DefaultConnection"), o => o.MaxBatchSize(1000)));
         services.AddScoped<IParcelRepository, ParcelRepository>();
         services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
         services.AddScoped<IDeliveryVehicleRepository, DeliveryVehicleRepository>();
@@ -25,6 +29,39 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IIntegrationMessageQueue, IntegrationMessageQueue>();
+        services.AddHostedService<OutboxBatchProcessor>();
+        services.AddHostedService<JanitorWorker>();
+        
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<CreateParcelConsumer>().ExcludeFromConfigureEndpoints();
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["RabbitMq:Host"] ?? "localhost", "/", h =>
+                {
+                    h.Username(configuration["RabbitMq:Username"] ?? "guest");
+                    h.Password(configuration["RabbitMq:Password"] ?? "guest");
+                    h.ContinuationTimeout(TimeSpan.FromSeconds(60));
+                    h.PublisherConfirmation = true; //todo must be true
+                });
+                cfg.ReceiveEndpoint("manta.parcel.create.batch", e =>
+                {
+                    e.PrefetchCount = 1000; 
+                    e.ConcurrentMessageLimit = 1;
+                    
+                    e.ConfigureConsumer<CreateParcelConsumer>(context, c =>
+                    {
+                        c.Options<BatchOptions>(o =>
+                        {
+                            o.SetMessageLimit(500);
+                            o.SetTimeLimit(TimeSpan.FromSeconds(2));
+                        });
+                    }); 
+                });
+                cfg.ConfigureEndpoints(context);
+            });
+        });
         return services;
     }
 }

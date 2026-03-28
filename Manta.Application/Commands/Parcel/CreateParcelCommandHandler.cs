@@ -1,5 +1,6 @@
 using Manta.Application.Factories;
 using Manta.Application.Interfaces;
+using Manta.Contracts;
 using Manta.Domain.CreationOptions;
 using Manta.Domain.Interfaces;
 using Manta.Domain.ValueObjects;
@@ -10,39 +11,34 @@ namespace Manta.Application.Commands.Parcel;
 
 public class CreateParcelCommandHandler : IRequestHandler<CreateParcelCommand, Guid>
 {
-    private readonly IParcelRepository _parcelRepository;
-    private readonly IUserRepository _userRepository;
     private readonly ICurrentUserService _currentUser;
-    private readonly IDeliveryPointRepository _deliveryPointRepository;
-    public CreateParcelCommandHandler(IParcelRepository parcelRepository, 
-        IUserRepository userRepository, 
-        IDeliveryPointRepository deliveryPointRepository, 
-        ICurrentUserService currentUser)
+    private readonly IIntegrationMessageQueue _queue;
+    public CreateParcelCommandHandler(ICurrentUserService currentUser, IIntegrationMessageQueue queue)
     {
-        _parcelRepository = parcelRepository;
-        _userRepository = userRepository;
-        _deliveryPointRepository = deliveryPointRepository;
         _currentUser = currentUser;
+        _queue = queue;
     }
 
     public async Task<Guid> Handle(CreateParcelCommand request, CancellationToken cancellationToken)
     {
         //todo check delivery point
         var parcelId = NewId.NextGuid();
-        var options = new ParcelCreationOptions
+        var messageId = NewId.NextGuid();
+        var message = new CreateParcelMessage
             (
-                Id: parcelId,
+                ParcelId: parcelId,
+                MessageId: messageId,
                 DeliveryPointId: request.DeliveryPointId,
                 AmountDue: request.AmountDue,
                 Weight: request.Weight,
                 RecipientEmail: request.RecipientEmail,
                 RecipientName: request.RecipientName,
                 RecipientPhoneNumber: request.RecipientPhone,
-                CreatedBy: new UserInfo(_currentUser.UserId, _currentUser.Email, _currentUser.UserName, _currentUser.Role));
-        var parcel = await ParcelFactory.Create(options);
-        if (parcel == null) throw new ArgumentException("Failed to create parcel");
-        await _parcelRepository.AddAsync(parcel, cancellationToken);
-        await _parcelRepository.SaveChangesAsync(cancellationToken);
-        return parcel.Id;
+                CreatedById: _currentUser.UserId,
+                CreatedByName: _currentUser.UserName,
+                CreatedByEmail: _currentUser.Email,
+                CreatedByRole: _currentUser.Role.ToString()); 
+        await _queue.EnqueueAsync(message, messageId, cancellationToken);
+        return parcelId;
     }
 }

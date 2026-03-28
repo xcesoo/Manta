@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+      <ProjectReference Include="..\Manta.Contracts\Manta.Contracts.csproj" />
       <ProjectReference Include="..\Manta.Domain\Manta.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Bogus" Version="35.6.5" />
-      <PackageReference Include="MassTransit.Abstractions" Version="9.0.1" />
+      <PackageReference Include="MassTransit.Abstractions" Version="8.2.5" />
       <PackageReference Include="MediatR" Version="14.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
     </ItemGroup>
