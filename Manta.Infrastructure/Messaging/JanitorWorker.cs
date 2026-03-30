@@ -16,7 +16,8 @@ public class JanitorWorker : BackgroundService
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<JanitorWorker> _logger;
     private readonly TimeSpan _checkInterval = TimeSpan.FromSeconds(30); 
-    private readonly TimeSpan _messageTimeout = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _messageTimeout = TimeSpan.FromMinutes(5);
+    private DateTime _lastLogCleanup = DateTime.MinValue;
 
     public JanitorWorker(IServiceProvider serviceProvider, ILogger<JanitorWorker> logger)
     {
@@ -49,21 +50,29 @@ public class JanitorWorker : BackgroundService
         var dbContext = scope.ServiceProvider.GetRequiredService<MantaDbContext>();
         var publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
         
-        var deletedCount = await dbContext.OutboxMessages
+        var deletedOutboxCount = await dbContext.OutboxMessages
             .Where(outbox => dbContext.ProcessedLogs.Any(log => log.MessageId == outbox.MessageId))
             .ExecuteDeleteAsync(ct);
 
-        if (deletedCount > 0)
+        if (deletedOutboxCount > 0)
         {
-            _logger.LogInformation($"[JANITOR] Cleaned {deletedCount}");
+            _logger.LogInformation($"[JANITOR] Cleaned {deletedOutboxCount} outbox messages");
+        }
+
+        if (DateTime.UtcNow - _lastLogCleanup >= TimeSpan.FromDays(1))
+        {
+            var processedLogsThreshold = DateTime.UtcNow.AddDays(-1);
+            var deletedLogs = await dbContext.ProcessedLogs
+                .Where(log => log.ProcessedAt < processedLogsThreshold)
+                .ExecuteDeleteAsync(ct);
+            _lastLogCleanup = DateTime.UtcNow;
+            _logger.LogInformation($"[JANITOR] Cleaned {deletedLogs} processed logs");
         }
         
         var thresholdDate = DateTime.UtcNow.Subtract(_messageTimeout);
 
         var stuckMessages = await dbContext.OutboxMessages
-            // Правильное условие:
-            .Where(o => o.CreatedAt < thresholdDate) // Сообщение В ЛЮБОМ СЛУЧАЕ должно быть старше 60 сек
-            .Where(o => o.SentAt == null || o.SentAt < thresholdDate)
+            .Where(o => o.CreatedAt < thresholdDate) 
             .Where(o => !dbContext.ProcessedLogs.Any(log => log.MessageId == o.MessageId))
             .OrderBy(o => o.CreatedAt)
             .Take(1000)
@@ -90,8 +99,6 @@ public class JanitorWorker : BackgroundService
                     {
                         typedList.Add(deserializedMessage);
                     }
-                    // ИСПРАВЛЕНИЕ: Обновляем время отправки при спасении
-                    stuckMsg.SentAt = DateTime.UtcNow; 
                 }
 
                 if (typedList.Count > 0)

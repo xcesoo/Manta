@@ -173,7 +173,7 @@ public class Seed : ISeed
                 DeliveryPointId: f.PickRandom(allDeliveryPoints.Select(dp => dp.Id)))
             );
 
-        var parcelsCommands = parcelsGenerate.Generate(1000000);
+        var parcelsCommands = parcelsGenerate.Generate(1_000_000);
         
         var parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 50 };
 

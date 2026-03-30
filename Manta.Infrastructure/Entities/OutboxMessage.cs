@@ -1,4 +1,4 @@
-namespace Manta.Domain.Entities;
+namespace Manta.Infrastructure.Entities;
 
 public class OutboxMessage
 {
@@ -6,5 +6,4 @@ public class OutboxMessage
     public string MessageType { get; set; } = string.Empty; 
     public string Payload { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
-    public DateTime? SentAt { get; set; }
 }

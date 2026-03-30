@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text.Json;
 using Manta.Application.Interfaces;
 using Manta.Domain.Entities;
+using Manta.Infrastructure.Entities;
 using Manta.Infrastructure.Persistence;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -73,7 +74,6 @@ public class OutboxBatchProcessor : BackgroundService
             MessageType = x.Message.GetType().AssemblyQualifiedName!,
             Payload = JsonSerializer.Serialize(x.Message, x.Message.GetType()),
             CreatedAt = DateTime.UtcNow,
-            SentAt = null
         }).ToList();
 
         dbContext.OutboxMessages.AddRange(outboxMessages);
@@ -92,10 +92,6 @@ public class OutboxBatchProcessor : BackgroundService
             var task = (Task)genericMethod.Invoke(null, new object[] { publishEndpoint, messagesList, ct })!;
             await task;
         }
-        var sentMessageIds = outboxMessages.Select(x => x.MessageId).ToList();
-        await dbContext.OutboxMessages
-            .Where(m => sentMessageIds.Contains(m.MessageId))
-            .ExecuteUpdateAsync(s => s.SetProperty(p => p.SentAt, DateTime.UtcNow), ct);
     }
     internal static Task PublishTypedBatchAsync<T>(IPublishEndpoint endpoint, IEnumerable<object> messages, CancellationToken ct) where T : class
     {

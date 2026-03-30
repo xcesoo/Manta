@@ -1,6 +1,7 @@
 using Manta.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Manta.Domain.Entities;
+using Manta.Infrastructure.Entities;
 
 namespace Manta.Infrastructure.Persistence;
 
@@ -28,8 +29,7 @@ public class MantaDbContext : DbContext
                 .IsRequired();
             entity.HasIndex(e => e.CreatedAt);
             entity.Property(e => e.CreatedAt).IsRequired();
-            entity.HasIndex(e => e.SentAt);
-            entity.Property(e => e.SentAt).IsRequired(false);
+
         });
         modelBuilder.Entity<ProcessedLog>(entity =>
         {

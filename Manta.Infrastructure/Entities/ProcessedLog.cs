@@ -1,4 +1,4 @@
-namespace Manta.Domain.Entities;
+namespace Manta.Infrastructure.Entities;
 
 public class ProcessedLog
 {

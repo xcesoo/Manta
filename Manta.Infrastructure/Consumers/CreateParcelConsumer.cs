@@ -4,6 +4,7 @@ using Manta.Domain.CreationOptions;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
 using Manta.Domain.ValueObjects;
+using Manta.Infrastructure.Entities;
 using Manta.Infrastructure.Persistence;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
