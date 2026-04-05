@@ -43,8 +43,7 @@ public class ParcelsController : ControllerBase
         try 
         {
             var parcelId = await _mediator.Send(command);
-            var parcel = await _mediator.Send(new GetParcelByIdQuery(parcelId));
-            return CreatedAtAction(nameof(GetById), new { id = parcelId }, parcel);
+            return Accepted(parcelId);
         }
         catch (ArgumentException ex)
         {
@@ -59,8 +58,7 @@ public class ParcelsController : ControllerBase
         try
         {
             var parcelId = await _mediator.Send(command);
-            var parcel = await _mediator.Send(new GetParcelByIdQuery(parcelId));
-            return Ok(parcel);
+            return Accepted(parcelId);
         }
         catch (Exception ex)
         {

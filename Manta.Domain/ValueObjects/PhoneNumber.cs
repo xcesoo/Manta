@@ -1,7 +1,11 @@
+using System.Text.RegularExpressions;
+
 namespace Manta.Domain.ValueObjects;
 
-public sealed record  PhoneNumber
+public sealed partial record  PhoneNumber
 {
+    [GeneratedRegex(@"^\+\d{12}$")]
+    private static partial Regex PhoneRegex();
     public string Value { get; }
 
     private PhoneNumber(){}
@@ -14,7 +18,7 @@ public sealed record  PhoneNumber
 
     private bool IsValid(string value)
     {
-        return System.Text.RegularExpressions.Regex.IsMatch(value, @"^\+\d{12}$");
+        return PhoneRegex().IsMatch(value);
     }
 
     public override string ToString() => Value;

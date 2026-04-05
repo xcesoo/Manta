@@ -15,7 +15,7 @@ namespace Manta.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
+ public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, 
         IConfiguration configuration)
     {
@@ -36,6 +36,7 @@ public static class DependencyInjection
         services.AddMassTransit(x =>
         {
             x.AddConsumer<CreateParcelConsumer>().ExcludeFromConfigureEndpoints();
+            x.AddConsumer<AcceptParcelAtDeliveryPointConsumer>().ExcludeFromConfigureEndpoints();
             x.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(configuration["RabbitMq:Host"] ?? "localhost", "/", h =>
@@ -58,6 +59,12 @@ public static class DependencyInjection
                             o.SetTimeLimit(TimeSpan.FromSeconds(2));
                         });
                     }); 
+                });
+                cfg.ReceiveEndpoint("manta.parcel.accept.delivery.point", e =>
+                {
+                    e.PrefetchCount = 1000;
+                    e.ConcurrentMessageLimit = 30;
+                    e.ConfigureConsumer<AcceptParcelAtDeliveryPointConsumer>(context);
                 });
                 cfg.ConfigureEndpoints(context);
             });

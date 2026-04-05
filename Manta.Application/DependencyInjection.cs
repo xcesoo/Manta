@@ -1,5 +1,6 @@
 using System.Reflection;
 using Manta.Application.DataSeed;
+using Manta.Application.Handlers;
 using Manta.Application.Services;
 using Manta.Domain.Services;
 using Manta.Domain.StatusRules.Context;
@@ -14,10 +15,10 @@ public static class DependencyInjection
         services.AddScoped<Seed>();
 
         services.AddSingleton(RuleLoader.LoadAllRules);
-        
         services.AddScoped<ParcelStatusService>();
-        
         services.AddScoped<ParcelDeliveryService>();
+        services.AddScoped<LogisticsDomainService>();
+        services.AddScoped<AcceptParcelAtDeliveryPointHandler>();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         

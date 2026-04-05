@@ -96,7 +96,7 @@ using (var scope = app.Services.CreateScope())
         var seeder = services.GetRequiredService<Seed>();
         
         logger.LogInformation("Seeding database...");
-        await seeder.SeedAsync(); 
+        await seeder.SeedAsync(true,false); 
         logger.LogInformation("Seeding database complete.");
     }
     catch (Exception e)

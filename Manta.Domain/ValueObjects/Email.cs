@@ -1,7 +1,11 @@
+using System.Text.RegularExpressions;
+
 namespace Manta.Domain.ValueObjects;
 
-public sealed record  Email
+public sealed partial record  Email
 {
+    [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
+    private static partial Regex EmailRegex();
     public string Value { get; private set; }
 
     private Email(){}
@@ -12,9 +16,9 @@ public sealed record  Email
         Value = value;
     }
 
-    private bool IsValid(string email)
+    private bool IsValid(string value)
     {
-        return System.Text.RegularExpressions.Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        return EmailRegex().IsMatch(value);
     }
 
     public override string ToString() => Value;

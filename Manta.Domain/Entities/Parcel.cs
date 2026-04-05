@@ -9,7 +9,7 @@ public class Parcel
     public Guid Id { get; private set; }
     public Guid DeliveryPointId {get; private set;}
     public Guid? CurrentLocationDeliveryPointId { get; private set; }
-    public LicensePlate? CurrentVehicleId { get; private set; } // Визначає в якому траспортному засобі знаходиться посилка
+    public Guid? CurrentVehicleId { get; private set; } // Визначає в якому траспортному засобі знаходиться посилка
     public bool InRightLocation => DeliveryPointId == CurrentLocationDeliveryPointId; // Визначає чи посилка знаходиться у пункті призначення
     public decimal AmountDue { get; private set; } // Сума до сплати
     public bool Paid => AmountDue == 0; // Визначає, чи сплачено
@@ -70,7 +70,7 @@ public class Parcel
     internal void Readdress(Guid newDeliveryPointId) => DeliveryPointId = newDeliveryPointId;
     internal void  MoveToLocation(Guid? newCurrentLocationDeliveryPointId) => CurrentLocationDeliveryPointId = newCurrentLocationDeliveryPointId;
 
-    internal void ChangeDeliveryVehicle(LicensePlate? newVehicleId) => CurrentVehicleId = newVehicleId;
+    internal void ChangeDeliveryVehicle(Guid? newVehicleId) => CurrentVehicleId = newVehicleId;
     internal void Cancel(UserInfo cancelledBy)
     {
         ChangeStatus(EParcelStatus.ShipmentCancelled, cancelledBy);

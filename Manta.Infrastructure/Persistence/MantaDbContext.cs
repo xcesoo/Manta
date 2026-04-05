@@ -87,11 +87,7 @@ public class MantaDbContext : DbContext
             
             // CurrentVehicleId як простий навігаційний property
             entity.Property(p => p.CurrentVehicleId)
-                .HasConversion(
-                    v => v != null ? v.Value : null,
-                    v => v != null ? LicensePlate.Create(v) : null)
                 .HasColumnName("CurrentVehicleId")
-                .HasMaxLength(10)
                 .IsRequired(false);
             
             // Ігноруємо computed properties
@@ -153,7 +149,7 @@ public class MantaDbContext : DbContext
             
             entity.HasOne<DeliveryVehicle>()
                 .WithMany()
-                .HasPrincipalKey(v => v.LicensePlateId)
+                .HasPrincipalKey(v => v.Id)
                 .HasForeignKey(p => p.CurrentVehicleId)
                 .OnDelete(DeleteBehavior.SetNull);
             

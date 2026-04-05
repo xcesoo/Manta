@@ -77,7 +77,7 @@ public class ParcelRepository : IParcelRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Parcel>> GetByVehicleIdAsync(LicensePlate vehicleId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Parcel>> GetByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken = default)
     {
         if (vehicleId == null)
             throw new ArgumentNullException(nameof(vehicleId));
@@ -172,7 +172,7 @@ public class ParcelRepository : IParcelRepository
             .SumAsync(p => p.AmountDue, cancellationToken);
     }
 
-    public async Task<double> GetTotalWeightByVehicleAsync(LicensePlate vehicleId, CancellationToken cancellationToken = default)
+    public async Task<double> GetTotalWeightByVehicleAsync(Guid vehicleId, CancellationToken cancellationToken = default)
     {
         if (vehicleId == null)
             throw new ArgumentNullException(nameof(vehicleId));

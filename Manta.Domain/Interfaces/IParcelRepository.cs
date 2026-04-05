@@ -18,7 +18,7 @@ public interface IParcelRepository
     // Пошук за критеріями
     Task<IEnumerable<Parcel>> GetByDeliveryPointIdAsync(Guid deliveryPointId, CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetByCurrentLocationAsync(Guid? locationId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Parcel>> GetByVehicleIdAsync(LicensePlate vehicleId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Parcel>> GetByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetByStatusAsync(EParcelStatus status, CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetByRecipientEmailAsync(string email, CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetByRecipientPhoneAsync(string phoneNumber, CancellationToken cancellationToken = default);
@@ -33,7 +33,7 @@ public interface IParcelRepository
     Task<int> CountByStatusAsync(EParcelStatus status, CancellationToken cancellationToken = default);
     Task<int> CountByDeliveryPointAsync(Guid deliveryPointId, CancellationToken cancellationToken = default);
     Task<decimal> GetTotalAmountDueAsync(CancellationToken cancellationToken = default);
-    Task<double> GetTotalWeightByVehicleAsync(LicensePlate vehicleId, CancellationToken cancellationToken = default);
+    Task<double> GetTotalWeightByVehicleAsync(Guid vehicleId, CancellationToken cancellationToken = default);
     
     // Пакетні операції
     Task<IEnumerable<Parcel>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
