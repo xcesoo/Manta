@@ -1,8 +1,11 @@
-# Traceability Skeleton
+# Матриця трасування (Traceability Matrix)
 
-| User Story | Design (DFD / ERD) | API Path / Команда | Тести / Error Codes                                     |
-| :--- | :--- | :--- |:--------------------------------------------------------|
-| **US-1** (Прийняття/бронювання комірки) | | `POST /api/parcels/accept` <br> `AcceptParcelAtDeliveryPointCommand` | 202 Accepted (returns GUID) <br> 409 `slot_unavailable` |
-| **US-2** (Перевірка слоту `storage`) | | `GET /api/parcels/{id}` <br> `GetParcelByIdQuery` | 200 OK <br> 404 `not_found`                             |
-| **US-3** (Скасування посилки) | | `PATCH /api/parcels/{id}/cancel` | 200 OK <br> 409 `wrong_parcel_status`                   |
-| **US-4** (Створення відділення) | | `POST /api/deliverypoint` <br> `CreateDeliveryPointCommand` | 201 Created                                             |
+Цей документ демонструє зв'язок між бізнес-вимогами (User Stories), архітектурним дизайном (процеси та сховища DFD) та конкретною реалізацією в коді (API ендпоінти, CQRS-команди/запити та обробка помилок).
+
+| User Story | Design (DFD / ERD) | API Path / Команда | Тести / Error Codes |
+| :--- | :--- | :--- | :--- |
+| **US-1** (Прийняття/бронювання комірки)<br>*Фіксація прибуття посилки на відділення та перевірка місткості (capacity).* | **DFD:** Процес **P3** (`accept_parcel_at_point`).<br>**Сховища:** **D1** (parcels), **D2** (delivery_points), **D3** (outbox_messages), **D4** (processed_logs), **D5** (vehicles).<br>**ERD:** Таблиці `Parcels`, `DeliveryPoints`, `ProcessedLogs`. | `POST /api/parcels/accept` <br><br> `AcceptParcelAtDeliveryPointCommand` | 202 Accepted (повертає `parcel_guid`) <br> 409 `slot_unavailable` (овербукінг) <br> 409 `location_mismatch` |
+| **US-2** (Перевірка слоту `storage`)<br>*Перегляд точного часу закінчення зберігання посилки.* | **DFD:** Читання з **D1** (parcels).<br>**ERD:** Таблиця `Parcels` (обчислюване поле `storage` на базі `arrived_at`). | `GET /api/parcels/{id}` <br><br> `GetParcelByIdQuery` | 200 OK (повертає DTO посилки) <br> 404 `not_found` |
+| **US-3** (Скасування посилки)<br>*Миттєве вивільнення зайнятого місця на відділенні.* | **DFD:** Асинхронне оновлення **D1** (parcels) через запис у **D3** (outbox_messages).<br>**ERD:** Таблиці `Parcels`, `OutboxMessages`. | `PATCH /api/parcels/{id}/cancel` <br><br> `CancelParcelCommand` *(якщо застосовно)* | 200 OK <br> 409 `wrong_parcel_status` (якщо вже видано `Delivered`) |
+| **US-4** (Створення відділення)<br>*Налаштування нової точки з певним лімітом `capacity`.* | **DFD:** Оновлення **D2** (delivery_points).<br>**ERD:** Таблиця `DeliveryPoints`. | `POST /api/deliverypoint` <br><br> `CreateDeliveryPointCommand` | 201 Created |
+| **US-5** (Створення посилки відправником)<br>*Реєстрація нової посилки в системі.* | **DFD:** Процес **P2** (`create_parcel`).<br>**Сховища:** **D1** (parcels), **D3** (outbox_messages).<br>**ERD:** Таблиці `Parcels`, `OutboxMessages`. | `POST /api/parcels` <br><br> `CreateParcelCommand` | 202 Accepted (повертає `parcel_guid`) |
