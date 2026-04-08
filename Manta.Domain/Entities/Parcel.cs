@@ -22,7 +22,7 @@ public class Parcel
     public virtual ICollection<ParcelStatus> StatusHistory { get; private set; } = new List<ParcelStatus>();
     public ParcelStatus CurrentStatus => StatusHistory.Last();
     public DateTime? ArrivedAt { get; private set; } = null;
-    public DateTime? Storage => ArrivedAt?.ToLocalTime() + TimeSpan.FromDays(3);
+    public DateTime? Storage => ArrivedAt?.ToUniversalTime() + TimeSpan.FromDays(3);
     private Parcel() { }
     private Parcel(Guid id, Guid deliveryPointId, Name recipientName, PhoneNumber recipientPhoneNumber, Email recipientEmail, double weight, decimal amountDue)
     {

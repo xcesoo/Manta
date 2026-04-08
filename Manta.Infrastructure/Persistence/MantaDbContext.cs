@@ -38,7 +38,7 @@ public class MantaDbContext : DbContext
             entity.HasIndex(e => e.ProcessedAt);
             entity.Property(e=>e.ProcessedAt).IsRequired();
         });
-        // Конфігурація Parcel
+        //  Parcel
         modelBuilder.Entity<Parcel>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -85,17 +85,17 @@ public class MantaDbContext : DbContext
                     .HasMaxLength(300);
             });
             
-            // CurrentVehicleId як простий навігаційний property
+            // CurrentVehicleId 
             entity.Property(p => p.CurrentVehicleId)
                 .HasColumnName("CurrentVehicleId")
                 .IsRequired(false);
             
-            // Ігноруємо computed properties
+            //  computed properties
             entity.Ignore(p => p.InRightLocation);
             entity.Ignore(p => p.Paid);
             entity.Ignore(p => p.CurrentStatus);
             
-            // StatusHistory як окрема таблиця
+            // StatusHistory
             entity.OwnsMany(p => p.StatusHistory, history =>
             {
                 history.ToTable("ParcelStatusHistory");
@@ -127,7 +127,6 @@ public class MantaDbContext : DbContext
                         .HasColumnName("ChangedByEmail")
                         .HasMaxLength(300);
                     
-                    // Ігноруємо Role - це вичислювана властивість
                     user.Property(u => u.Role)
                         .HasColumnName("ChangedByRole")
                         .HasConversion<string>()
@@ -136,7 +135,6 @@ public class MantaDbContext : DbContext
             });
 
             
-            // Зв'язки
             entity.HasOne<DeliveryPoint>()
                 .WithMany()
                 .HasForeignKey(p => p.DeliveryPointId)
@@ -153,7 +151,6 @@ public class MantaDbContext : DbContext
                 .HasForeignKey(p => p.CurrentVehicleId)
                 .OnDelete(DeleteBehavior.SetNull);
             
-            // Індекси
             entity.HasIndex(p => p.DeliveryPointId);
             entity.HasIndex(p => p.CurrentLocationDeliveryPointId);
             entity.HasIndex(p => p.CurrentVehicleId);
