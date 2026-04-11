@@ -78,7 +78,8 @@ public class Seed : ISeed
             //seed delivery points
             var deliveryPointsGenerate = new Faker<CreateDeliveryPointCommand>("uk")
                 .CustomInstantiator(f => new CreateDeliveryPointCommand(
-                    Address: f.Address.FullAddress()
+                    Address: f.Address.FullAddress(),
+                    Capacity: f.Random.Number(100,500)
                 ));
             var deliveryPointsCommands = deliveryPointsGenerate.Generate(30);
             foreach (var command in deliveryPointsCommands) await _mediator.Send(command);

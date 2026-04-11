@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Manta.Application;
 using Manta.Application.DataSeed;
 using Manta.Infrastructure;
+using Manta.Infrastructure.Hubs;
 using Manta.Infrastructure.Persistence;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,19 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true) // Дозволяємо підключення з локального файлу (file://)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); // SignalR обов'язково вимагає це налаштування!
+    });
+});
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers()
@@ -79,11 +93,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ParcelNotificationHub>("/hubs/parcels");
 
 await app.StartAsync();
 
@@ -96,7 +114,7 @@ using (var scope = app.Services.CreateScope())
         var seeder = services.GetRequiredService<Seed>();
         
         logger.LogInformation("Seeding database...");
-        await seeder.SeedAsync(true,false); 
+        await seeder.SeedAsync(false,true); 
         logger.LogInformation("Seeding database complete.");
     }
     catch (Exception e)

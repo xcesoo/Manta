@@ -118,6 +118,14 @@ public class ParcelRepository : IParcelRepository
     }
 
     // Спеціальні запити
+    public async Task<int> GetActiveParcelsCountAtPointAsync(Guid deliveryPointId, CancellationToken ct = default)
+    {
+        return await _context.Parcels
+            .Where(p => p.DeliveryPointId == deliveryPointId)
+            .CountAsync(p => p.StatusHistory
+                .OrderByDescending(h => h.ChangedAt)
+                .FirstOrDefault()!.Status == EParcelStatus.ReadyForPickup, ct);
+    }
     public async Task<IEnumerable<Parcel>> GetUnpaidParcelsAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Parcels

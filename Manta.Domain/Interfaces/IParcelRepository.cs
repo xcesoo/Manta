@@ -28,6 +28,7 @@ public interface IParcelRepository
     Task<IEnumerable<Parcel>> GetParcelsNotInRightLocationAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetParcelsInTransitAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<Parcel>> GetReadyForDeliveryAsync(Guid deliveryPointId, CancellationToken cancellationToken = default);
+    Task<int> GetActiveParcelsCountAtPointAsync(Guid deliveryPointId, CancellationToken ct = default);
     
     // Статистика
     Task<int> CountByStatusAsync(EParcelStatus status, CancellationToken cancellationToken = default);

@@ -19,7 +19,8 @@ public class CreateDeliveryPointCommandHandler : IRequestHandler<CreateDeliveryP
     {
         var options = new DeliveryPointCreationOptions(
             Id: NewId.NextGuid(),
-            Address:request.Address
+            Address:request.Address,
+            Capacity:request.Capacity
             );
         var deliveryPoint = await DeliveryPointFactory.Create(options);
         if (deliveryPoint == null) throw new ArgumentException($"Failed to create delivery point");

@@ -9,6 +9,7 @@ public sealed record RuleContext
     public UserInfo User { get; init; }
     public DeliveryPoint? DeliveryPoint { get; init; }
     public DeliveryVehicle? DeliveryVehicle { get; init; }
+    public int ActiveParcelsCount { get; init; }
 
     public static RuleContext ForParcel(Parcel parcel, UserInfo user) =>
         new RuleContext
@@ -17,12 +18,13 @@ public sealed record RuleContext
             User = user
         };
 
-    public static RuleContext ForDelivery(Parcel parcel, UserInfo user, DeliveryPoint deliveryPoint) =>
+    public static RuleContext ForDelivery(Parcel parcel, UserInfo user, DeliveryPoint deliveryPoint, int activeParcelsCount = 0) =>
         new RuleContext
         {
             Parcel = parcel,
             User = user,
-            DeliveryPoint = deliveryPoint
+            DeliveryPoint = deliveryPoint,
+            ActiveParcelsCount = activeParcelsCount
         };
 
     public static RuleContext ForVehicle(Parcel parcel, UserInfo user, DeliveryVehicle deliveryVehicle) =>

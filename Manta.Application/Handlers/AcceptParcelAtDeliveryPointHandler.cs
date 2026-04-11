@@ -37,8 +37,10 @@ public class AcceptParcelAtDeliveryPointHandler(
 
         var user = await _userRepository.GetByIdAsync(msg.UserId, ct) ??
                    throw new ArgumentException($"User {msg.UserId} not found");
+        
+        int activeCount = await _parcelRepository.GetActiveParcelsCountAtPointAsync(msg.DeliveryPointId, ct);
 
-        var context = RuleContext.ForDelivery(parcel, user, deliveryPoint);
+        var context = RuleContext.ForDelivery(parcel, user, deliveryPoint, activeCount);
 
         if (!_statusService.ApplyRule<AcceptAtDeliveryPointPolicy>(context))
             throw new ArgumentException("Failed to apply status rule");

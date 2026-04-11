@@ -2,5 +2,6 @@ namespace Manta.Domain.CreationOptions;
 
 public record DeliveryPointCreationOptions(
     Guid Id,
-    string Address
+    string Address,
+    int Capacity
     );

@@ -7,4 +7,5 @@ public enum ERuleResultError
     LocationMismatch,
     PaymentRequired,
     ArgumentInvalid,
+    SlotUnavailable,
 }

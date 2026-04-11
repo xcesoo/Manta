@@ -167,6 +167,9 @@ public class MantaDbContext : DbContext
             entity.Property(dp => dp.Address)
                 .HasMaxLength(500)
                 .IsRequired();
+            entity.Property(dp => dp.Capacity)
+                .IsRequired()
+                .HasDefaultValue(3);
         });
         
         // Конфігурація DeliveryVehicle
@@ -205,14 +208,6 @@ public class MantaDbContext : DbContext
             
             entity.Property(v => v.CurrentLoad)
                 .HasPrecision(10, 2)
-                .IsRequired();
-            
-            // ParcelsIds як колекція - використовуємо HasConversion для збереження у вигляді рядка
-            entity.Property(v => v.ParcelsIds)
-                .HasColumnName("ParcelsIds")
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => string.IsNullOrEmpty(v) ? new List<Guid>() : v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Guid.Parse).ToList())
                 .IsRequired();
         });
         
