@@ -1,0 +1,9 @@
+# Інформаційна архітектура (IA) - Manta Logistics
+
+| Page / URL                                                          | Для кого (ролі)              | Джерело даних (API-шляхи) | Критичні атрибути (snake_case) | Стани (статус-коди та UI)                                                            |
+|:--------------------------------------------------------------------|:-----------------------------| :--- | :--- |:-------------------------------------------------------------------------------------|
+| **Головна / Перелік відділень**<br>`/delivery-points`               | `admin`, `cashier`           | `GET /api/DeliveryPoint/{id}` | `id`, `address`, `capacity` | `loading`, `empty` (немає відділень), `error` (404 Not Found), `unauthorized` (401)  |
+| **Реєстрація відділення**<br>`/delivery-points/new`                 | `admin`                      | `POST /api/DeliveryPoint` | `address`, `capacity` | `loading`, `error` (422 Unprocessable Content)                                       |
+| **Створення відправлення (Бронювання)**<br>`/parcels/new`           | `admin`, `cashier`           | `POST /api/Parcels` | `delivery_point_id`, `weight`, `amount_due`, `recipient_name`, `recipient_phone`, `recipient_email` | `loading`, `accepted` (202 Accepted - повертає `uuid`)                               |
+| **Деталі посилки**<br>`/parcels/{id}`                               | `admin`, `cashier` | `GET /api/Parcels/{id}` | `id`, `delivery_point_id`, `weight`, `amount_due`, `recipient_name`, `recipient_phone` | `loading`, `error` (404 Not Found)                                                   |
+| **Прийом на відділенні (Зайняття слота)**<br>`/parcels/{id}/accept` | `admin`, `cashier`            | `POST /api/Parcels/accept` | `parcel_id`, `delivery_point_id` | `loading`, `accepted` (202), `conflict` (409 Conflict - перевищено ліміт capacity=3) |
