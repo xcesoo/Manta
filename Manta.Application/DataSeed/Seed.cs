@@ -69,11 +69,7 @@ public class Seed : ISeed
                 await _userRepository.AddAsync(SystemUser.Instance);
                 await _userRepository.SaveChangesAsync();
             }
-
-            // check seed db
-            if ((await _deliveryPointRepository.GetAllAsync()).Any()) return;
-
-
+            
             var timerdp = Stopwatch.StartNew();
             //seed delivery points
             var deliveryPointsGenerate = new Faker<CreateDeliveryPointCommand>("uk")
@@ -152,7 +148,7 @@ public class Seed : ISeed
                     DeliveryPointId: f.PickRandom(allDeliveryPoints.Select(dp => dp.Id)))
                 );
 
-            var parcelsCommands = parcelsGenerate.Generate(100000);
+            var parcelsCommands = parcelsGenerate.Generate(5000);
 
             var parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 50 };
 

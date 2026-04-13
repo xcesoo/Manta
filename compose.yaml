@@ -1,0 +1,36 @@
+﻿services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: manta_user
+      POSTGRES_PASSWORD: manta_password
+      POSTGRES_DB: manta_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U manta_user -d manta_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  manta-api:
+    build:
+      context: .
+      dockerfile: Manta.WebApi/Dockerfile 
+    ports:
+      - "5024:8080" 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=manta_db;Username=manta_user;Password=manta_password
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started

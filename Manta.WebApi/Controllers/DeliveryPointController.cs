@@ -1,5 +1,6 @@
 using Manta.Application.Commands.DeliveryPoint;
 using Manta.Application.Queries.DeliveryPoint;
+using Manta.Contracts.Responses;
 using Manta.Domain.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +20,20 @@ public class DeliveryPointController(
     private readonly IMediator _mediator = mediator;
     private readonly IDeliveryPointRepository _repository = repository;
 
-
-    [HttpGet("{id}")]
-    // [Authorize]
+    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]    [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(Guid id)
     {
         var deliveryPoint = await _mediator.Send(new GetDeliveryPointByIdQuery(id));
         if (deliveryPoint == null) return NotFound($"Відділення з ID {id} не знайдено.");
         return Ok(deliveryPoint);
     }
-
-    [HttpPost]
+    
+    [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]    [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateDeliveryPointCommand command)
     {
         try

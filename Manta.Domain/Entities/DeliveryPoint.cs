@@ -20,5 +20,5 @@ public class DeliveryPoint
         if (string.IsNullOrWhiteSpace(options.Address)) throw new ArgumentException("Address can't be null", nameof(options.Address));;
         return new DeliveryPoint(options.Id, options.Address,  options.Capacity);
     }
-    
+
 }

@@ -1,4 +1,5 @@
 using Manta.Application.Commands.Parcel;
+using Manta.Application.Services;
 using Manta.Contracts.Messages;
 using Manta.Domain.Entities;
 using Manta.Domain.Enums;
@@ -8,6 +9,7 @@ using Manta.Domain.StatusRules.Context;
 using Manta.Domain.StatusRules.Interfaces;
 using Manta.Domain.StatusRules.Policies;
 using Manta.Domain.ValueObjects;
+using Microsoft.Extensions.Logging;
 
 namespace Manta.Application.Handlers;
 
@@ -17,7 +19,8 @@ public class AcceptParcelAtDeliveryPointHandler(
     IDeliveryPointRepository deliveryPointRepository,
     IDeliveryVehicleRepository deliveryVehicleRepository,
     ParcelStatusService statusService,
-    LogisticsDomainService logisticsService)
+    LogisticsDomainService logisticsService,
+    ILogger<AcceptParcelAtDeliveryPointHandler> logger)
 {
     private readonly IParcelRepository _parcelRepository = parcelRepository;
     private readonly IDeliveryPointRepository _deliveryPointRepository = deliveryPointRepository;
@@ -26,6 +29,8 @@ public class AcceptParcelAtDeliveryPointHandler(
 
     private readonly ParcelStatusService _statusService = statusService;
     private readonly LogisticsDomainService _logisticsService = logisticsService;
+    
+    private readonly ILogger<AcceptParcelAtDeliveryPointHandler> _logger = logger;
 
     public async Task<Guid> HandleAsync(AcceptParcelAtDeliveryPointMessage msg, CancellationToken ct)
     {
@@ -60,6 +65,13 @@ public class AcceptParcelAtDeliveryPointHandler(
         parcel.MoveToLocation(deliveryPoint.Id);
         await _parcelRepository.UpdateAsync(parcel, ct);
 
+        _logger.LogInformation(
+            "Касир {MaskedName} ({MaskedEmail}) приймає посилку {ParcelId} на відділенні {PointId}",
+            PiiMasker.MaskName(user.Name),
+            PiiMasker.MaskEmail(user.Email),
+            parcel.Id,
+            deliveryPoint.Id);
+        
         return parcel.Id;
     }
 }

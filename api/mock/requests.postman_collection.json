@@ -1,0 +1,706 @@
+{
+  "info": {
+    "_postman_id": "9738b556-14a4-417e-965d-59c5c9ad002d",
+    "name": "Manta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53897488",
+    "_collection_link": "https://go.postman.co/collection/53897488-9738b556-14a4-417e-965d-59c5c9ad002d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"manta user\",\n  \"email\": \"test@gmail.com\",\n  \"password\": \"test123\",\n  \"role\": \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Auth/register",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var token = pm.response.text();",
+              "pm.collectionVariables.set(\"jwt_token\", token);",
+              "console.log(\"saved jwt_token: \" + token);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"test123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Auth/login",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Delivery Point",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseData = pm.response.json();",
+              "pm.collectionVariables.set(\"delivery_point\", responseData.id);",
+              "console.log(\"saved delivery_point id: \" + responseData.id);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"address\": \"string\",\n  \"capacity\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/DeliveryPoint",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "DeliveryPoint"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Parcel_1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseData = pm.response.text().replace(/\"/g, '').trim();",
+              "pm.collectionVariables.set(\"first_parcel\", responseData);",
+              "console.log(\"saved parcel id: \" + responseData);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"delivery_point_id\": \"{{delivery_point}}\",\n  \"weight\": 10,\n  \"amount_due\": 10000,\n  \"recipient_name\": \"name first parcel\",\n  \"recipient_phone\": \"+380000000000\",\n  \"recipient_email\": \"testemail@gmail.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Parcel_2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseData = pm.response.text().replace(/\"/g, '').trim();",
+              "pm.collectionVariables.set(\"second_parcel\", responseData);",
+              "console.log(\"saved parcel id: \" + responseData);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"delivery_point_id\": \"{{delivery_point}}\",\n  \"weight\": 10,\n  \"amount_due\": 1000,\n  \"recipient_name\": \"name second parcel\",\n  \"recipient_phone\": \"+380000000000\",\n  \"recipient_email\": \"testemail@gmail.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Parcel_3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseData = pm.response.text().replace(/\"/g, '').trim();",
+              "pm.collectionVariables.set(\"third_parcel\", responseData);",
+              "console.log(\"saved parcel id: \" + responseData);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"delivery_point_id\": \"{{delivery_point}}\",\n  \"weight\": 10,\n  \"amount_due\": 100,\n  \"recipient_name\": \"name third parcel\",\n  \"recipient_phone\": \"+380000000000\",\n  \"recipient_email\": \"testemail@gmail.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Parcel_4",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseData = pm.response.text().replace(/\"/g, '').trim();",
+              "pm.collectionVariables.set(\"fourth_parcel\", responseData);",
+              "console.log(\"saved parcel id: \" + responseData);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"delivery_point_id\": \"{{delivery_point}}\",\n  \"weight\": 10,\n  \"amount_due\": 10,\n  \"recipient_name\": \"name fourth parcel\",\n  \"recipient_phone\": \"+380000000000\",\n  \"recipient_email\": \"testemail@gmail.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Parcel_1",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 4000);",
+              "console.log(\"Wait 4 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5024/api/Parcels/{{first_parcel}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "{{first_parcel}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Parcel_2",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5024/api/Parcels/{{second_parcel}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "{{second_parcel}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Parcel_3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5024/api/Parcels/{{third_parcel}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "{{third_parcel}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Parcel_4",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5024/api/Parcels/{{fourth_parcel}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "{{fourth_parcel}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Accept Parcel_1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parcel_id\": \"{{first_parcel}}\",\n  \"delivery_point_id\": \"{{delivery_point}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels/accept",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Accept Parcel_2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parcel_id\": \"{{second_parcel}}\",\n  \"delivery_point_id\": \"{{delivery_point}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels/accept",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Accept Parcel_3",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parcel_id\": \"{{third_parcel}}\",\n  \"delivery_point_id\": \"{{delivery_point}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels/accept",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Accept Parcel_4 Twist A",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "setTimeout(function(){}, 2000);",
+              "console.log(\"Wait 2 seconds for rabbitmq to finish\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parcel_id\": \"{{fourth_parcel}}\",\n  \"delivery_point_id\": \"{{delivery_point}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:5024/api/Parcels/accept",
+          "host": [
+            "localhost"
+          ],
+          "port": "5024",
+          "path": [
+            "api",
+            "Parcels",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": ""
+    },
+    {
+      "key": "delivery_point",
+      "value": ""
+    },
+    {
+      "key": "first_parcel",
+      "value": ""
+    },
+    {
+      "key": "second_parcel",
+      "value": ""
+    },
+    {
+      "key": "third_parcel",
+      "value": ""
+    },
+    {
+      "key": "fourth_parcel",
+      "value": ""
+    }
+  ]
+}

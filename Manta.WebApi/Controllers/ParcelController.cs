@@ -2,6 +2,7 @@ using Manta.Application.Commands.Parcel;
 using Manta.Application.Events.Parcel;
 using Manta.Application.Queries.Parcel;
 using Manta.Application.Services;
+using Manta.Contracts.Responses;
 using Manta.Domain.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +28,9 @@ public class ParcelsController : ControllerBase
         _mediator = mediator;
     }
     
-    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]    [HttpGet("{id}")]
     [Authorize]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -35,8 +38,10 @@ public class ParcelsController : ControllerBase
         if (parcel == null) return NotFound($"Посилку з ID {id} не знайдено.");
         return Ok(parcel);
     }
-
-    [HttpPost]
+    
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status202Accepted)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]    [HttpPost]
     [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateParcelCommand command)
     {
@@ -50,8 +55,11 @@ public class ParcelsController : ControllerBase
             return BadRequest(new { error = ex.Message });
         }
     }
-
-    [HttpPost("accept")]
+    
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status202Accepted)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]    [HttpPost("accept")]
     [Authorize]
     public async Task<IActionResult> Accept([FromBody]AcceptParcelAtDeliveryPointCommand command)
     {
@@ -60,9 +68,21 @@ public class ParcelsController : ControllerBase
             var parcelId = await _mediator.Send(command);
             return Accepted(parcelId);
         }
+        catch (InvalidOperationException ex) 
+        {
+            return Conflict(new ApiErrorResponse 
+            { 
+                Error = "slot_unavailable", 
+                Message = ex.Message 
+            });
+        }
         catch (Exception ex)
         {
-            return BadRequest(new { error = ex.Message });
+            return UnprocessableEntity(new ApiErrorResponse 
+            { 
+                Error = "invariant_violation", 
+                Message = ex.Message 
+            });
         }
     }
 }

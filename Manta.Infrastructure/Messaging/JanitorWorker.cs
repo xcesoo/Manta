@@ -28,7 +28,7 @@ public class JanitorWorker : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("[JANITOR] started");
-
+        await Task.Delay(10000, stoppingToken);
         while (!stoppingToken.IsCancellationRequested)
         {
             try

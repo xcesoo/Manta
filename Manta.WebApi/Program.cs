@@ -1,8 +1,11 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Manta.Application;
 using Manta.Application.DataSeed;
+using Manta.Domain.Entities;
+using Manta.Domain.Interfaces;
 using Manta.Infrastructure;
 using Manta.Infrastructure.Hubs;
 using Manta.Infrastructure.Persistence;
@@ -18,17 +21,21 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.SetIsOriginAllowed(_ => true) // Дозволяємо підключення з локального файлу (file://)
+        policy.SetIsOriginAllowed(_ => true) 
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // SignalR обов'язково вимагає це налаштування!
+            .AllowCredentials(); 
     });
 });
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(options => 
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower));
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -75,7 +82,17 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<MantaDbContext>();
+        await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
+        var userRepository = services.GetRequiredService<IUserRepository>();
+        var systemUser = await userRepository.GetByIdAsync(Guid.Empty)
+                         ?? null;
+        if (systemUser == null)
+        {
+            await userRepository.AddAsync(SystemUser.Instance);
+            await userRepository.SaveChangesAsync();
+        }
+        
     }
     catch (Exception e)
     {
